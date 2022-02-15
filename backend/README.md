@@ -1,4 +1,4 @@
-# CZ2006 Project - Frontend Documentation 
+# CZ2006 Project - Backend Documentation 
 ## Table of Contents 
 1. Starting a development environment 
 2. Good/Must-have Habits
@@ -10,15 +10,16 @@ But, let me repeat myself.
 
 Navigate into dir with package.json 
 ```
-cd frontend
+cd backend
 ```
 Install dependencies (this is a habit I developed over time)
 ```
-npm install
+pip install -r requirements.txt
 ```
 Run environment 
 ```
-npm start
+python manage.py check
+python manage.py runserver
 ```
 
 EZPZ LEMON SQZY :P
@@ -26,9 +27,10 @@ EZPZ LEMON SQZY :P
 ## Good/Must-have Habits 
 These habits are good to have and some are must to have to mitigate the headache from debugging dependencies-related issues and things like that.
 
-Everytime you want to install a new dependency, PLEASE SAVE IT TO `package.json`.
+Everytime you want to install a new dependency, PLEASE SAVE IT TO `requirements.txt`.
 ```
-npm install --save <PACKAGE_NAME>
+pip install <PACKAGE_NAME>
+pip freeze >> requirements.txt
 ```
 
 
