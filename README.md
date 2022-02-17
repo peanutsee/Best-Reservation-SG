@@ -128,6 +128,11 @@ We may not know the solutions to your problem (we are not gods), but we can give
 ## GIT Practices
 There are many versions of git practices, but I am going to introduce the one I commonly use for my projects (usually between 5-6 people). Anyway, try to think of github or gitas a tree... Trees have branches... Branches have leaves... You see why soon :)
 
+### Defining Branches 
+`main` branch will be defined as hosting branch (no dev changes should be committed to this branch).
+`test` branch will be defined as the branch where testing will happen. 
+`development` branch will be defined as branch we will commit our untested commits to. 
+
 ### Pushing a new change
 This should happen when you want to update a new change in the program 
 ```
