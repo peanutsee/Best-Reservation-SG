@@ -60,6 +60,7 @@ You are done setting up the development environment.
 ## Running Development Environment 
 You should do this before you start developing the codes. 
 
+### Running Without Docker
 Start Python env (MUST START)
 ```
 pyenv\Scripts\activate
@@ -78,6 +79,17 @@ cd /frontend #go to frontend dir
 npm start 
 ```
 `frontend` services runs on port 3000 by default.
+
+### Running on Docker
+Navigate to dir with `docker-compose.yaml`
+Build images
+```
+docker-compose build
+```
+Run containers 
+```
+docker-compose up
+```
 
 ## Developing Guide
 This is a general development guide. Please refer to the respective frontend and backend development guides for a more indepth guide (ETC 18 February 2022).
