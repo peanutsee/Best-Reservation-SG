@@ -36,3 +36,15 @@ pip freeze >> requirements.txt
 
 ### Conventions 
 TBC 18 February 2022
+
+
+### Staging for Production 
+Build static in `frontend`
+```
+npm run build
+```
+Copy & paste static folder to `backend`
+Run collectstatic
+```
+python manage.py collectstatic
+```
