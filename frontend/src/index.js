@@ -1,8 +1,9 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { Provider } from "react-redux";
-import store from "./RootRedux/index";
-import NAVIGATION_ROUTES from './Navigation/index'
+/* eslint-disable react/jsx-filename-extension */
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import store from './RootRedux/index';
+import NAVIGATION_ROUTES from './Navigation/index';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -10,5 +11,5 @@ ReactDOM.render(
       {/* Routes goes here  */}
     </Provider>
   </React.StrictMode>,
-  document.getElementById("root")
+  document.getElementById('root'),
 );
