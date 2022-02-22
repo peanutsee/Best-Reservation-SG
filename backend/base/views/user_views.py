@@ -63,7 +63,7 @@ def registerUser(request):
             profile_serializer = ProfileSerializer(profile, many=False)
             user_data, profile_data = user_serializer.data, profile_serializer.data
             user_data.update(profile_data)
-            return Response(user_data)
+            return Response(user_data, status=status.HTTP_201_CREATED)
         except:
-            message = {'detail': 'User with this email already exists'}
+            message = {'detail': 'User registration not successful!'}
             return Response(message, status=status.HTTP_400_BAD_REQUEST)
