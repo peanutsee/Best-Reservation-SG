@@ -142,7 +142,6 @@ There are many versions of git practices, but I am going to introduce the one I 
 
 ### Defining Branches 
 `main` branch will be defined as hosting branch (no dev changes should be committed to this branch).
-`development` branch will be defined as branch we will commit our untested commits to. 
 
 ### Pushing a new change
 This should happen when you want to update a new change in the program 
