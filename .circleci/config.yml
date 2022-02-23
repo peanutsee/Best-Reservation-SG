@@ -33,14 +33,10 @@ jobs:
           pkg-manager: pipenv
           app-dir: ~/project/backend
       - run:
-<<<<<<< HEAD
           command: |
             ls
             cd backend
             ls
-=======
-          command: ls
->>>>>>> 5828d1d47fec4ae1775959e8fa867524a0ae1fb4
           # app-dir: ~/project/package-directory/  # If you're requirements.txt isn't in the root directory.
           # pip-dependency-file: test-requirements.txt  # if you have a different name for your requirements file, maybe one that combines your runtime and test requirements.
       # - run:
