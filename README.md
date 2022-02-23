@@ -146,11 +146,11 @@ There are many versions of git practices, but I am going to introduce the one I 
 ### Pushing a new change
 This should happen when you want to update a new change in the program 
 ```
-git branch # CHECK YOU ARE IN THE CORRECT BRANCH!!
+git branch # CHECK YOU ARE IN THE CORRECT BRANCH!! Frontemnd -> Frontend branch/ Backend -> Backend branch
 git status
 git add .
 git commit -m "PLEASE WRITE A PROPER COMMIT MESSAGE"
-git push origin main
+git push origin <BRANCH_NAME>
 ```
 Please push to main for now, until I think of a better way to do VCS (Yes, there is an option to use different branch and subversioning).
 

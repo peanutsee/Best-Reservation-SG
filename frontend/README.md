@@ -30,7 +30,5 @@ Everytime you want to install a new dependency, PLEASE SAVE IT TO `package.json`
 ```
 npm install --save <PACKAGE_NAME>
 ```
-
-
 ### Conventions 
 TBC 18 February 2022
