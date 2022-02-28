@@ -2,8 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-# TODO: Decide on what models need to be created (no need to normalize)
-# TODO: Create models and migrate to db
 # TODO: Create serializers for all fields (unless otherwise stated)
 # TODO: All models must support CRUD, views must reflect this
 # TODO: ALl enpoints must be tested independently of each other and the frontend UI
