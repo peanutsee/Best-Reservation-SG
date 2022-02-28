@@ -16,6 +16,8 @@ from django.contrib.auth.models import User
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     contact_number = models.CharField(max_length=255)
+    sms_notification = models.BooleanField(default=True)
+    email_notification = models.BooleanField(default=True)
 
     objects = models.manager
 
