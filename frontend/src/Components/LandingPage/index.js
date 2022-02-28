@@ -2,10 +2,15 @@
 /* eslint-disable react/jsx-filename-extension */
 
 import React from 'react';
+import CarouselSection from './Components/CarouselSection';
+import RestaurantCards from './Components/RestaurantCards';
 
 function index() {
   return (
-    <div>index</div>
+    <div>
+      <CarouselSection />
+      <RestaurantCards />
+    </div>
   );
 }
 

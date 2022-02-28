@@ -21,7 +21,7 @@ function AppHeader() {
           <Nav className="mr-auto">
             <Nav.Link href="#restaurants">Restaurants</Nav.Link>
             <Nav.Link href="#reservation">Reservation</Nav.Link>
-            <Nav.Link href="#profile">Reservation</Nav.Link>
+            <Nav.Link href="#profile">Profile</Nav.Link>
           </Nav>
         </Navbar.Collapse>
         <Form inline className="mx-3">

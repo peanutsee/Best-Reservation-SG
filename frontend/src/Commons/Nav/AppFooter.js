@@ -38,11 +38,6 @@ function AppFooter() {
               </ListGroup.Item>
               <ListGroup.Item>
                 <div>
-                  <Link to="/donate">Donate</Link>
-                </div>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <div>
                   <Link to="/contactus">Contact Us</Link>
                 </div>
               </ListGroup.Item>
