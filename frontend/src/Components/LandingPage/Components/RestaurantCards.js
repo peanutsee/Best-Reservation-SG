@@ -1,11 +1,14 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable linebreak-style */
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Card, Row, Col, Image,
 } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { retrieveRestaurants } from '../Redux/actions';
 
 const data = [
   {
@@ -26,6 +29,17 @@ const data = [
 ];
 
 function RestaurantCards() {
+  const dispatch = useDispatch();
+
+  const retrieveRestaurantData = useSelector((state) => state.retrieveRestaurantReducer);
+  const {
+    loading, error, restaurants, mazel,
+  } = retrieveRestaurantData;
+
+  useEffect(() => {
+    dispatch(retrieveRestaurants());
+  }, [dispatch]);
+
   return (
     <div className="p-5 my-5">
       <h2>Check out these restaurants!</h2>
