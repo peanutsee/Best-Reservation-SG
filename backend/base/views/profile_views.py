@@ -46,8 +46,8 @@ def updateUserProfile(request, pk):
 
         # Update Profile Details
         profile.contact_number = data['contact_number']
-        # profile.sms_notification = data['sms_notification_setting']
-        # profile.email_notification = data['email_notification_setting']
+        profile.sms_notification = data['sms_notification_setting']
+        profile.email_notification = data['email_notification_setting']
 
         # Save Changes
         user.save()
