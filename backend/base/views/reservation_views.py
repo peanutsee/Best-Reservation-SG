@@ -10,7 +10,7 @@ from rest_framework.permissions import IsAuthenticated
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def createReservation(request, pk):
+def createReservation(request):
 
     user = request.user
     data = request.data
