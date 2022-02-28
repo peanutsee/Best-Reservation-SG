@@ -34,3 +34,45 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = Profile
         fields = '__all__'
 
+class RestaurantSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Restaurant
+        fields = '__all__'
+
+class ReservationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Reservation
+        fields = '__all__'
+
+class IsPartOfSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = IsPartOf
+        fields = '__all__'
+
+class BillDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BillDetail
+        fields = '__all__'
+
+class MenuSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Menu
+        fields = '__all__'
+
+class MenuItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MenuItem
+        fields = '__all__'
+
+class OrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = '__all__'
+
+
+class OrderItemInOrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrderItemInOrder
+        fields = '__all__'
+
+
