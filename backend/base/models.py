@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 # TODO: Create serializers for all fields (unless otherwise stated)
 # TODO: All models must support CRUD, views must reflect this
-# TODO: ALl enpoints must be tested independently of each other and the frontend UI
+# TODO: ALl endpoints must be tested independently of each other and the frontend UI
 # TODO: All endpoints must be documented in swaggerhub
 
 # TODO: API to Restaurants
@@ -99,19 +99,20 @@ class IsPartOf(models.Model):
 
 
 class BillDetail(models.Model):
-    bill_reservation = models.ForeignKey(Reservation, on_delete=models.CASCADE)
+    bill_reservation = models.OneToOneField(Reservation, on_delete=models.CASCADE)
     before_tax_bill = models.DecimalField(decimal_places=2, max_digits=10)
     tax = models.DecimalField(default=1.17, decimal_places=2, max_digits=10)
     deposit = models.DecimalField(default=20, decimal_places=2, max_digits=10)
     after_tax_bill = models.DecimalField(decimal_places=2, max_digits=10, default=0)
+    bill_is_paid = models.BooleanField(default=False)
 
     objects = models.Manager()
 
-    def calculateFinalBill(self):
-        return self.before_tax_bill * self.tax - self.deposit
+    def calculate_final_bill(self):
+        return float(self.before_tax_bill) * float(self.tax) - float(self.deposit)
 
     def __str__(self):
-        return f"Bill for Reservation {bin(self.id)}"
+        return f"Bill for Reservation {bin(self.bill_reservation.id)}"
 
 class Menu(models.Model):
     menu_restaurant = models.OneToOneField(Restaurant, on_delete=models.CASCADE)
@@ -146,6 +147,11 @@ class OrderItemInOrder(models.Model):
     order_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     order_item_qty = models.IntegerField()
+
+    objects = models.Manager()
+
+    def get_price(self):
+        return self.order_item_qty * self.order_item.menu_item_price
 
     def __str__(self):
         return f"{self.order_item.menu_item_name} in {self.order.__str__()}"
