@@ -7,6 +7,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/users/', include('base.urls.user_urls')),
     path('api/reservation/', include('base.urls.reservation_urls')),
+    path('api/restaurants/', include('base.urls.restaurant_urls')),
     path('api/pre_order/', include('base.urls.pre_order_urls')),
     path('api/proportioning/', include('base.urls.proportioning_urls')),
     path('api/profile/', include('base.urls.profile_urls')),

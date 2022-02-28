@@ -24,10 +24,50 @@ class Profile(models.Model):
 
 
 class Restaurant(models.Model):
+    WESTERN = 'WS'
+    CHINESE = 'CH'
+    JAPANESE = 'JP'
+    KOREAN = 'KR'
+    OTHERS = 'OT'
+    CUISINE_TYPES = [
+        (WESTERN, 'Western'),
+        (CHINESE, 'Chinese'),
+        (JAPANESE, 'Japanese'),
+        (KOREAN, 'Korean'),
+        (OTHERS, 'Others'),
+    ]
+
+    KOPITIAM = 'HC'
+    CAFE = "CF"
+    BAR = 'BA'
+    HIGH_END_RESTAURANT = 'HE'
+    MEDIUM_END_RESTAURANT = 'ME'
+    BUDGET_RESTAURANT = 'BR'
+    FAST_FOOD_RESTAURANT = 'FF'
+    OTHERS = 'OT'
+    RESTAURANT_TYPES = [
+        (KOPITIAM, 'Kopitiam'),
+        (CAFE, 'Cafe'),
+        (BAR, 'Bar'),
+        (HIGH_END_RESTAURANT, 'High End Restaurant'),
+        (MEDIUM_END_RESTAURANT, 'Medium End Restaurant'),
+        (BUDGET_RESTAURANT, 'Budget Restaurant'),
+        (FAST_FOOD_RESTAURANT, 'Fast Food Restaurant'),
+        (OTHERS, 'Others'),
+    ]
+
     restaurant_name = models.CharField(max_length=255)
+    restaurant_image = models.ImageField('restaurant-images/')
     restaurant_description = models.TextField()
+    restaurant_cuisine = models.CharField(max_length=2, choices=CUISINE_TYPES, default=OTHERS)
+    restaurant_type = models.CharField(max_length=2, choices=RESTAURANT_TYPES, default=OTHERS)
+    restaurant_rating = models.DecimalField(decimal_places=2, max_digits=3, default=4)
+    num_clicks = models.IntegerField(default=0)
 
     objects = models.Manager()
+
+    def increaseClick(self):
+        return self.num_clicks + 1
 
     def __str__(self):
         return self.restaurant_name
