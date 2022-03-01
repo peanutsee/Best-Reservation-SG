@@ -38,7 +38,8 @@ def getReservation(request, pk):
     user = request.user
     try:
         reservation = Reservation.objects.get(id=pk)
-        if reservation.reservation_owner == user:
+        is_part_of = IsPartOf.objects.get()
+        if reservation.reservation_owner == user | isPartOf.reservation_diner == user:
             serializer = ReservationSerializer(reservation, many=False)
             return Response(serializer.data, status=status.HTTP_200_OK)
     except:
