@@ -86,7 +86,7 @@ class Reservation(models.Model):
     objects = models.Manager()
 
     def __str__(self):
-        return f"Reservation {bin(self.id)}"
+        return f"Reservation {(self.id)}"
 
 
 class IsPartOf(models.Model):
@@ -96,7 +96,7 @@ class IsPartOf(models.Model):
     objects = models.Manager()
 
     def __str__(self):
-        return f"ReservationDiner Is Part Of Reservation {bin(self.reservation.id)}"
+        return f"ReservationDiner Is Part Of Reservation {(self.reservation.id)}"
 
 
 class BillDetail(models.Model):
@@ -113,7 +113,7 @@ class BillDetail(models.Model):
         return float(self.before_tax_bill) * float(self.tax) - float(self.deposit)
 
     def __str__(self):
-        return f"Bill for Reservation {bin(self.bill_reservation.id)}"
+        return f"Bill for Reservation {(self.bill_reservation.id)}"
 
 class Menu(models.Model):
     menu_restaurant = models.OneToOneField(Restaurant, on_delete=models.CASCADE)
