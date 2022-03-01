@@ -96,7 +96,7 @@ class IsPartOf(models.Model):
     objects = models.Manager()
 
     def __str__(self):
-        return "ReservationDiner Is Part Of Reservation"
+        return f"ReservationDiner Is Part Of Reservation {bin(self.reservation.id)}"
 
 
 class BillDetail(models.Model):
