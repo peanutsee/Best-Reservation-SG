@@ -36,7 +36,7 @@ function AuthenticationPage() {
   return (
     <Row>
       <Col md={6} className="d-flex justify-content-center align-middle p-5">
-        <Image fluid src="/static/assets/registration_image.png" />
+        <Image fluid src="/static/assets/login_image.jpeg" />
       </Col>
       <Col md={6}>
         <Form className="p-5 shadow shadow-100">

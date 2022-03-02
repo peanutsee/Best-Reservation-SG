@@ -63,7 +63,6 @@ function EmailVerificationPage() {
                   text="Sign In"
                 >
                   Send
-
                 </Button>
               </div>
             </Form>
