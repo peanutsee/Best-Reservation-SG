@@ -13,6 +13,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.26.0",
     "eslist": "^1.0.0-beta.1",
+    "formik": "^2.2.9",
     "jest": "^27.5.1",
     "react": "^17.0.2",
     "react-bootstrap": "^2.1.2",
@@ -24,7 +25,8 @@
     "redux": "^4.1.2",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start": "react-scripts start",

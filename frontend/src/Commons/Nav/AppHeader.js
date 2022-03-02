@@ -28,12 +28,8 @@ function AppHeader() {
         </Navbar.Collapse>
         <Form inline className="mx-3">
           <ButtonGroup>
-            <Button variant="secondary" as={Link} to="/login">
-              Login
-            </Button>
-            <Button variant="secondary" as={Link} to="/signup">
-              Signup
-            </Button>
+            <Button variant="secondary" as={Link} to="/login">Login</Button>
+            <Button variant="secondary" as={Link} to="/registration">Register</Button>
           </ButtonGroup>
         </Form>
       </Container>
