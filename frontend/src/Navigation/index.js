@@ -1,11 +1,12 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable react/react-in-jsx-scope */
-/* eslint-disable linebreak-style */
+
 import { lazy } from 'react';
 
 const Login = lazy(() => import('../Components/AuthenticationPage'));
 const LandingPage = lazy(() => import('../Components/LandingPage'));
+const ReservationPage = lazy(() => import('../Components/ReservationPage'));
 const EmailVerification = lazy(() => import('../Components/EmailVerificationPage'));
 const PasswordReset = lazy(() => import('../Components/PasswordResetPage'));
 const Registration = lazy(() => import('../Components/RegistrationPage'));
@@ -15,6 +16,10 @@ const NAVIGATION_ROUTES = Object.freeze({
     path: '/',
     exact: true,
     element: <LandingPage />,
+  },
+  ReservationPage: {
+    path: '/ReservationPage',
+    element: <ReservationPage />,
   },
   login: {
     path: '/login',

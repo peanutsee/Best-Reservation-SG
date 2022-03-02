@@ -21,9 +21,15 @@ function AppHeader() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link href="#restaurants">Restaurants</Nav.Link>
-            <Nav.Link href="#reservation">Reservation</Nav.Link>
-            <Nav.Link href="#profile">Profile</Nav.Link>
+            <Link to="/RestaurantPage">
+              <Nav.Item>Restaurants</Nav.Item>
+            </Link>
+            <Link to="/ReservationPage">
+              <Nav.Item>Reservation</Nav.Item>
+            </Link>
+            <Link to="/ProfilePage">
+              <Nav.Item>Profile</Nav.Item>
+            </Link>
           </Nav>
         </Navbar.Collapse>
         <Form inline className="mx-3">
