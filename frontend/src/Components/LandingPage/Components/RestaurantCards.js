@@ -5,7 +5,7 @@
 /* eslint-disable linebreak-style */
 import React, { useEffect } from 'react';
 import {
-  Card, Row, Col, Image,
+  Card, Row, Col, Image, Button,
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { retrieveRestaurants } from '../Redux/actions';
@@ -13,18 +13,21 @@ import { retrieveRestaurants } from '../Redux/actions';
 const data = [
   {
     key: 1,
-    website: 'Restaurant 1',
+    restaurant: 'Restaurant 1',
     image: '/static/assets/burgers.jpg',
+    description: 'Nice good food',
   },
   {
     key: 2,
-    website: 'Restaurant 2',
+    restaurant: 'Restaurant 2',
     image: '/static/assets/burgers.jpg',
+    description: 'Nice good food',
   },
   {
     key: 3,
-    website: 'Restaurant 3',
+    restaurant: 'Restaurant 3',
     image: '/static/assets/burgers.jpg',
+    description: 'Nice good food',
   },
 ];
 
@@ -46,15 +49,18 @@ function RestaurantCards() {
       <Row>
         {data.map((site) => (
           <Col sm={4}>
-            <a href={site.url}>
-              <Card className="h-100">
-                <Card.Body>
-                  <div className="d-flex justify-content-center">
-                    <Image fluid src={site.image} />
-                  </div>
-                </Card.Body>
-              </Card>
-            </a>
+            <Card className="h-100">
+              <Card.Body className="py-2 text-center">
+                <Image fluid src={site.image} />
+                <h3>{site.restaurant}</h3>
+                <p>{site.description}</p>
+              </Card.Body>
+              <Card.Footer className="py-2 text-center">
+                <Button>
+                  View Restaurant
+                </Button>
+              </Card.Footer>
+            </Card>
           </Col>
         ))}
       </Row>
