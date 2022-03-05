@@ -49,12 +49,27 @@ def fullBillPaymentSettlement(request, bill_id):
 def splitBillPayment(request, order_pk):
     order = Order.objects.filter(id=order_pk)[0]
     order_items = OrderItemInOrder.objects.filter(order=order)
-    result = []
+    result = {"reservation_participants": [],
+              "order_items": []}
     for item in order_items:
         menu_item = MenuItem.objects.filter(id=item.order_item.id)[0]
         order_item_serialized = MenuItemSerializer(menu_item, many=False)
         order_item_data = order_item_serialized.data
         order_item_data.update({"order_item_qty": item.order_item_qty})
-        result.append(order_item_data)
+        result['order_items'].append(order_item_data)
+
+    # Add Reservation Diners
+    for user in IsPartOf.objects.filter(reservation=order.order_reservation):
+        u = User.objects.filter(id=user.get_user_id())[0]
+        u_serialized = UserSerializer(u, many=False)
+        u_data = u_serialized.data
+        result['reservation_participants'].append(u_data)
+
+    # Add Reservation Owner
+    u = User.objects.filter(id=request.user.id)[0]
+    u_serialized = UserSerializer(u, many=False)
+    u_data = u_serialized.data
+    result['reservation_participants'].append(u_data)
+
     return Response(result, status=status.HTTP_200_OK)
 

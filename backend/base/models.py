@@ -81,9 +81,13 @@ class Reservation(models.Model):
     reservation_date_time = models.DateTimeField()
     reservation_created_date_time = models.DateTimeField(auto_created=True, auto_now_add=True)
     reservation_is_completed = models.BooleanField(default=False)
+<<<<<<< HEAD
     reservation_pax = models.IntegerField()
     number_of_users_in_reservation = models.IntegerField(default=1)
     #reservation_link = models.URLField()
+=======
+    reservation_pax = models.IntegerField(default=False)
+>>>>>>> d99281632e8d9a4cf3151ae945abfb5ff844ee26
 
     objects = models.Manager()
 
@@ -97,8 +101,11 @@ class IsPartOf(models.Model):
 
     objects = models.Manager()
 
+    def get_user_id(self):
+        return self.reservation_diner.id
+
     def __str__(self):
-        return f"ReservationDiner Is Part Of Reservation {(self.reservation.id)}"
+        return f"{self.reservation_diner.username} with ID {self.reservation_diner.id} Is Part Of Reservation {(self.reservation.id)}"
 
 
 class BillDetail(models.Model):

@@ -9,7 +9,6 @@ urlpatterns = [
     path('api/reservation/', include('base.urls.reservation_urls')),  # DOING
     path('api/restaurants/', include('base.urls.restaurant_urls')),  # DONE
     path('api/pre_order/', include('base.urls.pre_order_urls')),  # DONE
-    path('api/proportioning/', include('base.urls.proportioning_urls')),  # DOING
     path('api/profile/', include('base.urls.profile_urls')),  # DONE
     path('api/payment/', include('base.urls.payment_urls')),
 ]
