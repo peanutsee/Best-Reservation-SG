@@ -81,12 +81,9 @@ class Reservation(models.Model):
     reservation_date_time = models.DateTimeField()
     reservation_created_date_time = models.DateTimeField(auto_created=True, auto_now_add=True)
     reservation_is_completed = models.BooleanField(default=False)
-
     reservation_pax = models.IntegerField()
     number_of_users_in_reservation = models.IntegerField(default=1)
     #reservation_link = models.URLField()
-    reservation_pax = models.IntegerField(default=False)
-
 
     objects = models.Manager()
 
