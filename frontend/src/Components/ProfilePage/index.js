@@ -1,30 +1,31 @@
-//darryl set default notification as true
-//user can toggle off if they want
+// darryl set default notification as true
+// user can toggle off if they want
+/* eslint-disable linebreak-style */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable react/react-in-jsx-scope */
+/* eslint-disable react/jsx-indent */
+/* eslint-disable indent */
+/* eslint-disable react/jsx-no-useless-fragment */
+/* eslint-disable no-trailing-spaces */
+/* eslint-disable react/jsx-closing-tag-location */
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable react/jsx-boolean-value */
+/* eslint-disable react/jsx-indent-props */
 
-import React from "react";
+import React from 'react';
 import {
-    Form,
-    Button,
-    Col,
-    Row,
-    Tab,
-    Nav,
+  Form,
+  Button,
+  Col,
+  Row,
+  Tab,
+  Nav,
 } from 'react-bootstrap';
 
-import BootstrapSwitchButton from 'bootstrap-switch-button-react'
-/*
-<BootstrapSwitchButton
-    checked={false}
-    onlabel='Admin User'
-    offlabel='Regular User'
-    onChange={(checked: boolean) => {
-        this.setState({ isUserAdmin: checked })
-    }}
-/>
-*/
+import BootstrapSwitchButton from 'bootstrap-switch-button-react';
 
 function ProfilePage() {
-    return(
+    return (
         <>  
         <Tab.Container id="left-tabs-example" defaultActiveKey="first">
             <Row>
@@ -99,14 +100,6 @@ function ProfilePage() {
                                     <BootstrapSwitchButton checked={true} onstyle="success" />
                                 </Col>
                             </Row>
-                            {/* <h2>Delete Account</h2>
-                            <p>Type email to delete</p>
-                            <Form.Label>Email</Form.Label>
-                            <ControlLabel>Enter email</ControlLabel>
-                            <Form.Control
-                                type="email"
-                                id="inputEmail"
-                            /> */}
                             <h2>Delete Account</h2>
                             <Form.Label>Type email to delete</Form.Label>
                             <Form.Control
@@ -127,33 +120,5 @@ function ProfilePage() {
         </>
     );
 }
-
-/*
-//create temp data first
-const userData = [
-    { id: "1", firstName: "Jon", lastName: "Ng", email: "jonng@gmail.com", contactNo: "95508731", password: "Jonng123"}
-]
-
-function ProfileDetails({ profile }) {
-    return(
-        <div>
-            {profile.map(profile => (
-                <div>
-                    <h2>{profile.firstName}</h2>
-                </div>
-            ))}
-        </div>
-    )
-}
-
-// function App() {
-//     return <ProfileDetails />;
-// }
-
-ReactDOM.render(
-    <ProfileDetails profile={userData} />,
-    document.getElementById('root')
-);
-*/
 
 export default ProfilePage;
