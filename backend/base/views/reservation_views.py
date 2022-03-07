@@ -65,7 +65,12 @@ def createReservation(request):
         reservation_pax=data['reservation_pax'],
     )
 
+    bill = BillDetail.objects.create(
+        bill_reservation=reservation,
+        before_tax_bill = 0.00,
+    )
     order = Order.objects.create(order_reservation=reservation)
+    bill.save()
     order.save()
     reservation.save()
     reservation_serializer = ReservationSerializer(reservation, many=False)
@@ -75,14 +80,24 @@ def createReservation(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getReservation(request, pk):
-    Restaurant.objects.filter(id=pk)[0]
+
     user = request.user
     try:
-        reservations = Reservation.objects.get(id=pk)
-        is_part_of = IsPartOf.objects.filter(reservation=reservations)
-        if reservations.reservation_owner == user | isPartOf.reservation_diner == user:
+        reservation = Reservation.objects.get(id=pk)
+        is_part_of = IsPartOf.objects.filter(reservation=reservation)
+        if reservation.reservation_owner == user:
             serializer = ReservationSerializer(reservation, many=False)
             return Response(serializer.data, status=status.HTTP_200_OK)
+
+        # If they are reservation diner of the reservation
+        all_reservation_diner_in_all_reservation = IsPartOf.objects.all()
+        for part_of in all_reservation_diner_in_all_reservation:
+            if part_of.reservation_diner == user:
+                if part_of.reservation == reservation:
+                    # then they can get the reservation details
+                    serializer = ReservationSerializer(reservation, many=False)
+                    return Response(serializer.data, status=status.HTTP_200_OK)
+
     except:
         return Response(f"Reservation id {pk} do not exist", status=HTTP_400_BAD_REQUEST)
 
@@ -96,40 +111,46 @@ def updateReservation(request, pk):
     user = request.user
     data = request.data
 
-
-
     try:
         reservation = Reservation.objects.filter(id=pk)[0]
         if reservation.reservation_owner == user:
-            try:
-                reservation.reservation_pax = data['reservation_pax']
-            except:
-                pass
-            try:
-                reservation.reservation_date_time = data['reservation_date_time']
-            except:
-                pass
-            reservation.save()
-            serializer = ReservationSerializer(reservation, many=False)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            if reservation.reservation_is_completed != True:
+                try:
+                    reservation.reservation_pax = data['reservation_pax']
+                except:
+                    pass
+                try:
+                    reservation.reservation_date_time = data['reservation_date_time']
+                except:
+                    pass
+                reservation.save()
+                serializer = ReservationSerializer(reservation, many=False)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            else:
+                message = "Unable to update as Reservation is completed"
+                return Response(message, status=status.HTTP_204_NO_CONTENT)
 
         # If they are reservation diner of the reservation
         all_reservation_diner_in_all_reservation = IsPartOf.objects.all()
         for part_of in all_reservation_diner_in_all_reservation:
             if part_of.reservation_diner == user:
                 if part_of.reservation == reservation:
-                     # then they can edit
-                    try:
-                        reservation.reservation_pax = data['reservation_pax']
-                    except:
-                        pass
-                    try:
-                        reservation.reservation_date_time = data['reservation_date_time']
-                    except:
-                        pass
-                    reservation.save()
-                    serializer = ReservationSerializer(reservation, many=False)
-                    return Response(serializer.data, status=status.HTTP_200_OK)
+                    if reservation.reservation_is_completed != True:
+                        # then they can edit
+                        try:
+                            reservation.reservation_pax = data['reservation_pax']
+                        except:
+                            pass
+                        try:
+                            reservation.reservation_date_time = data['reservation_date_time']
+                        except:
+                            pass
+                        reservation.save()
+                        serializer = ReservationSerializer(reservation, many=False)
+                        return Response(serializer.data, status=status.HTTP_200_OK)
+                    else:
+                        message = "Unable to update as Reservation is completed"
+                        return Response(message, status=status.HTTP_204_NO_CONTENT)
 
     except:
         return Response(f"Reservation id {pk} do not exist", status=HTTP_400_BAD_REQUEST)
@@ -145,16 +166,83 @@ def deleteReservation(request, pk):
     try:
         reservation = Reservation.objects.filter(id=pk)[0]
         if reservation.reservation_owner == user:
-            reservation.delete()
-            message = "Reservation deleted"
-            return Response(message, status=status.HTTP_204_NO_CONTENT)
+            if reservation.reservation_is_completed != True:
+                reservation.delete()
+                message = "Reservation deleted"
+                return Response(message, status=status.HTTP_204_NO_CONTENT)
+            else:
+                message = "Unable to delete as Reservation is completed"
+                return Response(message, status=status.HTTP_204_NO_CONTENT)
+
+            # If they are reservation diner of the reservation
+        all_reservation_diner_in_all_reservation = IsPartOf.objects.all()
+        for part_of in all_reservation_diner_in_all_reservation:
+            if part_of.reservation_diner == user:
+                if part_of.reservation == reservation:
+                    if reservation.reservation_is_completed != True:
+                        # then they can delete the reservation
+                        reservation.delete()
+                        message = "Reservation deleted"
+                        return Response(message, status=status.HTTP_204_NO_CONTENT)
+                    else:
+                        message = "Unable to delete as Reservation is completed"
+                        return Response(message, status=status.HTTP_204_NO_CONTENT)
     except:
         return Response(f"Reservation id {pk} do not exist", status=HTTP_400_BAD_REQUEST)
 
     message = "User is not authorized!"
     return Response(message, status=HTTP_401_UNAUTHORIZED)
 
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def joinReservation(request, pk):
+
+    #create and validate link
+    user = request.user
+    try:
+        current_reservation = Reservation.objects.filter(id=pk)[0]
+        if current_reservation.number_of_users_in_reservation < current_reservation.reservation_pax:
+            current_reservation.number_of_users_in_reservation += 1
+            current_reservation.save()
+            is_part_of = IsPartOf.objects.create(
+                reservation=current_reservation,
+                reservation_diner=user,
+            )
+            is_part_of.save()
+
+            serializer = IsPartOfSerializer(is_part_of, many=False)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        else:
+            return Response("Max Reservation Pax has been reached, please update Reservation pax to join!", status=HTTP_400_BAD_REQUEST)
+    except:
+        return Response(f"Reservation id {pk} do not exist", status=HTTP_400_BAD_REQUEST)
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def removeReservation(request, pk):
+
+    user = request.user
+    try:
+        all_is_part_of = IsPartOf.objects.all()
+        for is_part_of in all_is_part_of:
+            if is_part_of.reservation_diner == user:
+                if is_part_of.reservation == Reservation.objects.filter(id=pk)[0]:
+                    reservation = Reservation.objects.get(id=pk)
+                    reservation.number_of_users_in_reservation -= 1
+                    reservation.save()
+                    is_part_of.delete()
+                    message = "Reservation diner deleted"
+                    return Response(message, status=status.HTTP_204_NO_CONTENT)
+
+    except:
+        return Response(f"Reservation id {pk} do not exist", status=HTTP_400_BAD_REQUEST)
+
+    message = "User is not authorized!"
+    return Response(message, status=HTTP_401_UNAUTHORIZED)
+
+# Not sure how implement the following tasks:
 # TO add Download PDF of reservation
-
 # TO add generate reservation link
-
+# To add auto changing of status to Reservation Completed --> can come under BillDetails? idk
+# To auto delete Reservation if abandon Reservation , deposit forfeited
