@@ -14,8 +14,7 @@ import {
 import { Link } from "react-router-dom";
 
 function AppHeader() {
-  const userInfo = true;
-  const userInfoId = 1;
+  const userInfo = false;
 
   const logoutHandler = () => {};
   return (
@@ -43,7 +42,7 @@ function AppHeader() {
                 <Dropdown.Menu>
                   <Dropdown.Item>
                     <Nav.Link>
-                      <Link to={`/profile/${userInfoId}`}>Profile</Link>
+                      <Link to="/profile">Profile</Link>
                     </Nav.Link>
                   </Dropdown.Item>
                   <Dropdown.Item>
@@ -69,11 +68,11 @@ function AppHeader() {
             ) : (
               <>
                 <Nav.Link>
-                  <Link to="/login">Sign In</Link>
+                  <Link to="/login" className='mx-4'>Sign In</Link>
                 </Nav.Link>
 
                 <Nav.Link>
-                  <Link to="/registration">Sign Up</Link>
+                  <Link to="/registration" className='mx-4'>Sign Up</Link>
                 </Nav.Link>
               </>
             )}
