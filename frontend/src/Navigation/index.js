@@ -39,7 +39,7 @@ const NAVIGATION_ROUTES = Object.freeze({
     element: <Registration />,
   },
   profilePage: {
-    path: '/profile',
+    path: '/profile/:id',
     element: <ProfilePage />,
   },
 });

@@ -34,7 +34,9 @@ const data = [
 function RestaurantCards() {
   const dispatch = useDispatch();
 
-  const retrieveRestaurantData = useSelector((state) => state.retrieveRestaurantReducer);
+  const retrieveRestaurantData = useSelector(
+    (state) => state.retrieveRestaurantReducer,
+  );
   const {
     loading, error, restaurants, mazel,
   } = retrieveRestaurantData;
@@ -48,7 +50,7 @@ function RestaurantCards() {
       <h2>Check out these restaurants!</h2>
       <Row>
         {data.map((site) => (
-          <Col sm={4}>
+          <Col sm={4} className="mb-3">
             <Card className="h-100">
               <Card.Body className="py-2 text-center">
                 <Image fluid src={site.image} />
@@ -56,9 +58,7 @@ function RestaurantCards() {
                 <p>{site.description}</p>
               </Card.Body>
               <Card.Footer className="py-2 text-center">
-                <Button>
-                  View Restaurant
-                </Button>
+                <Button>View Restaurant</Button>
               </Card.Footer>
             </Card>
           </Col>
