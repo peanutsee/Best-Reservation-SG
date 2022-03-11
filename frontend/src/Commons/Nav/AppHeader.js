@@ -24,10 +24,10 @@ function AppHeader() {
             <Link to="/RestaurantPage">
               <Nav.Item>Restaurants</Nav.Item>
             </Link>
-            <Link to="/ReservationPage">
+            <Link to="/reservation">
               <Nav.Item>Reservation</Nav.Item>
             </Link>
-            <Link to="/ProfilePage">
+            <Link to="/profile">
               <Nav.Item>Profile</Nav.Item>
             </Link>
           </Nav>

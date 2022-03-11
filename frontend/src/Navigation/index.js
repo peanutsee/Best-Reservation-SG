@@ -11,6 +11,7 @@ const EmailVerification = lazy(() => import('../Components/EmailVerificationPage
 const PasswordReset = lazy(() => import('../Components/PasswordResetPage'));
 const Registration = lazy(() => import('../Components/RegistrationPage'));
 const ProfilePage = lazy(() => import('../Components/ProfilePage'));
+const PreOrderPage = lazy(() => import('../Components/PreOrderPage'));
 
 const NAVIGATION_ROUTES = Object.freeze({
   homePage: {
@@ -40,8 +41,11 @@ const NAVIGATION_ROUTES = Object.freeze({
   },
   profilePage: {
     path: '/profile',
-    exact: true,
     element: <ProfilePage />,
+  },
+  PreOrderPage: {
+    path: '/pre_order',
+    element: <PreOrderPage />,
   },
 });
 
