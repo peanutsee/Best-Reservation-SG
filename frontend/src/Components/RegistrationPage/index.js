@@ -58,8 +58,8 @@ function RegistrationPage() {
     setPasswordShown(!passwordShown);
   };
   return (
-    <div className="p-l m-5">
-      <Container>
+    <Container className="p-5">
+      <div className="p-5 shadow shadow-100">
         <h1 className="text-center">We're excited to have you onboard!</h1>
 
         <Formik
@@ -179,10 +179,13 @@ function RegistrationPage() {
                     )}
                     <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                   </Form.Group>
-                  <Form.Group className="mb-3" controlId="formBasicCheckbox" onClick={togglePassword}>
+                  <Form.Group
+                    className="mb-3"
+                    controlId="formBasicCheckbox"
+                    onClick={togglePassword}
+                  >
                     <Form.Check type="checkbox" label="Show Password" />
                   </Form.Group>
-
                 </Col>
                 <Col>
                   <Form.Group className="mb-3" controlId="validationFormik04">
@@ -193,7 +196,9 @@ function RegistrationPage() {
                       value={values.confirmPassword}
                       onChange={handleChange}
                       isInvalid={!!errors.confirmPassword}
-                      isValid={touched.confirmPassword && !errors.confirmPassword}
+                      isValid={
+                        touched.confirmPassword && !errors.confirmPassword
+                      }
                       feedback={errors.confirmPassword}
                       placeholder="*********"
                     />
@@ -221,10 +226,10 @@ function RegistrationPage() {
         <p>
           Already have an account?
           {' '}
-          <Link to="/login">Log in here.</Link>
+          <Link to="/login">Log in here</Link>
         </p>
-      </Container>
-    </div>
+      </div>
+    </Container>
   );
 }
 

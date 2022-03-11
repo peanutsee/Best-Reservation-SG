@@ -30,7 +30,7 @@ def retrieveAllRestaurantsByMostClicks(request):
 
 @api_view(['GET'])
 def retrieveRestaurant(request, pk):
-    restaurant = Restaurant.objects.filter(id=pk)[0]
+    restaurant = Restaurant.objects.get(id=pk)
     restaurant.num_clicks = restaurant.increaseClick()
     restaurant.save()
     restaurant_serialized = RestaurantSerializer(restaurant, many=False)
@@ -42,8 +42,8 @@ def retrieveRestaurant(request, pk):
 
 @api_view(['GET'])
 def retrieveRestaurantMenuItems(request, pk):
-    restaurant = Restaurant.objects.filter(id=pk)[0]
-    menu = Menu.objects.filter(menu_restaurant=restaurant)[0]
+    restaurant = Restaurant.objects.get(id=pk)
+    menu = Menu.objects.get(menu_restaurant=restaurant)
     menu_items = MenuItem.objects.filter(menu_item_menu_restaurant=menu)
     menu_serialized = MenuItemSerializer(menu_items, many=True)
     menu_data = menu_serialized.data
@@ -52,7 +52,7 @@ def retrieveRestaurantMenuItems(request, pk):
 
 @api_view(["GET"])
 def retrieveMenuItem(request, pk):
-    menu_item = MenuItem.objects.filter(id=pk)[0]
+    menu_item = MenuItem.objects.get(id=pk)
     menu_item_serialized = MenuItemSerializer(menu_item, many=False)
     menu_item_data = menu_item_serialized.data
     return Response(menu_item_data, status=status.HTTP_200_OK)

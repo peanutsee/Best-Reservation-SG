@@ -8,7 +8,7 @@ from ..serializers import *
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def fullBillPaymentTabulation(request, order_pk):
-    order = Order.objects.filter(id=order_pk)[0]
+    order = Order.objects.get(id=order_pk)
     order_items = OrderItemInOrder.objects.filter(order=order)
     total_before_tax = 0
     for item in order_items:
@@ -47,12 +47,12 @@ def fullBillPaymentSettlement(request, bill_id):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def splitBillPayment(request, order_pk):
-    order = Order.objects.filter(id=order_pk)[0]
+    order = Order.objects.get(id=order_pk)
     order_items = OrderItemInOrder.objects.filter(order=order)
     result = {"reservation_participants": [],
               "order_items": []}
     for item in order_items:
-        menu_item = MenuItem.objects.filter(id=item.order_item.id)[0]
+        menu_item = MenuItem.objects.get(id=item.order_item.id)
         order_item_serialized = MenuItemSerializer(menu_item, many=False)
         order_item_data = order_item_serialized.data
         order_item_data.update({"order_item_qty": item.order_item_qty})
@@ -60,13 +60,13 @@ def splitBillPayment(request, order_pk):
 
     # Add Reservation Diners
     for user in IsPartOf.objects.filter(reservation=order.order_reservation):
-        u = User.objects.filter(id=user.get_user_id())[0]
+        u = User.objects.get(id=user.get_user_id())
         u_serialized = UserSerializer(u, many=False)
         u_data = u_serialized.data
         result['reservation_participants'].append(u_data)
 
     # Add Reservation Owner
-    u = User.objects.filter(id=request.user.id)[0]
+    u = User.objects.get(id=request.user.id)
     u_serialized = UserSerializer(u, many=False)
     u_data = u_serialized.data
     result['reservation_participants'].append(u_data)

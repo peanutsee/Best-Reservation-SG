@@ -13,13 +13,13 @@ from ..serializers import *
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def retrieveUserProfile(request, pk):
-    user = User.objects.filter(id=pk)[0]
-    if user == request.user:
+def retrieveUserProfile(request):
+    user = request.user
+    if user:
         user_serialized = UserSerializerWithToken(user, many=False)
         user_data = user_serialized.data
 
-        profile = Profile.objects.filter(user=user)[0]
+        profile = Profile.objects.get(user=user)
         profile_serializer = ProfileSerializer(profile, many=False)
         profile_data = profile_serializer.data
 
@@ -30,12 +30,12 @@ def retrieveUserProfile(request, pk):
 
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
-def updateUserProfile(request, pk):
-    user = User.objects.filter(id=pk)[0]
-    if user == request.user:
-        profile = Profile.objects.filter(user=user)[0]
+def updateUserProfile(request):
+    user = request.user
+    if user:
+        profile = Profile.objects.get(user=user)
         data = request.data
-
+        print(data)
         # Update User Details
         user.email = data['email']
         user.username = data['email']
@@ -46,8 +46,8 @@ def updateUserProfile(request, pk):
 
         # Update Profile Details
         profile.contact_number = data['contact_number']
-        profile.sms_notification = data['sms_notification_setting']
-        profile.email_notification = data['email_notification_setting']
+        # profile.sms_notification = data['sms_notification_setting']
+        # profile.email_notification = data['email_notification_setting']
 
         # Save Changes
         user.save()
@@ -65,8 +65,8 @@ def updateUserProfile(request, pk):
 
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
-def deleteUserProfile(request, pk):
-    user = User.objects.filter(id=pk)[0]
-    if user == request.user:
+def deleteUserProfile(request):
+    user = request.user
+    if user:
         user.delete()
         return Response("User Deleted", status=status.HTTP_200_OK)
