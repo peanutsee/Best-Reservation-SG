@@ -226,5 +226,4 @@ project_root
     |_Dockerfile    
 |_docker-compose.yaml
 |_README.md
-
 ```
