@@ -19,7 +19,7 @@ const NAVIGATION_ROUTES = Object.freeze({
     element: <LandingPage />,
   },
   ReservationPage: {
-    path: '/reservation_page',
+    path: '/reservation',
     element: <ReservationPage />,
   },
   login: {

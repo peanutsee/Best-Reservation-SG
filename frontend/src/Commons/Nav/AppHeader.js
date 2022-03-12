@@ -14,7 +14,7 @@ import {
 import { Link } from "react-router-dom";
 
 function AppHeader() {
-  const userInfo = false;
+  const userInfo = true;
 
   const logoutHandler = () => {};
   return (
