@@ -1,8 +1,6 @@
-/* eslint-disable jsx-quotes */
-/* eslint-disable quotes */
 /* eslint-disable linebreak-style */
 /* eslint-disable react/jsx-filename-extension */
-import React from "react";
+import React from 'react';
 import {
   Navbar,
   Container,
@@ -10,13 +8,21 @@ import {
   Button,
   Dropdown,
   NavDropdown,
-} from "react-bootstrap";
-import { Link } from "react-router-dom";
+} from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../Components/AuthenticationPage/Redux/actions';
 
 function AppHeader() {
-  const userInfo = true;
+  const dispatch = useDispatch();
 
-  const logoutHandler = () => {};
+  const userLogin = useSelector((state) => state.userLoginReducer);
+  const { userInfo } = userLogin;
+
+  const logoutHandler = () => {
+    dispatch(logout());
+  };
+
   return (
     <Navbar bg="light" expand="lg">
       <Container>
@@ -25,12 +31,9 @@ function AppHeader() {
         </Link>
 
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse
-          id="basic-navbar-nav"
-          className='justify-content-end'
-        >
+        <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
           <Nav>
-            <Nav.Link className='mx-4'>
+            <Nav.Link className="mx-4">
               <Link to="/">Home</Link>
             </Nav.Link>
             {userInfo ? (
@@ -68,11 +71,15 @@ function AppHeader() {
             ) : (
               <>
                 <Nav.Link>
-                  <Link to="/login" className='mx-4'>Sign In</Link>
+                  <Link to="/login" className="mx-4">
+                    Sign In
+                  </Link>
                 </Nav.Link>
 
                 <Nav.Link>
-                  <Link to="/registration" className='mx-4'>Sign Up</Link>
+                  <Link to="/registration" className="mx-4">
+                    Sign Up
+                  </Link>
                 </Nav.Link>
               </>
             )}

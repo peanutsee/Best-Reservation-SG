@@ -84,7 +84,8 @@ class Reservation(models.Model):
     reservation_pax = models.IntegerField()
     number_of_users_in_reservation = models.IntegerField(default=1)
     #reservation_link = models.URLField()
-
+    # reservation_qr_code = models.ImageField(upload_to='reservation-qr/')
+    
     objects = models.Manager()
 
     def __str__(self):
