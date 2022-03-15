@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-filename-extension */
 import { React, useState, useEffect } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Alert } from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
@@ -25,7 +25,7 @@ function LoginForm() {
   const navigate = useNavigate();
 
   const userLogin = useSelector((state) => state.userLoginReducer);
-  const { userInfo } = userLogin;
+  const { success, error, userInfo } = userLogin;
 
   const loginHandler = (e) => {
     dispatch(login(e.email, e.password));
@@ -46,6 +46,9 @@ function LoginForm() {
   return (
     <div className="p-5 shadow shadow-100">
       <h1 className="text-center">Welcome back!</h1>
+      {success && <Alert variant="success" className="text-center">Login Successful!</Alert>}
+      {error && <Alert variant="danger" className="text-center">{error}</Alert>}
+
       <Formik
         validationSchema={SCHEMA}
         onSubmit={loginHandler}
