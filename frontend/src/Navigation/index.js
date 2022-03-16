@@ -14,6 +14,7 @@ const Registration = lazy(() => import('../Components/RegistrationPage'));
 const ProfilePage = lazy(() => import('../Components/ProfilePage'));
 const PreOrderPage = lazy(() => import('../Components/PreOrderPage'));
 const RestaurantPage = lazy(() => import('../Components/RestaurantPage'));
+const ReservationConfirmationPage = lazy(() => import('../Components/ReservationConfirmationPage'));
 
 const NAVIGATION_ROUTES = Object.freeze({
   homePage: {
@@ -49,9 +50,13 @@ const NAVIGATION_ROUTES = Object.freeze({
     path: '/preorder',
     element: <PreOrderPage />,
   },
-  restautantPage: {
+  restaurantPage: {
     path: '/restaurant/:id/',
     element: <RestaurantPage />,
+  },
+  reservationConfirmationPage: {
+    path: '/reservation_confirmation',
+    element: <ReservationConfirmationPage />,
   },
 });
 
