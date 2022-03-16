@@ -1,5 +1,4 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable react/jsx-filename-extension */
 
 import React from 'react';
 import CarouselSection from './Components/CarouselSection';

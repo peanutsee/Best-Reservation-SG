@@ -5,7 +5,7 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import AppHeader from './Commons/Nav/AppHeader';
 import AppFooter from './Commons/Nav/AppFooter';
 import store from './RootRedux/index';

@@ -59,7 +59,8 @@ class Restaurant(models.Model):
     ]
 
     restaurant_name = models.CharField(max_length=255)
-    restaurant_image = models.ImageField('restaurant-images/')
+    restaurant_image_1 = models.ImageField('restaurant-images/', default=None, blank=True, null=True)
+    restaurant_image_2 = models.ImageField('restaurant-images/', default=None, blank=True, null=True)
     restaurant_description = models.TextField()
     restaurant_cuisine = models.CharField(max_length=2, choices=CUISINE_TYPES, default=OTHERS)
     restaurant_type = models.CharField(max_length=2, choices=RESTAURANT_TYPES, default=OTHERS)
