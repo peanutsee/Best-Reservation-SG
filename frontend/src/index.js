@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AppHeader from './Commons/Nav/AppHeader';
 import AppFooter from './Commons/Nav/AppFooter';
+import 'antd/dist/antd.css';
 import store from './RootRedux/index';
 import './bootstrap.min.css';
 import ScrollToTop from './Commons/ScrollToTop';
