@@ -47,9 +47,13 @@ def updateUserProfile(request):
                 user.password = make_password(data['password'])
 
         # Update Profile Details
-        if data['sms_notification'] or data['email_notification']:
-            profile.sms_notification = data['sms_notification']
-            profile.email_notification = data['email_notification']
+        if data['sms_notification'] == '':
+            data['sms_notification'] = profile.sms_notification
+        if data['email_notification'] == '':
+            data['email_notification'] = profile.sms_notification
+        
+        profile.sms_notification = data['sms_notification']
+        profile.email_notification = data['email_notification']
 
         # Save Changes
         user.save()
