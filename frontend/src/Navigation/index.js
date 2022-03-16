@@ -1,3 +1,4 @@
+/* eslint-disable import/extensions */
 /* eslint-disable linebreak-style */
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable react/react-in-jsx-scope */
@@ -11,6 +12,8 @@ const EmailVerification = lazy(() => import('../Components/EmailVerificationPage
 const PasswordReset = lazy(() => import('../Components/PasswordResetPage'));
 const Registration = lazy(() => import('../Components/RegistrationPage'));
 const ProfilePage = lazy(() => import('../Components/ProfilePage'));
+const PreOrderPage = lazy(() => import('../Components/PreOrderPage'));
+const RestaurantPage = lazy(() => import('../Components/RestaurantPage'));
 
 const NAVIGATION_ROUTES = Object.freeze({
   homePage: {
@@ -41,6 +44,14 @@ const NAVIGATION_ROUTES = Object.freeze({
   profilePage: {
     path: '/profile',
     element: <ProfilePage />,
+  },
+  preOrderPage: {
+    path: '/preorder',
+    element: <PreOrderPage />,
+  },
+  restautantPage: {
+    path: '/restaurant/:id/',
+    element: <RestaurantPage />,
   },
 });
 

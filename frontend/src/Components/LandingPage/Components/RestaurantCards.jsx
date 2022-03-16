@@ -1,14 +1,18 @@
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/prop-types */
 /* eslint-disable linebreak-style */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/react-in-jsx-scope */
-/* eslint-disable react/jsx-filename-extension */
 /* eslint-disable linebreak-style */
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-  Card, Row, Col, Image, Button,
+  Modal, Nav, Card, Row, Col, Image, Button,
 } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { retrieveRestaurants } from '../Redux/actions';
+import RestaurantCardModel from './RestaurantCardModel';
 
 const data = [
   {
@@ -51,16 +55,7 @@ function RestaurantCards() {
       <Row>
         {data.map((site) => (
           <Col sm={4} className="mb-3">
-            <Card className="h-100">
-              <Card.Body className="py-2 text-center">
-                <Image fluid src={site.image} />
-                <h3>{site.restaurant}</h3>
-                <p>{site.description}</p>
-              </Card.Body>
-              <Card.Footer className="py-2 text-center">
-                <Button>View Restaurant</Button>
-              </Card.Footer>
-            </Card>
+            <RestaurantCardModel restaurant={site} />
           </Col>
         ))}
       </Row>
