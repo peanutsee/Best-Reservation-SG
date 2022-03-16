@@ -11,8 +11,9 @@ def retrieveAllRestaurants(request):
     """
     Retrieve Restaurant with No Filter
     """
+    print(request.query_params)
     # RUN ONCE TO LOAD RESTAURANTS INTO DATABASE
-    # file_paths = [r'C:\Users\Darryl See\Desktop\cz2006-project\backend\base\views\formatted_clean_chinese_food.json',r'C:\Users\Darryl See\Desktop\cz2006-project\backend\base\views\formatted_clean_muslim_food.json',r'C:\Users\Darryl See\Desktop\cz2006-project\backend\base\views\formatted_clean_indian_food.json',r'C:\Users\Darryl See\Desktop\cz2006-project\backend\base\views\formatted_clean_japanese_food.json',r'C:\Users\Darryl See\Desktop\cz2006-project\backend\base\views\formatted_clean_western_food.json' ]
+    # file_paths = [r'~/formatted_clean_chinese_food.json',r'~/formatted_clean_muslim_food.json',r'~/formatted_clean_indian_food.json',r'~/formatted_clean_japanese_food.json',r'~/formatted_clean_western_food.json' ]
     # for f in file_paths:
     #     with open(f, encoding='utf-8') as file:
     #         f = json.load(file)
@@ -54,7 +55,7 @@ def retrieveAllRestaurants(request):
     except EmptyPage:
         restaurants_data = paginator.page(paginator.num_pages)
 
-    if page == None:
+    if page == '':
         page = 1
 
     page = int(page)

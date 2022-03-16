@@ -2,13 +2,13 @@
 
 import React from 'react';
 import CarouselSection from './Components/CarouselSection';
-import RestaurantCards from './Components/RestaurantCards';
+import Restaurants from './Components/Restaurants';
 
 function index() {
   return (
     <div>
       <CarouselSection />
-      <RestaurantCards />
+      <Restaurants />
     </div>
   );
 }
