@@ -1,44 +1,100 @@
+/* eslint-disable quotes */
 /* eslint-disable react/jsx-filename-extension */
-
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
-  Button,
-  Col,
-  Row,
-  Modal,
-  Stack,
-} from 'react-bootstrap';
+  Row, Col, Button, Modal,
+} from "react-bootstrap";
+// import Menu from "./Components/Menu";
+// import PreOrderList from "./Components/PreOrderList";
+// import UpdateItem from "./Components/UpdateItem";
+// import DeleteItem from "./Components/DeleteItem";
+
+function OrderLink(props) {
+  return (
+    <Modal
+      {...props}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">
+          Share Pre-Order Link with Friends!
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <p>
+          Auto-generated Link
+        </p>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button onClick={props.onHide}>
+          Close
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  );
+}
+
+function OrderMenu(props) {
+  return (
+    <Modal
+      {...props}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">
+          Menu
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <p>
+          
+        </p>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button onClick={props.onHide}>
+          Close
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  );
+}
 
 function PreOrderPage() {
-  const [show, setShow] = useState(false);
+  const [orderLinkModalShow, setOrderLinkModalShow] = useState(false);
+  const [orderMenuModalShow, setOrderMenuModalShow] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
   return (
-    <>
-      <Stack direction="horizontal" gap={3}>
-        <h3 className="ms-5">Order #ID</h3>
-        <div className="ms-5">
-          <Button variant="dark" onClick={handleShow}>
+    <div className="p-5">
+      <Row>
+        <Col sm={2}>
+          <h1>Order #ID</h1>
+        </Col>
+        <Col>
+          <Button variant="dark" onClick={() => setOrderLinkModalShow(true)}>
             Share
           </Button>
-        </div>
-      </Stack>
-
-      <Modal show={show} onHide={handleClose} size="lg">
-        <Modal.Header closeButton>
-          <Modal.Title>Share Pre-Order Link with Friends!</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div>Auto-generated Link</div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary">Copy Link</Button>
-          <Button variant="primary">Close</Button>
-        </Modal.Footer>
-      </Modal>
-      { /* to increment this id counter later */ }
-    </>
+          <OrderLink
+            show={orderLinkModalShow}
+            onHide={() => setOrderLinkModalShow(false)}
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col md={{ offset: 10 }}>
+          <Button variant="dark" onClick={() => setOrderMenuModalShow(true)}>
+            View Menu
+          </Button>
+          <OrderMenu
+            show={orderMenuModalShow}
+            onHide={() => setOrderMenuModalShow(false)}
+          />
+        </Col>
+      </Row>
+    </div>
   );
 }
 

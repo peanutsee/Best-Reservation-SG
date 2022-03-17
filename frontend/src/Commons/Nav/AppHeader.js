@@ -25,19 +25,7 @@ function AppHeader() {
         </Link>
 
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-<<<<<<< HEAD
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mr-auto">
-            <Link to="/RestaurantPage">
-              <Nav.Item>Restaurants</Nav.Item>
-            </Link>
-            <Link to="/reservation">
-              <Nav.Item>Reservation</Nav.Item>
-            </Link>
-            <Link to="/profile">
-              <Nav.Item>Profile</Nav.Item>
-            </Link>
-=======
+        
         <Navbar.Collapse
           id="basic-navbar-nav"
           className='justify-content-end'
@@ -89,7 +77,6 @@ function AppHeader() {
                 </Nav.Link>
               </>
             )}
->>>>>>> 88d188b10c7a594e4d4a2a85e6616cd66d5f8050
           </Nav>
         </Navbar.Collapse>
       </Container>
