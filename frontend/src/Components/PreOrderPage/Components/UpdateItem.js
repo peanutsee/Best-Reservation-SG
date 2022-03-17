@@ -4,10 +4,6 @@ import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 
 function UpdateItem() {
-    return (
-        <div>
-        </div>
-    );
 }
     
 export default UpdateItem;
