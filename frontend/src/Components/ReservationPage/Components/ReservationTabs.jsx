@@ -6,7 +6,8 @@ import {
 
 function ReservationTabs() {
   return (
-    <Container>
+    <Container className="p-5">
+      <h1 className="mb-5">Reservation Management</h1>
       <Tabs
         defaultActiveKey="current"
       >

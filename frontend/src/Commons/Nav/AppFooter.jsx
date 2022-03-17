@@ -1,14 +1,6 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable jsx-a11y/anchor-is-valid */
-/* eslint-disable linebreak-style */
-/* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import {
-  Container,
-  Row,
-  Col,
-  ListGroup,
-  Button,
+  Container, Row, Col, ListGroup, Button,
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
@@ -23,38 +15,28 @@ function AppFooter() {
           </Button>
         </div>
         <Row className="justify-content-center">
-          <Col sm={12} md={6} item className="my-3 borderless text-center">
+          <Col sm={12} md={6} className="my-3 borderless text-center">
             <h4>Quick Links</h4>
             <ListGroup as="ul">
               <ListGroup.Item>
-                <div>
-                  <Link to="/aboutus">About Us</Link>
-                </div>
+                <Link to="/aboutus">About Us</Link>
               </ListGroup.Item>
               <ListGroup.Item>
-                <div>
-                  <Link to="/faq">FAQ</Link>
-                </div>
+                <Link to="/faq">FAQ</Link>
               </ListGroup.Item>
               <ListGroup.Item>
-                <div>
-                  <Link to="/contactus">Contact Us</Link>
-                </div>
+                <Link to="/contactus">Contact Us</Link>
               </ListGroup.Item>
             </ListGroup>
           </Col>
-          <Col sm={12} md={6} item className="my-3 borderless text-center">
+          <Col sm={12} md={6} className="my-3 borderless text-center">
             <h4>Important Links</h4>
             <ListGroup as="ul">
               <ListGroup.Item>
-                <div>
-                  <Link to="/termsandcondition">Terms & Conditions</Link>
-                </div>
+                <Link to="/termsandcondition">Terms & Conditions</Link>
               </ListGroup.Item>
               <ListGroup.Item>
-                <div>
-                  <Link to="/privacypolicy">Privacy Policy</Link>
-                </div>
+                <Link to="/privacypolicy">Privacy Policy</Link>
               </ListGroup.Item>
             </ListGroup>
           </Col>

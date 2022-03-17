@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-nested-ternary */
 import React, { useEffect } from 'react';
@@ -37,8 +37,8 @@ function Restaurants() {
       ) : (
         <>
           <Row>
-            {restaurants.map((restaurant) => (
-              <Col sm={3} className="mb-3">
+            {restaurants.map((restaurant, key) => (
+              <Col key={key} sm={3} className="mb-3">
                 <RestaurantCardModel restaurant={restaurant} />
               </Col>
             ))}
