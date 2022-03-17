@@ -1,9 +1,9 @@
-/* eslint-disable quotes */
-/* eslint-disable react/jsx-filename-extension */
-import React, { useState } from "react";
-import { Form, Button } from "react-bootstrap";
+import React from 'react'
 
 function DeleteItem() {
+  return (
+    <div>DeleteItem</div>
+  )
 }
-    
-export default DeleteItem;
+
+export default DeleteItem
