@@ -173,6 +173,21 @@ Let's suppose you want to push your things onto the remote repository but there 
 
 This is because, only you know what changes you've made. The other parties don't! 
 
+```
+# stash your commits 
+git add .
+git commit -m "stash"
+
+# pull changes 
+git pull origin main
+```
+at this point, you should be able to deconflict on VSCode if you have GIT Lens extension. 
+```
+git add .
+git commit -m "new changes + deconflich merge"
+git checkout <BRANCH_NAME>
+git push origin <BRANCH_NAME>
+```
 PS: If you have a better solution to deconflict a conflict, please suggest. I don't know of a better solution to do this yet.
 
 ### Extra Juice 
