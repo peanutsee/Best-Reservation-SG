@@ -26,33 +26,24 @@ class Profile(models.Model):
 
 
 class Restaurant(models.Model):
-    uuid = models.AutoField()
-    name = models.CharField(max_length=255)
-    official_website = models.URLField()
-    official_email = models.EmailField()
-    restaurant_description = models.CharField(max_length=255)
-    restaurant_primary_contact = models.IntegerField(default=0)
-    restaurant_secondary_contact = models.IntegerField(default=0)
+    id = models.TextField(primary_key=True)
+    restaurant_name = models.CharField(max_length=255)
+    restaurant_official_website = models.URLField()
+    restaurant_official_email = models.EmailField()
+    restaurant_shorter_description = models.TextField(default="")
+    restaurant_primary_contact = models.TextField(default="")
+    restaurant_secondary_contact = models.TextField(default="")
     restaurant_rating = models.DecimalField(decimal_places=1, max_digits=2)
     restaurant_block = models.CharField(max_length=255)
-    restuarnat_street_name = models.CharField(max_length=255)
+    restaurant_street_name = models.TextField()
     restaurant_floor_number = models.CharField(max_length=255)
     restaurant_unit_number = models.CharField(max_length=255)
-    restuarant_building_name = models.CharField(max_length=255)
-
-    objects = models.Manager()
-
-
-
-
-
-    restaurant_name = models.CharField(max_length=255)
+    restaurant_building_name = models.TextField()
+    restaurant_postal_code = models.CharField(max_length=255)
+    restaurant_longer_description = models.TextField()
+    restaurant_thumbnail = models.ImageField('restaurant-thumbnail-images/', default=None, blank=True, null=True)
     restaurant_image_1 = models.ImageField('restaurant-images/', default=None, blank=True, null=True)
     restaurant_image_2 = models.ImageField('restaurant-images/', default=None, blank=True, null=True)
-    restaurant_description = models.TextField()
-    restaurant_cuisine = models.CharField(max_length=2, choices=CUISINE_TYPES, default=OTHERS)
-    restaurant_type = models.CharField(max_length=2, choices=RESTAURANT_TYPES, default=OTHERS)
-    restaurant_rating = models.DecimalField(decimal_places=2, max_digits=3, default=4)
     num_clicks = models.IntegerField(default=0)
 
     objects = models.Manager()

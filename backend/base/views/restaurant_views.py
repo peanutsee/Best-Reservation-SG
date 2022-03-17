@@ -4,6 +4,8 @@ from rest_framework.response import Response
 from ..serializers import *
 from random import shuffle
 
+# TODO: Include "Search" and "Filter" functions
+
 @api_view(['GET'])
 def retrieveAllRestaurants(request):
     """
@@ -13,6 +15,8 @@ def retrieveAllRestaurants(request):
     restaurants_serialized = RestaurantSerializer(restaurants, many=True)
     restaurants_data = restaurants_serialized.data
     shuffle(restaurants_data)
+    
+    # TODO: Pagination
     return Response(restaurants_data, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
@@ -37,8 +41,6 @@ def retrieveRestaurant(request, pk):
     restaurant_data = restaurant_serialized.data
     return Response(restaurant_data, status=status.HTTP_200_OK)
 
-
-# TODO: Restaurant Availability
 
 @api_view(['GET'])
 def retrieveRestaurantMenuItems(request, pk):
