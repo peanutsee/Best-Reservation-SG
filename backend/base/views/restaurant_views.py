@@ -11,7 +11,6 @@ def retrieveAllRestaurants(request):
     """
     Retrieve Restaurant with No Filter
     """
-    print(request.query_params)
     # RUN ONCE TO LOAD RESTAURANTS INTO DATABASE
     # file_paths = [r'~/formatted_clean_chinese_food.json',r'~/formatted_clean_muslim_food.json',r'~/formatted_clean_indian_food.json',r'~/formatted_clean_japanese_food.json',r'~/formatted_clean_western_food.json' ]
     # for f in file_paths:

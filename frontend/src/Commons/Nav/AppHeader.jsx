@@ -1,5 +1,3 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import {
   Navbar,
@@ -33,9 +31,9 @@ function AppHeader() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
           <Nav>
-            <Nav.Link className="mx-4">
+            <div className="mx-4">
               <Link to="/">Home</Link>
-            </Nav.Link>
+            </div>
             {userInfo ? (
               <Dropdown>
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
@@ -44,14 +42,14 @@ function AppHeader() {
 
                 <Dropdown.Menu>
                   <Dropdown.Item>
-                    <Nav.Link>
+                    <div>
                       <Link to="/profile">Profile</Link>
-                    </Nav.Link>
+                    </div>
                   </Dropdown.Item>
                   <Dropdown.Item>
-                    <Nav.Link>
+                    <div>
                       <Link to="/reservation">Reservation</Link>
-                    </Nav.Link>
+                    </div>
                   </Dropdown.Item>
                   <NavDropdown.Divider />
 
@@ -70,17 +68,17 @@ function AppHeader() {
               </Dropdown>
             ) : (
               <>
-                <Nav.Link>
+                <div>
                   <Link to="/login" className="mx-4">
                     Sign In
                   </Link>
-                </Nav.Link>
+                </div>
 
-                <Nav.Link>
+                <div>
                   <Link to="/registration" className="mx-4">
                     Sign Up
                   </Link>
-                </Nav.Link>
+                </div>
               </>
             )}
           </Nav>

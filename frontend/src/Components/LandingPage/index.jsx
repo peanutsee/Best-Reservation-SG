@@ -6,10 +6,10 @@ import Restaurants from './Components/Restaurants';
 
 function index() {
   return (
-    <div>
+    <>
       <CarouselSection />
       <Restaurants />
-    </div>
+    </>
   );
 }
 
