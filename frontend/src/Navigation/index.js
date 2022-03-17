@@ -13,11 +13,8 @@ const PasswordReset = lazy(() => import('../Components/PasswordResetPage'));
 const Registration = lazy(() => import('../Components/RegistrationPage'));
 const ProfilePage = lazy(() => import('../Components/ProfilePage'));
 const PreOrderPage = lazy(() => import('../Components/PreOrderPage'));
-<<<<<<< HEAD
-=======
 const RestaurantPage = lazy(() => import('../Components/RestaurantPage'));
 const ReservationConfirmationPage = lazy(() => import('../Components/ReservationConfirmationPage'));
->>>>>>> 07757d21c61ff472781f74026f70f52eb3eeacc2
 
 const NAVIGATION_ROUTES = Object.freeze({
   homePage: {
