@@ -4,6 +4,7 @@
 2. Running Development Environment
 3. Developing Guide
 4. GIT Practises
+5. Application Skeleton Tree
 
 ## Setup Guide 
 You will only need to set up <strong>once</strong> unless you screwed up somewhere. 
@@ -185,4 +186,44 @@ git remote -v
 Checkout to another branch (to change branch)
 ```
 git checkout <branch_name>
+```
+
+## Application Skeleton Tree
+```bash
+project_root
+|_.circleci
+|_.git
+|_frontend
+    |_README.md
+    |_public
+        |_index.html
+        |_build
+    |_src
+        |_Commons
+        |_Components
+        |_Navigation
+        |_RootRedux
+        |_bootstrap.min.css
+        |_index.js
+    |_Dockerfile
+    |_package.json
+    |_.dockerignore
+    |_.gitignore
+|_backend
+    |_backend
+        |_settings.py
+        |_urls.py
+    |_base
+        |_views
+        |_urls
+        |_admin.py
+        |_models.py
+        |_serializer.py
+    |_.dockerignore
+    |_.gitignore
+    |_manage.py
+    |_requirements.txt
+    |_Dockerfile    
+|_docker-compose.yaml
+|_README.md
 ```

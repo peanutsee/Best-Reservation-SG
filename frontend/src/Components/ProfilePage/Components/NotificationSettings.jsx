@@ -1,39 +1,57 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 /* eslint-disable quotes */
-/* eslint-disable react/jsx-filename-extension */
 import React, { useState } from "react";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Alert } from "react-bootstrap";
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { updateNotifications, deleteProfile } from '../Redux/actions';
 
-function NotificationSettings() {
-  const [smsNotif, setSmsNotif] = useState(true);
-  const [emailNotif, setEmailNotif] = useState(true);
+function NotificationSettings(props) {
+  const { profile } = props;
+  const [smsNotif, setSmsNotif] = useState(profile.sms_notification);
+  const [emailNotif, setEmailNotif] = useState(profile.email_notification);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const notificationUpdate = useSelector((state) => state.notificationUpdateReducer);
+  const { success, error } = notificationUpdate;
 
   const updateNotifHandler = (e) => {
     e.preventDefault();
+    dispatch(updateNotifications(smsNotif, emailNotif));
   };
 
   const deleteAccountHandler = (e) => {
     e.preventDefault();
+    dispatch(deleteProfile());
+    navigate('/');
   };
+
   return (
     <>
       <h1 className="text-center">Notification Updates</h1>
+      {success && <Alert variant="success" className="text-center">Profile Update Successfully!</Alert>}
+      {error && <Alert variant="danger" className="text-center">Profile Update Unsuccessful!</Alert>}
+
       <div id="notification">
         <h3>Notifications</h3>
         <Form onSubmit={updateNotifHandler}>
-          <Form.Group className="mb-3" controlId="formBasicCheckbox">
+          <Form.Group className="mb-3" controlId="smsNotificationCB">
             <Form.Check
-              type="checkbox"
+              type="switch"
               label="SMS Notification"
               checked={smsNotif}
-              onChange={(e) => setSmsNotif(e.target.value)}
+              onChange={() => setSmsNotif(!smsNotif)}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicCheckbox">
+          <Form.Group className="mb-3" controlId="emailNotificationCB">
             <Form.Check
-              type="checkbox"
+              type="switch"
               label="Email Notification"
               checked={emailNotif}
-              onChange={(e) => setEmailNotif(e.target.value)}
+              onChange={() => setEmailNotif(!emailNotif)}
             />
           </Form.Group>
           <div className="d-flex justify-content-end">

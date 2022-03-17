@@ -1,16 +1,15 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable react/jsx-filename-extension */
 
 import React from 'react';
 import CarouselSection from './Components/CarouselSection';
-import RestaurantCards from './Components/RestaurantCards';
+import Restaurants from './Components/Restaurants';
 
 function index() {
   return (
-    <div>
+    <>
       <CarouselSection />
-      <RestaurantCards />
-    </div>
+      <Restaurants />
+    </>
   );
 }
 

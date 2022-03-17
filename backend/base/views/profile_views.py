@@ -35,19 +35,25 @@ def updateUserProfile(request):
     if user:
         profile = Profile.objects.get(user=user)
         data = request.data
-        print(data)
+
         # Update User Details
-        user.email = data['email']
-        user.username = data['email']
-        user.first_name = data['first_name']
-        user.last_name = data['last_name']
-        if data['password'] != '':
-            user.password = make_password(data['password'])
+        if data['email'] != '':
+            user.email = data['email']
+            user.username = data['email']
+            user.first_name = data['first_name']
+            user.last_name = data['last_name']
+            profile.contact_number = data['contact_number']
+            if data['password'] != '':
+                user.password = make_password(data['password'])
 
         # Update Profile Details
-        profile.contact_number = data['contact_number']
-        # profile.sms_notification = data['sms_notification_setting']
-        # profile.email_notification = data['email_notification_setting']
+        if data['sms_notification'] == '':
+            data['sms_notification'] = profile.sms_notification
+        if data['email_notification'] == '':
+            data['email_notification'] = profile.sms_notification
+        
+        profile.sms_notification = data['sms_notification']
+        profile.email_notification = data['email_notification']
 
         # Save Changes
         user.save()

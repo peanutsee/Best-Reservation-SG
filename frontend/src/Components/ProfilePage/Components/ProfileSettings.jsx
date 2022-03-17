@@ -1,21 +1,15 @@
-/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable no-console */
+/* eslint-disable react/prop-types */
 import { React, useState } from 'react';
 import {
-  Form, Button, Row, Col,
+  Form, Button, Row, Col, Alert,
 } from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateProfile } from '../Redux/actions';
 
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/;
-
-const INTIALVALUES = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  password: '',
-  confirmPassword: '',
-  contact: '',
-};
 
 const SCHEMA = yup.object().shape({
   firstName: yup.string().required('First Name Required'),
@@ -23,7 +17,7 @@ const SCHEMA = yup.object().shape({
   email: yup.string().email().required('Email Required'),
   password: yup
     .string()
-    .required('Required')
+    .required('Enter password to update profile')
     .min(8, 'Miniumum 8 Characters')
     .max(24, 'Maximum 24 Characters')
     .matches(
@@ -32,7 +26,7 @@ const SCHEMA = yup.object().shape({
     ),
   confirmPassword: yup
     .string()
-    .required('Required')
+    .required('Password must match')
     .oneOf(
       [yup.ref('password'), null],
       'Password Must Match',
@@ -45,8 +39,26 @@ const SCHEMA = yup.object().shape({
     .max(8, 'Enter Valid Contact Number'),
 });
 
-function ProfileSettings() {
-  const updateHandler = () => {};
+function ProfileSettings(props) {
+  const { profile } = props;
+
+  const dispatch = useDispatch();
+
+  const profileUpdate = useSelector((state) => state.profileUpdateReducer);
+  const { success, error } = profileUpdate;
+
+  const updateHandler = (e) => {
+    dispatch(updateProfile(e.firstName, e.lastName, e.email, e.password, e.contact));
+  };
+
+  const INTIALVALUES = {
+    firstName: profile.first_name,
+    lastName: profile.last_name,
+    email: profile.email,
+    password: '',
+    confirmPassword: '',
+    contact: profile.contact_number,
+  };
 
   // For toggling show/hide password
   const [passwordShown, setPasswordShown] = useState(false);
@@ -56,6 +68,8 @@ function ProfileSettings() {
   return (
     <>
       <h1 className="text-center">Profile Update</h1>
+      {success && <Alert variant="success" className="text-center">Profile Update Successfully!</Alert>}
+      {error && <Alert variant="danger" className="text-center">Profile Update Unsuccessful!</Alert>}
 
       <Formik
         validationSchema={SCHEMA}
@@ -68,7 +82,7 @@ function ProfileSettings() {
           <Form noValidate onSubmit={handleSubmit}>
             <Row xs={1} md={2}>
               <Col>
-                <Form.Group className="mb-3">
+                <Form.Group className="mb-3" controlId="validationFormik01">
                   <Form.Label>First Name</Form.Label>
                   <Form.Control
                     type="text"
@@ -88,7 +102,7 @@ function ProfileSettings() {
                 </Form.Group>
               </Col>
               <Col>
-                <Form.Group className="mb-3">
+                <Form.Group className="mb-3" controlId="validationFormik02">
                   <Form.Label>Last Name</Form.Label>
                   <Form.Control
                     type="text"
@@ -111,7 +125,7 @@ function ProfileSettings() {
 
             <Row xs={1} md={2}>
               <Col>
-                <Form.Group className="mb-3" controlId="validationFormik01">
+                <Form.Group className="mb-3" controlId="validationFormik03">
                   <Form.Label>Email address</Form.Label>
                   <Form.Control
                     type="email"
@@ -132,7 +146,7 @@ function ProfileSettings() {
                 </Form.Group>
               </Col>
               <Col>
-                <Form.Group className="mb-3" controlId="validationFormik03">
+                <Form.Group className="mb-3" controlId="validationFormik04">
                   <Form.Label>Contact Number</Form.Label>
                   <Form.Control
                     type="tel"
@@ -155,7 +169,7 @@ function ProfileSettings() {
             </Row>
             <Row xs={1} md={2}>
               <Col>
-                <Form.Group className="mb-3" controlId="validationFormik03">
+                <Form.Group className="mb-3" controlId="validationFormik05">
                   <Form.Label>Password</Form.Label>
                   <Form.Control
                     type={passwordShown ? 'text' : 'password'}
@@ -183,7 +197,7 @@ function ProfileSettings() {
                 </Form.Group>
               </Col>
               <Col>
-                <Form.Group className="mb-3" controlId="validationFormik04">
+                <Form.Group className="mb-3" controlId="validationFormik06">
                   <Form.Label>Confirm Password</Form.Label>
                   <Form.Control
                     type="password"

@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-+b)m(p-a7l@4x*yh%d$^8%1-0@c5p=23*ku9etixr@p*&c!75u
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'cz2006-project-dss2.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
+    'storages',
     'base.apps.BaseConfig',
 ]
 
@@ -84,8 +85,12 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'project_db',
+        'USER': 'cz2006_admin',
+        'PASSWORD': 'cz2006_admin_password',
+        "HOST": 'cz2006-project-db.chogbp65nxin.ap-southeast-1.rds.amazonaws.com',
+        'PORT': '5432'
     }
 }
 
@@ -134,6 +139,16 @@ STATICFILES_DIRS = [  # This will throw a warning
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_ROOT = os.path.join( BASE_DIR, 'static/media')
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+# Boto3 Config
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+AWS_S3_ACCESS_KEY_ID = 'AKIA42OZ2LUIURYVDY6Y'
+AWS_S3_SECRET_ACCESS_KEY = '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'
+AWS_QUERYSTRING_AUTH = False
+AWS_STORAGE_BUCKET_NAME = 'cz2006-project-bucket'
+AWS_S3_FILE_OVERWRITE = False
 
 CORS_ALLOW_ALL_ORIGINS = True
 

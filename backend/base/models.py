@@ -26,44 +26,24 @@ class Profile(models.Model):
 
 
 class Restaurant(models.Model):
-    WESTERN = 'WS'
-    CHINESE = 'CH'
-    JAPANESE = 'JP'
-    KOREAN = 'KR'
-    OTHERS = 'OT'
-    CUISINE_TYPES = [
-        (WESTERN, 'Western'),
-        (CHINESE, 'Chinese'),
-        (JAPANESE, 'Japanese'),
-        (KOREAN, 'Korean'),
-        (OTHERS, 'Others'),
-    ]
-
-    KOPITIAM = 'HC'
-    CAFE = "CF"
-    BAR = 'BA'
-    HIGH_END_RESTAURANT = 'HE'
-    MEDIUM_END_RESTAURANT = 'ME'
-    BUDGET_RESTAURANT = 'BR'
-    FAST_FOOD_RESTAURANT = 'FF'
-    OTHERS = 'OT'
-    RESTAURANT_TYPES = [
-        (KOPITIAM, 'Kopitiam'),
-        (CAFE, 'Cafe'),
-        (BAR, 'Bar'),
-        (HIGH_END_RESTAURANT, 'High End Restaurant'),
-        (MEDIUM_END_RESTAURANT, 'Medium End Restaurant'),
-        (BUDGET_RESTAURANT, 'Budget Restaurant'),
-        (FAST_FOOD_RESTAURANT, 'Fast Food Restaurant'),
-        (OTHERS, 'Others'),
-    ]
-
+    id = models.TextField(primary_key=True)
     restaurant_name = models.CharField(max_length=255)
-    restaurant_image = models.ImageField('restaurant-images/')
-    restaurant_description = models.TextField()
-    restaurant_cuisine = models.CharField(max_length=2, choices=CUISINE_TYPES, default=OTHERS)
-    restaurant_type = models.CharField(max_length=2, choices=RESTAURANT_TYPES, default=OTHERS)
-    restaurant_rating = models.DecimalField(decimal_places=2, max_digits=3, default=4)
+    restaurant_official_website = models.URLField()
+    restaurant_official_email = models.EmailField()
+    restaurant_shorter_description = models.TextField(default="")
+    restaurant_primary_contact = models.TextField(default="")
+    restaurant_secondary_contact = models.TextField(default="")
+    restaurant_rating = models.DecimalField(decimal_places=1, max_digits=2)
+    restaurant_block = models.CharField(max_length=255)
+    restaurant_street_name = models.TextField()
+    restaurant_floor_number = models.CharField(max_length=255)
+    restaurant_unit_number = models.CharField(max_length=255)
+    restaurant_building_name = models.TextField()
+    restaurant_postal_code = models.CharField(max_length=255)
+    restaurant_longer_description = models.TextField()
+    restaurant_thumbnail = models.URLField()
+    restaurant_image_1 = models.URLField()
+    restaurant_image_2 = models.URLField()
     num_clicks = models.IntegerField(default=0)
 
     objects = models.Manager()
@@ -84,7 +64,8 @@ class Reservation(models.Model):
     reservation_pax = models.IntegerField()
     number_of_users_in_reservation = models.IntegerField(default=1)
     #reservation_link = models.URLField()
-
+    # reservation_qr_code = models.ImageField(upload_to='reservation-qr/')
+    
     objects = models.Manager()
 
     def __str__(self):

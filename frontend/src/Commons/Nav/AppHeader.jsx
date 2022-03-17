@@ -1,39 +1,46 @@
-/* eslint-disable jsx-quotes */
-/* eslint-disable quotes */
-/* eslint-disable linebreak-style */
-/* eslint-disable react/jsx-filename-extension */
-import React from "react";
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+import React from 'react';
 import {
   Navbar,
   Container,
   Nav,
-  Button,
   Dropdown,
   NavDropdown,
-} from "react-bootstrap";
-import { Link } from "react-router-dom";
+} from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../Components/AuthenticationPage/Redux/actions';
+import './app.css';
 
 function AppHeader() {
-  const userInfo = false;
+  const dispatch = useDispatch();
 
-  const logoutHandler = () => {};
+  const userLogin = useSelector((state) => state.userLoginReducer);
+  const { userInfo } = userLogin;
+
+  const logoutHandler = () => {
+    dispatch(logout());
+  };
+
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar className="transparent-bg" expand="lg">
       <Container>
         <Link to="/">
           <Navbar.Brand>BEST RESERVATION SG</Navbar.Brand>
         </Link>
 
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
+<<<<<<< HEAD:frontend/src/Commons/Nav/AppHeader.js
         
         <Navbar.Collapse
           id="basic-navbar-nav"
           className='justify-content-end'
         >
+=======
+        <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
+>>>>>>> 07757d21c61ff472781f74026f70f52eb3eeacc2:frontend/src/Commons/Nav/AppHeader.jsx
           <Nav>
-            <Nav.Link className='mx-4'>
-              <Link to="/">Home</Link>
-            </Nav.Link>
             {userInfo ? (
               <Dropdown>
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
@@ -42,39 +49,46 @@ function AppHeader() {
 
                 <Dropdown.Menu>
                   <Dropdown.Item>
-                    <Nav.Link>
+                    <div>
                       <Link to="/profile">Profile</Link>
-                    </Nav.Link>
+                    </div>
                   </Dropdown.Item>
                   <Dropdown.Item>
-                    <Nav.Link>
+                    <div>
                       <Link to="/reservation">Reservation</Link>
-                    </Nav.Link>
+                    </div>
                   </Dropdown.Item>
                   <NavDropdown.Divider />
 
                   <Dropdown.Item>
                     <Link to="/">
-                      <Button
+                      <div
                         variant="outline-light"
                         className="text-black"
                         onClick={logoutHandler}
                       >
                         Logout
-                      </Button>
+                      </div>
                     </Link>
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             ) : (
               <>
-                <Nav.Link>
-                  <Link to="/login" className='mx-4'>Sign In</Link>
-                </Nav.Link>
+                <div className="header-links">
+                  <Link to="/">Home</Link>
+                </div>
+                <div className="header-links">
+                  <Link to="/login">
+                    Sign In
+                  </Link>
+                </div>
 
-                <Nav.Link>
-                  <Link to="/registration" className='mx-4'>Sign Up</Link>
-                </Nav.Link>
+                <div className="header-links">
+                  <Link to="/registration">
+                    Sign Up
+                  </Link>
+                </div>
               </>
             )}
           </Nav>

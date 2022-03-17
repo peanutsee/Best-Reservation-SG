@@ -1,0 +1,24 @@
+.transparent-bg {
+    background-color: transparent!important;
+}
+.header-links {
+    margin-right: 1.5rem !important;
+}
+.header-links:hover {
+    animation-duration: 1s;
+    text-decoration: underline !important;
+    animation-name: link-colors;
+    transform: scale(1.1);
+    transition: 0.2s;
+}
+@keyframes link-colors {
+    0% {
+        opacity: 0.25;
+    }
+    50% {
+        opacity: 0.75;
+    }
+    100% {
+        opacity: 1;
+    }
+}
