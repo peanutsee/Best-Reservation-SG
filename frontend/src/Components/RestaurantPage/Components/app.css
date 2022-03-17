@@ -1,12 +1,11 @@
-.border-right {
+.border-left {
   border-left: solid !important;
   border-width: 1px !important;
-  border-color: grey !important;
+  border-color: #eceeef !important;
 }
 
 @media (max-width: 768px) {
-  .border-right {
+  .border-left {
     border-left: none !important;
-    border-width: 2px !important;
   }
 }

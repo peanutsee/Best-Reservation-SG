@@ -5,6 +5,7 @@ import {
   Modal, Card, Image, Button,
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import './app.css';
 
 function PopUpModal(props) {
   const { restaurant } = props;
@@ -45,7 +46,7 @@ function RestaurantCardModel(props) {
   const [modalShow, setModalShow] = useState(false);
 
   return (
-    <Card className="h-100 shadow shadow-100 rounded">
+    <Card className="h-100 shadow shadow-100 rounded glass-card">
       <Card.Body>
         <Image className="p-2" fluid src={restaurant.image} />
         <h3 className="py-2 text-center">{restaurant.restaurant_name}</h3>
