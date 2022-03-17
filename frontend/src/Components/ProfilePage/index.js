@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import NotificationSettings from "./Components/NotificationSettings";
 import ProfileSettings from "./Components/ProfileSettings";
 import { retrieveUserProfile } from "./Redux/actions";
+import "./app.css";
 
 function ProfilePage() {
   const dispatch = useDispatch();
@@ -29,13 +30,14 @@ function ProfilePage() {
       ) : error ? (
         <h1 className="text-center">Error Loading Profile</h1>
       ) : (
-        <Tab.Container id="left-tabs-example" defaultActiveKey="profile">
+        <Tab.Container defaultActiveKey="profile">
           <Row>
             <Col sm={2}>
-              <Nav variant="pills" className="flex-column text-center">
+              <Nav variant="pills" className="flex-column text-center mx-auto">
                 <Nav.Item className="mb-3 shadow shadow-100">
                   <Nav.Link eventKey="profile">Profile</Nav.Link>
                 </Nav.Item>
+
                 <Nav.Item className="mb-3 shadow shadow-100">
                   <Nav.Link eventKey="notification">Notifications</Nav.Link>
                 </Nav.Item>

@@ -12,7 +12,6 @@ import RestaurantPaginator from './RestaurantPaginator';
 function Restaurants() {
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
-
   const retrieveRestaurantData = useSelector(
     (state) => state.retrieveRestaurantReducer,
   );
@@ -43,7 +42,7 @@ function Restaurants() {
               </Col>
             ))}
           </Row>
-          <div className="d-flex justify-content-center align-middle">
+          <div className="d-flex justify-content-center mt-5">
             <RestaurantPaginator page={page} pages={pages} />
           </div>
         </>
