@@ -2,11 +2,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react';
 import {
-  Navbar,
-  Container,
-  Nav,
-  Dropdown,
-  NavDropdown,
+  Navbar, Container, Nav, Dropdown, NavDropdown,
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -31,15 +27,7 @@ function AppHeader() {
         </Link>
 
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-<<<<<<< HEAD:frontend/src/Commons/Nav/AppHeader.js
-        
-        <Navbar.Collapse
-          id="basic-navbar-nav"
-          className='justify-content-end'
-        >
-=======
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
->>>>>>> 07757d21c61ff472781f74026f70f52eb3eeacc2:frontend/src/Commons/Nav/AppHeader.jsx
           <Nav>
             {userInfo ? (
               <Dropdown>
@@ -79,15 +67,11 @@ function AppHeader() {
                   <Link to="/">Home</Link>
                 </div>
                 <div className="header-links">
-                  <Link to="/login">
-                    Sign In
-                  </Link>
+                  <Link to="/login">Sign In</Link>
                 </div>
 
                 <div className="header-links">
-                  <Link to="/registration">
-                    Sign Up
-                  </Link>
+                  <Link to="/registration">Sign Up</Link>
                 </div>
               </>
             )}
