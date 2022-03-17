@@ -1,13 +1,13 @@
 /* eslint-disable default-param-last */
 /* eslint-disable import/prefer-default-export */
 import {
-  RESERVATION_GETALLACTIVE_REQUEST,
-  RESERVATION_GETALLACTIVE_SUCCESS,
-  RESERVATION_GETALLACTIVE_ERROR,
+  RESERVATION_GET_ALL_ACTIVE_REQUEST,
+  RESERVATION_GET_ALL_ACTIVE_SUCCESS,
+  RESERVATION_GET_ALL_ACTIVE_ERROR,
 
-  RESERVATION_GETALLCOMPLETED_REQUEST,
-  RESERVATION_GETALLCOMPLETED_SUCCESS,
-  RESERVATION_GETALLCOMPLETED_ERROR,
+  RESERVATION_GET_ALL_COMPLETED_REQUEST,
+  RESERVATION_GET_ALL_COMPLETED_SUCCESS,
+  RESERVATION_GET_ALL_COMPLETED_ERROR,
 
   RESERVATION_DELETE_REQUEST,
   RESERVATION_DELETE_SUCCESS,
@@ -22,11 +22,11 @@ export const getAllActiveReducer = (state = [], action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case RESERVATION_GETALLACTIVE_REQUEST:
+    case RESERVATION_GET_ALL_ACTIVE_REQUEST:
       return { loading: true, success: false };
-    case RESERVATION_GETALLACTIVE_SUCCESS:
+    case RESERVATION_GET_ALL_ACTIVE_SUCCESS:
       return { loading: false, success: true, activeOrders: payload };
-    case RESERVATION_GETALLACTIVE_ERROR:
+    case RESERVATION_GET_ALL_ACTIVE_ERROR:
       return { loading: false, success: false, error: payload };
     default:
       return state;
@@ -37,11 +37,11 @@ export const getAllCompletedReducer = (state = [], action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case RESERVATION_GETALLCOMPLETED_REQUEST:
+    case RESERVATION_GET_ALL_COMPLETED_REQUEST:
       return { loading: true, success: false };
-    case RESERVATION_GETALLCOMPLETED_SUCCESS:
+    case RESERVATION_GET_ALL_COMPLETED_SUCCESS:
       return { loading: false, success: true, completedOrders: payload };
-    case RESERVATION_GETALLCOMPLETED_ERROR:
+    case RESERVATION_GET_ALL_COMPLETED_ERROR:
       return { loading: false, success: false, error: payload };
     default:
       return state;
