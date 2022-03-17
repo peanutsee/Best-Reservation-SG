@@ -55,9 +55,9 @@ export const getAllActive = () => async (dispatch, getState) => {
     dispatch({
       type: RESERVATION_GET_ALL_ACTIVE_ERROR,
       payload:
-                error.response && error.response.data.detail
-                  ? error.response.data.detail
-                  : error.message,
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
     });
   }
 };
@@ -94,9 +94,9 @@ export const getAllCompleted = () => async (dispatch, getState) => {
     dispatch({
       type: RESERVATION_GET_ALL_COMPLETED_ERROR,
       payload:
-                  error.response && error.response.data.detail
-                    ? error.response.data.detail
-                    : error.message,
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
     });
   }
 };
@@ -137,9 +137,9 @@ export const deleteReservavtion = (reservationID) => async (dispatch, getState) 
     dispatch({
       type: RESERVATION_DELETE_ERROR,
       payload:
-                    error.response && error.response.data.detail
-                      ? error.response.data.detail
-                      : error.message,
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
     });
   }
 };
@@ -179,9 +179,9 @@ export const joinReservation = (reservationID) => async (dispatch, getState) => 
     dispatch({
       type: RESERVATION_JOIN_ERROR,
       payload:
-                    error.response && error.response.data.detail
-                      ? error.response.data.detail
-                      : error.message,
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
     });
   }
 };
@@ -222,9 +222,9 @@ export const removeReservation = (reservationID) => async (dispatch, getState) =
     dispatch({
       type: RESERVATION_REMOVE_ERROR,
       payload:
-                      error.response && error.response.data.detail
-                        ? error.response.data.detail
-                        : error.message,
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
     });
   }
 };
