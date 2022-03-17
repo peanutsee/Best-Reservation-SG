@@ -1,13 +1,13 @@
 /* eslint-disable import/prefer-default-export */
 import axios from 'axios';
 import {
-  RESERVATION_GETALLACTIVE_REQUEST,
-  RESERVATION_GETALLACTIVE_SUCCESS,
-  RESERVATION_GETALLACTIVE_ERROR,
+  RESERVATION_GET_ALL_ACTIVE_REQUEST,
+  RESERVATION_GET_ALL_ACTIVE_SUCCESS,
+  RESERVATION_GET_ALL_ACTIVE_ERROR,
 
-  RESERVATION_GETALLCOMPLETED_REQUEST,
-  RESERVATION_GETALLCOMPLETED_SUCCESS,
-  RESERVATION_GETALLCOMPLETED_ERROR,
+  RESERVATION_GET_ALL_COMPLETED_REQUEST,
+  RESERVATION_GET_ALL_COMPLETED_SUCCESS,
+  RESERVATION_GET_ALL_COMPLETED_ERROR,
 
   RESERVATION_DELETE_REQUEST,
   RESERVATION_DELETE_SUCCESS,
@@ -17,16 +17,16 @@ import {
   RESERVATION_JOIN_SUCCESS,
   RESERVATION_JOIN_ERROR,
 
-  // other pages , create reservation
-  RESERVATION_CREATION_REQUEST,
-  RESERVATION_CREATION_SUCCESS,
-  RESERVATION_CREATION_ERROR,
+  RESERVATION_REMOVE_REQUEST,
+  RESERVATION_REMOVE_SUCCESS,
+  RESERVATION_REMOVE_ERROR,
+
 } from './constants';
 
 export const getAllActive = () => async (dispatch, getState) => {
   try {
     dispatch({
-      type: RESERVATION_GETALLACTIVE_REQUEST,
+      type: RESERVATION_GET_ALL_ACTIVE_REQUEST,
     });
 
     // to retrieve information from the store
@@ -47,13 +47,13 @@ export const getAllActive = () => async (dispatch, getState) => {
     );
 
     dispatch({
-      type: RESERVATION_GETALLACTIVE_SUCCESS,
+      type: RESERVATION_GET_ALL_ACTIVE_SUCCESS,
       payload: data,
     });
     localStorage.setItem('activeOrders', JSON.stringify(data));
   } catch (error) {
     dispatch({
-      type: RESERVATION_GETALLACTIVE_ERROR,
+      type: RESERVATION_GET_ALL_ACTIVE_ERROR,
       payload:
                 error.response && error.response.data.detail
                   ? error.response.data.detail
@@ -65,7 +65,7 @@ export const getAllActive = () => async (dispatch, getState) => {
 export const getAllCompleted = () => async (dispatch, getState) => {
   try {
     dispatch({
-      type: RESERVATION_GETALLCOMPLETED_REQUEST,
+      type: RESERVATION_GET_ALL_COMPLETED_REQUEST,
     });
 
     // to retrieve information from the store
@@ -86,13 +86,13 @@ export const getAllCompleted = () => async (dispatch, getState) => {
     );
 
     dispatch({
-      type: RESERVATION_GETALLCOMPLETED_SUCCESS,
+      type: RESERVATION_GET_ALL_COMPLETED_SUCCESS,
       payload: data,
     });
     localStorage.setItem('completedOrders', JSON.stringify(data));
   } catch (error) {
     dispatch({
-      type: RESERVATION_GETALLCOMPLETED_ERROR,
+      type: RESERVATION_GET_ALL_COMPLETED_ERROR,
       payload:
                   error.response && error.response.data.detail
                     ? error.response.data.detail
@@ -186,12 +186,10 @@ export const joinReservation = (reservationID) => async (dispatch, getState) => 
   }
 };
 
-// other pages , create reservation
-// eslint-disable-next-line max-len
-export const createReservation = (restaurantID, reservationTime, reservationPax) => async (dispatch, getState) => {
+export const removeReservation = (reservationID) => async (dispatch, getState) => {
   try {
     dispatch({
-      type: RESERVATION_CREATION_REQUEST,
+      type: RESERVATION_REMOVE_REQUEST,
     });
 
     // to retrieve information from the store
@@ -206,25 +204,27 @@ export const createReservation = (restaurantID, reservationTime, reservationPax)
       },
     };
 
-    const { data } = await axios.post(
-      '/api/resevation/create-reservation/',
+    const { data } = await axios.delete(
+      '/api/resevation/remove-reservation/',
       {
-        restaurantID, reservationTime, reservationPax,
+        reservationID,
       },
       config,
     );
 
     dispatch({
-      type: RESERVATION_CREATION_SUCCESS,
+      type: RESERVATION_REMOVE_SUCCESS,
       payload: data,
     });
+    // after delete need to do this?
+    localStorage.setItem('activeOrders', JSON.stringify(data));
   } catch (error) {
     dispatch({
-      type: RESERVATION_CREATION_ERROR,
+      type: RESERVATION_REMOVE_ERROR,
       payload:
-                  error.response && error.response.data.detail
-                    ? error.response.data.detail
-                    : error.message,
+                      error.response && error.response.data.detail
+                        ? error.response.data.detail
+                        : error.message,
     });
   }
 };

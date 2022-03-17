@@ -6,7 +6,7 @@ import {
   RESERVATION_CREATION_ERROR,
 } from './constants';
 
-export const createReservationReducer = (state = [], action) => {
+export const createReservationReducer = (state = {}, action) => {
   const { type, payload } = action;
 
   switch (type) {
