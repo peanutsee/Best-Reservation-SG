@@ -55,14 +55,13 @@ def retrieveAllRestaurants(request):
     except EmptyPage:
         restaurants_data = paginator.page(paginator.num_pages)
 
-    if page == '':
+    if page == None:
         page = 1
 
     page = int(page)
 
     restaurants_serialized = RestaurantSerializer(restaurants_data, many=True)
     restaurants_data_page = restaurants_serialized.data
-    shuffle(restaurants_data_page)
     
     output = {
         'restaurants_data': restaurants_data_page,
