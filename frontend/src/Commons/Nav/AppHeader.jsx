@@ -31,7 +31,15 @@ function AppHeader() {
         </Link>
 
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
+<<<<<<< HEAD:frontend/src/Commons/Nav/AppHeader.js
+        
+        <Navbar.Collapse
+          id="basic-navbar-nav"
+          className='justify-content-end'
+        >
+=======
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
+>>>>>>> 07757d21c61ff472781f74026f70f52eb3eeacc2:frontend/src/Commons/Nav/AppHeader.jsx
           <Nav>
             {userInfo ? (
               <Dropdown>
