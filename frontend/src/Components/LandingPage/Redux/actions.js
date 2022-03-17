@@ -9,7 +9,7 @@ import {
   RETRIEVE_RESTAURANTS_ERROR,
 } from './constants';
 
-export const retrieveRestaurants = () => async (dispatch) => {
+export const retrieveRestaurants = (page = '') => async (dispatch) => {
   try {
     dispatch({ type: RETRIEVE_RESTAURANTS_REQUEST });
 
@@ -18,13 +18,19 @@ export const retrieveRestaurants = () => async (dispatch) => {
         'Content-type': 'application/json',
       },
     };
-
-    const { data } = await axios.get(
-      '/api/restaurants/retrieve-all-restaurants/',
-      config,
-    );
-
-    dispatch({ type: RETRIEVE_RESTAURANTS_SUCCESS, payload: data });
+    if (page === '') {
+      const { data } = await axios.get(
+        '/api/restaurants/retrieve-all-restaurants',
+        config,
+      );
+      dispatch({ type: RETRIEVE_RESTAURANTS_SUCCESS, payload: data });
+    } else {
+      const { data } = await axios.get(
+        `/api/restaurants/retrieve-all-restaurants/?page=${page}`,
+        config,
+      );
+      dispatch({ type: RETRIEVE_RESTAURANTS_SUCCESS, payload: data });
+    }
   } catch (error) {
     dispatch({
       type: RETRIEVE_RESTAURANTS_ERROR,

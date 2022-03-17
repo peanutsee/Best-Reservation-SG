@@ -17,7 +17,13 @@ export const retrieveRestaurantReducer = (
     case RETRIEVE_RESTAURANTS_REQUEST:
       return { loading: true };
     case RETRIEVE_RESTAURANTS_SUCCESS:
-      return { loading: false, success: true, restaurants: payload };
+      return {
+        loading: false,
+        success: true,
+        restaurants: payload.restaurants_data,
+        page: payload.page,
+        pages: payload.pages,
+      };
     case RETRIEVE_RESTAURANTS_ERROR:
       return { loading: false, success: false, error: payload };
     case RETRIEVE_RESTAURANTS_RESET:

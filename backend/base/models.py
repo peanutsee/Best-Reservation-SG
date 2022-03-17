@@ -41,9 +41,9 @@ class Restaurant(models.Model):
     restaurant_building_name = models.TextField()
     restaurant_postal_code = models.CharField(max_length=255)
     restaurant_longer_description = models.TextField()
-    restaurant_thumbnail = models.ImageField('restaurant-thumbnail-images/', default=None, blank=True, null=True)
-    restaurant_image_1 = models.ImageField('restaurant-images/', default=None, blank=True, null=True)
-    restaurant_image_2 = models.ImageField('restaurant-images/', default=None, blank=True, null=True)
+    restaurant_thumbnail = models.URLField()
+    restaurant_image_1 = models.URLField()
+    restaurant_image_2 = models.URLField()
     num_clicks = models.IntegerField(default=0)
 
     objects = models.Manager()
