@@ -8,9 +8,10 @@ import {
   Table,
   Button,
 } from 'react-bootstrap';
+import QuantityChange from './Components/QuantityChange';
 
 function SplitBillPage() {
-  const [paymentComplete, setPaymentComplete] = useState(true);
+  const [paymentComplete, setPaymentComplete] = useState(false);
   // eslint-disable-next-line no-unused-vars
   const togglePayment = () => {
     setPaymentComplete(!paymentComplete);
@@ -24,23 +25,32 @@ function SplitBillPage() {
       <Table className="table table-striped table-sm">
         <thead>
           <tr>
-            <th scope="col">Items</th>
-            <th scope="col">Price</th>
-            <th scope="col">Quantity</th>
+            <th scope="col" width="220">Items</th>
+            <th scope="col" width="220">Price</th>
+            <th scope="col" width="10">Quantity</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>Chicken Burger</td>
             <td>$5.00</td>
+            <td>
+              <QuantityChange />
+            </td>
           </tr>
           <tr>
             <td>Fried Rice</td>
             <td>$4.00</td>
+            <td>
+              <QuantityChange />
+            </td>
           </tr>
           <tr>
             <td>Ban Mian</td>
             <td>$3.00</td>
+            <td>
+              <QuantityChange />
+            </td>
           </tr>
         </tbody>
       </Table>
