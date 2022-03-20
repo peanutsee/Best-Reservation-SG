@@ -11,6 +11,9 @@ const EmailVerification = lazy(() => import('../Components/EmailVerificationPage
 const PasswordReset = lazy(() => import('../Components/PasswordResetPage'));
 const Registration = lazy(() => import('../Components/RegistrationPage'));
 const ProfilePage = lazy(() => import('../Components/ProfilePage'));
+const PaymentPage = lazy(() => import('../Components/PaymentPage'));
+const AccessPage = lazy(() => import('../Components/AccessPage'));
+const SplitBillPage = lazy(() => import('../Components/SplitBillPage'));
 
 const NAVIGATION_ROUTES = Object.freeze({
   homePage: {
@@ -41,6 +44,18 @@ const NAVIGATION_ROUTES = Object.freeze({
   profilePage: {
     path: '/profile',
     element: <ProfilePage />,
+  },
+  paymentPage: {
+    path: '/payment',
+    element: <PaymentPage />,
+  },
+  accessPage: {
+    path: '/access',
+    element: <AccessPage />,
+  },
+  splitBillPage: {
+    path: '/split_bill',
+    element: <SplitBillPage />,
   },
 });
 
