@@ -26,6 +26,25 @@ function PaymentPage() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const copyToClipboard = (str) => {
+    const el = document.createElement('textarea');
+    el.value = str;
+    el.setAttribute('readonly', '');
+    el.style.position = 'absolute';
+    el.style.left = '-9999px';
+    document.body.appendChild(el);
+    const selected = document.getSelection().rangeCount > 0
+      ? document.getSelection().getRangeAt(0)
+      : false;
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    if (selected) {
+      document.getSelection().removeAllRanges();
+      document.getSelection().addRange(selected);
+    }
+  };
+
   return (
     <Container className="py-5 my-5">
       <h1 className="text-left">
@@ -123,7 +142,13 @@ function PaymentPage() {
                   </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                  <Button>
+                  <Button onClick={() => {
+                    // eslint-disable-next-line no-useless-concat
+                    copyToClipboard('Final order URL: ' + 'https://finalOrder.com\n'
+                  // eslint-disable-next-line no-useless-concat
+                  + 'Password: ' + 'P@ssw0rd');
+                  }}
+                  >
                     Copy
                   </Button>
                 </Modal.Footer>

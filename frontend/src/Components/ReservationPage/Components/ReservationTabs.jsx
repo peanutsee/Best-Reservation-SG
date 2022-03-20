@@ -1,20 +1,15 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable import/extensions */
-/* eslint-disable linebreak-style */
-/* eslint-disable react/jsx-filename-extension */
-/* eslint-disable linebreak-style */
-/* eslint-disable react/jsx-no-undef */
-/* eslint-disable linebreak-style */
 import React from 'react';
+import { Link } from 'react-router-dom';
 import {
-  Dropdown, Table, Container, Tabs, Tab,
+  Nav, Dropdown, Table, Container, Tabs, Tab,
 } from 'react-bootstrap';
 
 function ReservationTabs() {
   return (
-    <Container>
+    <Container className="p-5">
+      <h1 className="mb-5">Reservation Management</h1>
       <Tabs
-        defaultActiveKey="reservations"
+        defaultActiveKey="current"
       >
         <Tab eventKey="current" title="Current">
           <Table striped bordered hover>
@@ -41,9 +36,21 @@ function ReservationTabs() {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                      <Dropdown.Item href="#/action-1">Edit</Dropdown.Item>
-                      <Dropdown.Item href="#/action-2">Delete</Dropdown.Item>
-                      <Dropdown.Item href="#/action-3">Order</Dropdown.Item>
+                      <Dropdown.Item>
+                        <Nav.Link>
+                          <Link to="/edit_reservation">Edit</Link>
+                        </Nav.Link>
+                      </Dropdown.Item>
+                      <Dropdown.Item>
+                        <Nav.Link>
+                          <Link to="/delete_reservation">Delete</Link>
+                        </Nav.Link>
+                      </Dropdown.Item>
+                      <Dropdown.Item>
+                        <Nav.Link>
+                          <Link to="/preorder">Order</Link>
+                        </Nav.Link>
+                      </Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
                 </td>
@@ -61,9 +68,21 @@ function ReservationTabs() {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                      <Dropdown.Item href="#/action-1">Edit</Dropdown.Item>
-                      <Dropdown.Item href="#/action-2">Delete</Dropdown.Item>
-                      <Dropdown.Item href="#/action-3">Order</Dropdown.Item>
+                      <Dropdown.Item>
+                        <Nav.Link>
+                          <Link to="/edit_reservation">Edit</Link>
+                        </Nav.Link>
+                      </Dropdown.Item>
+                      <Dropdown.Item>
+                        <Nav.Link>
+                          <Link to="/delete_reservation">Delete</Link>
+                        </Nav.Link>
+                      </Dropdown.Item>
+                      <Dropdown.Item>
+                        <Nav.Link>
+                          <Link to="/preorder">Order</Link>
+                        </Nav.Link>
+                      </Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
                 </td>
@@ -81,9 +100,21 @@ function ReservationTabs() {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                      <Dropdown.Item href="#/action-1">Edit</Dropdown.Item>
-                      <Dropdown.Item href="#/action-2">Delete</Dropdown.Item>
-                      <Dropdown.Item href="#/action-3">Order</Dropdown.Item>
+                      <Dropdown.Item>
+                        <Nav.Link>
+                          <Link to="/edit_reservation">Edit</Link>
+                        </Nav.Link>
+                      </Dropdown.Item>
+                      <Dropdown.Item>
+                        <Nav.Link>
+                          <Link to="/delete_reservation">Delete</Link>
+                        </Nav.Link>
+                      </Dropdown.Item>
+                      <Dropdown.Item>
+                        <Nav.Link>
+                          <Link to="/preorder">Order</Link>
+                        </Nav.Link>
+                      </Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
                 </td>

@@ -1,3 +1,4 @@
+/* eslint-disable import/extensions */
 /* eslint-disable linebreak-style */
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable react/react-in-jsx-scope */
@@ -14,6 +15,9 @@ const ProfilePage = lazy(() => import('../Components/ProfilePage'));
 const PaymentPage = lazy(() => import('../Components/PaymentPage'));
 const AccessPage = lazy(() => import('../Components/AccessPage'));
 const SplitBillPage = lazy(() => import('../Components/SplitBillPage'));
+const PreOrderPage = lazy(() => import('../Components/PreOrderPage'));
+const RestaurantPage = lazy(() => import('../Components/RestaurantPage'));
+const ReservationConfirmationPage = lazy(() => import('../Components/ReservationConfirmationPage'));
 
 const NAVIGATION_ROUTES = Object.freeze({
   homePage: {
@@ -56,6 +60,18 @@ const NAVIGATION_ROUTES = Object.freeze({
   splitBillPage: {
     path: '/split_bill',
     element: <SplitBillPage />,
+    preOrderPage: {
+      path: '/preorder',
+      element: <PreOrderPage />,
+    },
+    restaurantPage: {
+      path: '/restaurant/:id/',
+      element: <RestaurantPage />,
+    },
+    reservationConfirmationPage: {
+      path: '/reservation_confirmation',
+      element: <ReservationConfirmationPage />,
+    },
   },
 });
 

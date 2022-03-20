@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable linebreak-style */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable linebreak-style */
@@ -5,9 +6,10 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import AppHeader from './Commons/Nav/AppHeader';
 import AppFooter from './Commons/Nav/AppFooter';
+// import 'antd/dist/antd.css';
 import store from './RootRedux/index';
 import './bootstrap.min.css';
 import ScrollToTop from './Commons/ScrollToTop';
@@ -21,8 +23,8 @@ ReactDOM.render(
         <AppHeader />
         <Suspense fallback={<div />}>
           <Routes>
-            {Object.values(NAVIGATION_ROUTES).map((route) => (
-              <Route {...route} />
+            {Object.values(NAVIGATION_ROUTES).map((route, key) => (
+              <Route key={key} {...route} />
             ))}
           </Routes>
         </Suspense>

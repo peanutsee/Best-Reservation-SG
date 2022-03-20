@@ -44,7 +44,6 @@ def getAllCompletedReservation(request):
         if reservation.reservation_owner == user:
             if reservation.reservation_is_completed:
                 completed_reservations.append(reservation)
-
     all_is_part_of = IsPartOf.objects.all()
     for is_part_of in all_is_part_of:
         if is_part_of.reservation_diner == user:
