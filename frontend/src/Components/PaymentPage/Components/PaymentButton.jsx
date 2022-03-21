@@ -4,13 +4,14 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { setPin } from '../Redux/actions';
 
 function PaymentButton(props) {
   const { bill_details } = props;
-  const url = 'www.google.com';
   const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const copyToClipboard = (str) => {
@@ -39,7 +40,7 @@ function PaymentButton(props) {
         <PaymentModal
           show={show}
           onHide={() => setShow(false)}
-          url={url}
+          url={bill_details.bill_url}
           copyToClipboard={copyToClipboard}
         />
       </>
@@ -49,9 +50,20 @@ function PaymentButton(props) {
 }
 
 function PaymentModal(props) {
+  const dispatch = useDispatch();
+  const params = useParams();
+
   const { copyToClipboard, url } = props;
 
   const [password, setPassword] = useState('');
+
+  const pin = useSelector((state) => state.setPasswordReducer);
+  const { success } = pin;
+
+  const handlePassword = (e) => {
+    e.preventDefault();
+    dispatch(setPin(params.id, password));
+  };
 
   return (
     <Modal
@@ -78,33 +90,32 @@ function PaymentModal(props) {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="6 Digit Pin"
             />
+            {success && (
+              <Form.Text>
+                Password set successfully!
+              </Form.Text>
+            )}
           </Form.Group>
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button
-          onClick={() => {
-            copyToClipboard(`URL: ${url}\nPassword: ${password}\nPlease share this with your friends before commencing the proportioning process :)`);
-          }}
-        >
-          Copy
-        </Button>
+        {!success && (
+          <Button onClick={(e) => handlePassword(e)}>Set Password</Button>
+        )}
+        {success && (
+          <Button
+            onClick={() => {
+              copyToClipboard(
+                `URL: ${url}\nPassword: ${password}\nPlease share this with your friends before commencing the proportioning process :)`,
+              );
+            }}
+          >
+            Copy
+          </Button>
+        )}
       </Modal.Footer>
     </Modal>
   );
 }
 
 export default PaymentButton;
-
-// {bill_details && (
-//   <div className="d-flex justify-content-end">
-//     {bill_details.bill_is_paid === true ? (
-//       <>
-//         <Button onClick={handleShow}>Tap to Split</Button>
-//
-//       </>
-//     ) : (
-//       <Button>Tap to Pay</Button>
-//     )}
-//   </div>
-// )}

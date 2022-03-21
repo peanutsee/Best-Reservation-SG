@@ -92,6 +92,8 @@ class BillDetail(models.Model):
     deposit = models.DecimalField(default=20, decimal_places=2, max_digits=10)
     after_tax_bill = models.DecimalField(decimal_places=2, max_digits=10, default=0)
     bill_is_paid = models.BooleanField(default=False)
+    bill_pin = models.TextField(default='NO PIN')
+    bill_url = models.URLField(default='www.example.com')
 
     objects = models.Manager()
 

@@ -9,7 +9,6 @@ const PasswordReset = lazy(() => import('../Components/PasswordResetPage'));
 const Registration = lazy(() => import('../Components/RegistrationPage'));
 const ProfilePage = lazy(() => import('../Components/ProfilePage'));
 const PaymentPage = lazy(() => import('../Components/PaymentPage'));
-const AccessPage = lazy(() => import('../Components/AccessPage'));
 const SplitBillPage = lazy(() => import('../Components/SplitBillPage'));
 const PreOrderPage = lazy(() => import('../Components/PreOrderPage'));
 const RestaurantPage = lazy(() => import('../Components/RestaurantPage'));
@@ -58,12 +57,8 @@ const NAVIGATION_ROUTES = Object.freeze({
     path: '/payment/:id',
     element: <PaymentPage />,
   },
-  accessPage: {
-    path: '/access',
-    element: <AccessPage />,
-  },
   splitBillPage: {
-    path: '/split_bill/:id/:uid',
+    path: '/split_bill/:id',
     element: <SplitBillPage />,
   },
 
