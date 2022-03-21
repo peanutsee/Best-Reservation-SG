@@ -10,6 +10,9 @@ from ..serializers import *
 def fullBillPaymentTabulation(request, order_pk):
     order = Order.objects.get(id=order_pk)
     order_items = OrderItemInOrder.objects.filter(order=order)
+    order_items_serialized = OrderSerializer(order_items, many=True)
+    order_items_data = order_items_serialized.data
+    
     total_before_tax = 0
     for item in order_items:
         total_before_tax += item.get_price()
@@ -29,7 +32,9 @@ def fullBillPaymentTabulation(request, order_pk):
     bill.save()
     bill_serializer = BillDetailSerializer(bill, many=False)
     bill_data = bill_serializer.data
-
+    
+    bill_data.update({'order_items': order_items_data})
+    
     return Response(bill_data, status=status.HTTP_200_OK)
 
 

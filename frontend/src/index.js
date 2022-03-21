@@ -6,7 +6,7 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AppHeader from './Commons/Nav/AppHeader';
 import AppFooter from './Commons/Nav/AppFooter';
 // import 'antd/dist/antd.css';

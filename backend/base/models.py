@@ -26,7 +26,7 @@ class Profile(models.Model):
 
 
 class Restaurant(models.Model):
-    id = models.TextField(primary_key=True)
+    restaurant_uuid = models.TextField(default="None")
     restaurant_name = models.CharField(max_length=255)
     restaurant_official_website = models.URLField()
     restaurant_official_email = models.EmailField()

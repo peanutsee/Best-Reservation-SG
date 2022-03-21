@@ -1,8 +1,4 @@
-/* eslint-disable import/extensions */
-/* eslint-disable linebreak-style */
-/* eslint-disable react/jsx-filename-extension */
 /* eslint-disable react/react-in-jsx-scope */
-
 import { lazy } from 'react';
 
 const Login = lazy(() => import('../Components/AuthenticationPage'));
@@ -20,19 +16,24 @@ const RestaurantPage = lazy(() => import('../Components/RestaurantPage'));
 const ReservationConfirmationPage = lazy(() => import('../Components/ReservationConfirmationPage'));
 
 const NAVIGATION_ROUTES = Object.freeze({
+  // Misc Routes
   homePage: {
     path: '/',
     exact: true,
     element: <LandingPage />,
   },
-  ReservationPage: {
-    path: '/reservation',
-    element: <ReservationPage />,
+
+  profilePage: {
+    path: '/profile',
+    element: <ProfilePage />,
   },
+
+  // Authentication Routes
   login: {
     path: '/login',
     element: <Login />,
   },
+
   emailVerify: {
     path: '/email_verification',
     element: <EmailVerification />,
@@ -45,12 +46,16 @@ const NAVIGATION_ROUTES = Object.freeze({
     path: '/registration',
     element: <Registration />,
   },
-  profilePage: {
-    path: '/profile',
-    element: <ProfilePage />,
+
+  // Reservation Routes
+  ReservationPage: {
+    path: '/reservation',
+    element: <ReservationPage />,
   },
+
+  // Payment Routes
   paymentPage: {
-    path: '/payment',
+    path: '/payment/:id',
     element: <PaymentPage />,
   },
   accessPage: {
@@ -58,20 +63,26 @@ const NAVIGATION_ROUTES = Object.freeze({
     element: <AccessPage />,
   },
   splitBillPage: {
-    path: '/split_bill',
+    path: '/split_bill/:id/:uid',
     element: <SplitBillPage />,
-    preOrderPage: {
-      path: '/preorder',
-      element: <PreOrderPage />,
-    },
-    restaurantPage: {
-      path: '/restaurant/:id/',
-      element: <RestaurantPage />,
-    },
-    reservationConfirmationPage: {
-      path: '/reservation_confirmation',
-      element: <ReservationConfirmationPage />,
-    },
+  },
+
+  // Pre-Order Routes
+  preOrderPage: {
+    path: '/preorder/:id',
+    element: <PreOrderPage />,
+  },
+
+  // Restaurant Routes
+  restaurantPage: {
+    path: '/restaurant/:id',
+    element: <RestaurantPage />,
+  },
+
+  // Reservation Routes
+  reservationConfirmationPage: {
+    path: '/reservation_confirmation',
+    element: <ReservationConfirmationPage />,
   },
 });
 
