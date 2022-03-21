@@ -10,9 +10,18 @@ from ..serializers import *
 def fullBillPaymentTabulation(request, order_pk):
     order = Order.objects.get(id=order_pk)
     order_items = OrderItemInOrder.objects.filter(order=order)
-    order_items_serialized = OrderSerializer(order_items, many=True)
+    order_items_serialized = OrderItemInOrderSerializer(order_items, many=True)
     order_items_data = order_items_serialized.data
     
+    for item in order_items_data:
+        menu_item = MenuItem.objects.get(id=item['id'])
+        item_serialized = MenuItemSerializer(menu_item, many=False)
+        item_data = item_serialized.data
+        item_name = item_data['menu_item_name']
+        item_price = item_data['menu_item_price']
+        item.update({'order_item_name': item_name})
+        item.update({'order_item_price': item_price})
+        
     total_before_tax = 0
     for item in order_items:
         total_before_tax += item.get_price()
