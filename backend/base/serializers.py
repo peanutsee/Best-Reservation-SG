@@ -76,3 +76,12 @@ class OrderItemInOrderSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class TelegramDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TelegramData
+        fields = '__all__'
+        
+class ProportionsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Proportions
+        fields = '__all__'
