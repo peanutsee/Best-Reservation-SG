@@ -7,7 +7,8 @@ urlpatterns = [
     path('update-bill-password/order_id=<int:order_pk>/', views.updatePin),
     
     # Split Bill Payment to Users
-    path("split-bill-to-users/order_id=<int:order_pk>/", views.splitBillPayment)
+    path("split-bill-to-users/order_id=<int:order_pk>/", views.splitBillPayment), 
+    path("add-proportions/order_id=<int:order_pk>/", views.addProportions)
 ]
 
 

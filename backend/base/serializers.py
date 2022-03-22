@@ -81,7 +81,7 @@ class TelegramDataSerializer(serializers.ModelSerializer):
         model = TelegramData
         fields = '__all__'
         
-class ProportionsSerializer(serializers.ModelSerializer):
+class ProportionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Proportions
+        model = Proportion
         fields = '__all__'
