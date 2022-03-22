@@ -42,6 +42,8 @@ class OrderAdmin(admin.ModelAdmin):
 @admin.register(TelegramData)
 class TelegramDataAdmin(admin.ModelAdmin):
     pass
-
+@admin.register(Proportions)
+class ProportionsAdmin(admin.ModelAdmin):
+    pass
 
 
