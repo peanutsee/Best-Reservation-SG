@@ -1,18 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-
-# TODO: Create serializers for all fields (unless otherwise stated)
-# TODO: All models must support CRUD, views must reflect this
-# TODO: ALl endpoints must be tested independently of each other and the frontend UI
-# TODO: All endpoints must be documented in swaggerhub
-
-# TODO: API to Restaurants
-# TODO: API to DBS PayLah!
-# TODO: API to Telegram
-# TODO: Email SMTP
-# TODO: AWS backend (EC2, RDS, S3, ELB)
-
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     contact_number = models.CharField(max_length=255)
@@ -63,8 +51,9 @@ class Reservation(models.Model):
     reservation_is_completed = models.BooleanField(default=False)
     reservation_pax = models.IntegerField()
     number_of_users_in_reservation = models.IntegerField(default=1)
-    #reservation_link = models.URLField()
-    # reservation_qr_code = models.ImageField(upload_to='reservation-qr/')
+    reservation_pin = models.TextField(default='NO PIN')
+    reservation_url = models.URLField(default='www.example.com')
+
     
     objects = models.Manager()
 
@@ -144,3 +133,22 @@ class OrderItemInOrder(models.Model):
 
     def __str__(self):
         return f"{self.order_item.menu_item_name} in {self.order.__str__()}"
+
+class TelegramData(models.Model):
+    telegram_handle = models.TextField()
+    telegram_id = models.IntegerField()
+    
+    objects = models.Manager()
+    
+    def __str__(self):
+        return self.telegram_handle
+    
+class Proportions(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    telegram_handle = models.ForeignKey(TelegramData, on_delete=models.SET_NULL, null=True, blank=True)
+    proportions = models.TextField()
+    
+    objects = models.Manager()
+    
+    def __str__(self):
+        return self.telegram_handle.telegram_handle
