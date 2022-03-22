@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
-from base.serializers import *
-from base.models import *
+from ..serializers import *
+from ..models import *
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from datetime import datetime
@@ -22,6 +22,11 @@ def getAllReservation(request):
 
     # Sort Active Reservation
     active_reservations = Reservation.objects.filter(reservation_owner=user, reservation_is_completed=False)
+    is_part_of_active_reservations = IsPartOf.objects.filter(reservation_diner=user)
+    for is_part_of in is_part_of_active_reservations:
+        if ( is_part_of.reservation.reservation_is_completed == False ):
+            active_reservations.append(is_part_of.reservation)
+
     active_reservations_serialized = ReservationSerializer(active_reservations, many=True)
     active_reservations_data = active_reservations_serialized.data
     for reservation in active_reservations_data:
@@ -39,6 +44,11 @@ def getAllReservation(request):
                    
     # Sort Completed Reservation
     completed_reservations = Reservation.objects.filter(reservation_owner=user, reservation_is_completed=True)
+    is_part_of_completed_reservations = IsPartOf.objects.filter(reservation_diner=user)
+    for is_part_of in is_part_of_completed_reservations:
+        if ( is_part_of.reservation.reservation_is_completed == True ):
+            completed_reservations.append(is_part_of.reservation)
+
     completed_reservations_serialized = ReservationSerializer(completed_reservations, many=True)
     completed_reservations_data = completed_reservations_serialized.data
     for reservation in completed_reservations_data:
@@ -70,6 +80,8 @@ def createReservation(request):
         reservation_date_time=data['reservation_time'],
         reservation_pax=data['reservation_pax'],
     )
+
+    reservation.reservation_url = f"http://localhost:3000/reservation/{reservation.id}"
 
     bill = BillDetail.objects.create(
         bill_reservation=reservation,

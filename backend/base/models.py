@@ -41,9 +41,9 @@ class Restaurant(models.Model):
     restaurant_building_name = models.TextField()
     restaurant_postal_code = models.CharField(max_length=255)
     restaurant_longer_description = models.TextField()
-    restaurant_thumbnail = models.URLField()
-    restaurant_image_1 = models.URLField()
-    restaurant_image_2 = models.URLField()
+    restaurant_thumbnail = models.URLField(default=None)
+    restaurant_image_1 = models.URLField(default=None)
+    restaurant_image_2 = models.URLField(default=None)
     num_clicks = models.IntegerField(default=0)
 
     objects = models.Manager()
@@ -63,7 +63,8 @@ class Reservation(models.Model):
     reservation_is_completed = models.BooleanField(default=False)
     reservation_pax = models.IntegerField()
     number_of_users_in_reservation = models.IntegerField(default=1)
-    #reservation_link = models.URLField()
+    reservation_pin = models.TextField(default='NO PIN')
+    reservation_url = models.URLField(default='www.example.com')
     # reservation_qr_code = models.ImageField(upload_to='reservation-qr/')
     
     objects = models.Manager()

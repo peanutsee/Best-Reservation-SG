@@ -2,16 +2,16 @@
 /* eslint-disable import/prefer-default-export */
 import axios from 'axios';
 import {
-  RESERVATION_CREATION_REQUEST,
-  RESERVATION_CREATION_SUCCESS,
-  RESERVATION_CREATION_ERROR,
+  RESERVATION_UPDATE_REQUEST,
+  RESERVATION_UPDATE_SUCCESS,
+  RESERVATION_UPDATE_ERROR,
 } from './constants';
 
 // eslint-disable-next-line max-len
-export const createReservation = (restaurant_id, reservation_date_time, reservation_pax) => async (dispatch, getState) => {
+export const updateReservation = (reservationID, reservation_date_time, reservation_pax) => async (dispatch, getState) => {
   try {
     dispatch({
-      type: RESERVATION_CREATION_REQUEST,
+      type: RESERVATION_UPDATE_REQUEST,
     });
 
     // to retrieve information from the store
@@ -25,22 +25,21 @@ export const createReservation = (restaurant_id, reservation_date_time, reservat
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-
     const { data } = await axios.post(
-      '/api/resevation/create-reservation/',
+      `/api/reservation/update-reservation/reservation_id=${reservationID}`,
       {
-        restaurant_id, reservation_date_time, reservation_pax,
+        reservationID, reservation_date_time, reservation_pax,
       },
       config,
     );
 
     dispatch({
-      type: RESERVATION_CREATION_SUCCESS,
+      type: RESERVATION_UPDATE_SUCCESS,
       payload: data,
     });
   } catch (error) {
     dispatch({
-      type: RESERVATION_CREATION_ERROR,
+      type: RESERVATION_UPDATE_ERROR,
       payload:
         error.response && error.response.data.detail
           ? error.response.data.detail
