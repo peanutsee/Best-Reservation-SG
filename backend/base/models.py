@@ -26,7 +26,7 @@ class Profile(models.Model):
 
 
 class Restaurant(models.Model):
-    id = models.TextField(primary_key=True)
+    restaurant_uuid = models.TextField(default="None")
     restaurant_name = models.CharField(max_length=255)
     restaurant_official_website = models.URLField()
     restaurant_official_email = models.EmailField()
@@ -92,6 +92,8 @@ class BillDetail(models.Model):
     deposit = models.DecimalField(default=20, decimal_places=2, max_digits=10)
     after_tax_bill = models.DecimalField(decimal_places=2, max_digits=10, default=0)
     bill_is_paid = models.BooleanField(default=False)
+    bill_pin = models.TextField(default='NO PIN')
+    bill_url = models.URLField(default='www.example.com')
 
     objects = models.Manager()
 
@@ -113,7 +115,7 @@ class MenuItem(models.Model):
     menu_item_name = models.CharField(max_length=255)
     menu_item_description = models.TextField()
     menu_item_price = models.DecimalField(max_digits=10, decimal_places=2)
-    menu_item_image = models.ImageField(upload_to='menu-item-image/')
+    menu_item_image = models.ImageField(upload_to='menu-item-image/', default=None, blank=True, null=True)
 
     objects = models.Manager()
 

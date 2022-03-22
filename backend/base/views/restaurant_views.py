@@ -11,8 +11,8 @@ def retrieveAllRestaurants(request):
     """
     Retrieve Restaurant with No Filter
     """
-    # RUN ONCE TO LOAD RESTAURANTS INTO DATABASE
-    # file_paths = [r'~/formatted_clean_chinese_food.json',r'~/formatted_clean_muslim_food.json',r'~/formatted_clean_indian_food.json',r'~/formatted_clean_japanese_food.json',r'~/formatted_clean_western_food.json' ]
+    # # RUN ONCE TO LOAD RESTAURANTS INTO DATABASE
+    # file_paths = [r'C:/Users/Darryl See/Desktop/cz2006-project/backend/base/views/formatted_clean_chinese_food.json',r'C:/Users/Darryl See/Desktop/cz2006-project/backend/base/views//formatted_clean_muslim_food.json',r'C:/Users/Darryl See/Desktop/cz2006-project/backend/base/views//formatted_clean_indian_food.json',r'C:/Users/Darryl See/Desktop/cz2006-project/backend/base/views//formatted_clean_japanese_food.json',r'C:/Users/Darryl See/Desktop/cz2006-project/backend/base/views//formatted_clean_western_food.json' ]
     # for f in file_paths:
     #     with open(f, encoding='utf-8') as file:
     #         f = json.load(file)
@@ -20,7 +20,7 @@ def retrieveAllRestaurants(request):
     #             data = f.get(key)
     #             try:
     #                 restaurant = Restaurant.objects.create(
-    #                     id=data['uuid'],
+    #                     restaurant_uuid=data['uuid'],
     #                     restaurant_name = data['name'],
     #                     restaurant_official_website = data['officialWebsite'],
     #                     restaurant_official_email = data['officialEmail'],

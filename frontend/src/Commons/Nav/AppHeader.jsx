@@ -2,11 +2,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react';
 import {
-  Navbar,
-  Container,
-  Nav,
-  Dropdown,
-  NavDropdown,
+  Navbar, Container, Nav, Dropdown, NavDropdown,
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -71,15 +67,11 @@ function AppHeader() {
                   <Link to="/">Home</Link>
                 </div>
                 <div className="header-links">
-                  <Link to="/login">
-                    Sign In
-                  </Link>
+                  <Link to="/login">Sign In</Link>
                 </div>
 
                 <div className="header-links">
-                  <Link to="/registration">
-                    Sign Up
-                  </Link>
+                  <Link to="/registration">Sign Up</Link>
                 </div>
               </>
             )}

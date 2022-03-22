@@ -1,165 +1,52 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import {
-  Nav, Dropdown, Table, Container, Tabs, Tab,
-} from 'react-bootstrap';
+/* eslint-disable max-len */
+/* eslint-disable no-nested-ternary */
+/* eslint-disable camelcase */
+import React, { useEffect } from 'react';
+import { Container, Tabs, Tab } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import ActiveReservations from './ActiveReservations';
+import CompletedReservations from './CompletedReservations';
+import { retrieveAllReservations } from '../Redux/actions';
 
 function ReservationTabs() {
+  const dispatch = useDispatch();
+
+  const retrieveReservations = useSelector(
+    (state) => state.retrieveReservationsReducer,
+  );
+  const {
+    loading, error, active_reservations, completed_reservations,
+  } = retrieveReservations;
+
+  useEffect(() => {
+    if (!active_reservations) {
+      dispatch(retrieveAllReservations());
+    }
+  }, [dispatch, active_reservations]);
+
   return (
     <Container className="p-5">
       <h1 className="mb-5">Reservation Management</h1>
-      <Tabs
-        defaultActiveKey="current"
-      >
-        <Tab eventKey="current" title="Current">
-          <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Restaurant</th>
-                <th>Pax</th>
-                <th>Timing</th>
-                <th>Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>Koma</td>
-                <td>3</td>
-                <td>7:30pm</td>
-                <td>25 April 2022</td>
-                <td>
-                  <Dropdown className="d-flex justify-content-center align-center">
-                    <Dropdown.Toggle>
-                      Manage Reservation
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu>
-                      <Dropdown.Item>
-                        <Nav.Link>
-                          <Link to="/edit_reservation">Edit</Link>
-                        </Nav.Link>
-                      </Dropdown.Item>
-                      <Dropdown.Item>
-                        <Nav.Link>
-                          <Link to="/delete_reservation">Delete</Link>
-                        </Nav.Link>
-                      </Dropdown.Item>
-                      <Dropdown.Item>
-                        <Nav.Link>
-                          <Link to="/preorder">Order</Link>
-                        </Nav.Link>
-                      </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Burger and Lobster</td>
-                <td>2</td>
-                <td>7:00pm</td>
-                <td>25 May 2022</td>
-                <td>
-                  <Dropdown className="d-flex justify-content-center align-center">
-                    <Dropdown.Toggle id="dropdown-basic">
-                      Manage Reservation
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu>
-                      <Dropdown.Item>
-                        <Nav.Link>
-                          <Link to="/edit_reservation">Edit</Link>
-                        </Nav.Link>
-                      </Dropdown.Item>
-                      <Dropdown.Item>
-                        <Nav.Link>
-                          <Link to="/delete_reservation">Delete</Link>
-                        </Nav.Link>
-                      </Dropdown.Item>
-                      <Dropdown.Item>
-                        <Nav.Link>
-                          <Link to="/preorder">Order</Link>
-                        </Nav.Link>
-                      </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>Lavo</td>
-                <td>2</td>
-                <td>7:15pm</td>
-                <td>2 June 2022</td>
-                <td>
-                  <Dropdown className="d-flex justify-content-center align-center">
-                    <Dropdown.Toggle id="dropdown-basic">
-                      Manage Reservation
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu>
-                      <Dropdown.Item>
-                        <Nav.Link>
-                          <Link to="/edit_reservation">Edit</Link>
-                        </Nav.Link>
-                      </Dropdown.Item>
-                      <Dropdown.Item>
-                        <Nav.Link>
-                          <Link to="/delete_reservation">Delete</Link>
-                        </Nav.Link>
-                      </Dropdown.Item>
-                      <Dropdown.Item>
-                        <Nav.Link>
-                          <Link to="/preorder">Order</Link>
-                        </Nav.Link>
-                      </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </td>
-              </tr>
-            </tbody>
-          </Table>
-        </Tab>
-        <Tab eventKey="previous" title="Previous">
-          <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Restaurant</th>
-                <th>Pax</th>
-                <th>Timing</th>
-                <th>Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>Koma</td>
-                <td>3</td>
-                <td>7:30pm</td>
-                <td>23 Jan 2022</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Burger and Lobster</td>
-                <td>2</td>
-                <td>7:00pm</td>
-                <td>24 Feb 2022</td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>Lavo</td>
-                <td>2</td>
-                <td>7:15pm</td>
-                <td>1 March 2022</td>
-              </tr>
-            </tbody>
-          </Table>
-        </Tab>
-      </Tabs>
-
+      {loading ? (
+        <h1>Loading Reservations...</h1>
+      ) : error ? (
+        <h1>Error Loading Reservations...</h1>
+      ) : (
+        <Tabs defaultActiveKey="current">
+          <Tab eventKey="current" title="Current">
+            {active_reservations && (
+              <ActiveReservations active_reservations={active_reservations} />
+            )}
+          </Tab>
+          <Tab eventKey="previous" title="Previous">
+            {completed_reservations && (
+              <CompletedReservations
+                completed_reservations={completed_reservations}
+              />
+            )}
+          </Tab>
+        </Tabs>
+      )}
     </Container>
   );
 }

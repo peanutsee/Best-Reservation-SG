@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'storages',
+    'django_extensions',
     'base.apps.BaseConfig',
 ]
 
@@ -89,7 +90,7 @@ DATABASES = {
         'NAME': 'project_db',
         'USER': 'cz2006_admin',
         'PASSWORD': 'cz2006_admin_password',
-        "HOST": 'cz2006-project-db.chogbp65nxin.ap-southeast-1.rds.amazonaws.com',
+        "HOST": 'cz2007-db.chogbp65nxin.ap-southeast-1.rds.amazonaws.com',
         'PORT': '5432'
     }
 }

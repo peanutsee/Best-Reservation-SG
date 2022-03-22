@@ -10,26 +10,48 @@ from ..serializers import *
 def fullBillPaymentTabulation(request, order_pk):
     order = Order.objects.get(id=order_pk)
     order_items = OrderItemInOrder.objects.filter(order=order)
+    order_items_serialized = OrderItemInOrderSerializer(order_items, many=True)
+    order_items_data = order_items_serialized.data
+    
+    for item in order_items_data:
+        menu_item = MenuItem.objects.get(id=item['id'])
+        item_serialized = MenuItemSerializer(menu_item, many=False)
+        item_data = item_serialized.data
+        item_name = item_data['menu_item_name']
+        item_price = item_data['menu_item_price']
+        item.update({'order_item_name': item_name})
+        item.update({'order_item_price': item_price})
+        
     total_before_tax = 0
     for item in order_items:
         total_before_tax += item.get_price()
-    bill = BillDetail.objects.filter(bill_reservation=order.order_reservation)
+    bill = BillDetail.objects.get(bill_reservation=order.order_reservation)
+    
+    bill.bill_url = f"http://localhost:3000/split_bill/{bill.id}"
+    bill.before_tax_bill = total_before_tax
+    bill.after_tax_bill = bill.calculate_final_bill()
+    
+    bill.save()
+    bill_serializer = BillDetailSerializer(bill, many=False)
+    bill_data = bill_serializer.data
+    
+    bill_data.update({'order_items': order_items_data})
+    
+    return Response(bill_data, status=status.HTTP_200_OK)
 
-    if len(bill) == 0:
-        bill = BillDetail.objects.create(
-            bill_reservation=order.order_reservation,
-            before_tax_bill=total_before_tax,
-        )
-        bill.after_tax_bill = bill.calculate_final_bill()
-    else:
-        bill = bill[0]
-        bill.before_tax_bill = total_before_tax
-        bill.after_tax_bill = bill.calculate_final_bill()
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def updatePin(request, order_pk):
+    data = request.data
+    order = Order.objects.get(id=order_pk)
+    bill = BillDetail.objects.get(bill_reservation=order.order_reservation)
+    
+    bill.bill_pin = data['bill_password']
 
     bill.save()
     bill_serializer = BillDetailSerializer(bill, many=False)
     bill_data = bill_serializer.data
-
+    
     return Response(bill_data, status=status.HTTP_200_OK)
 
 
