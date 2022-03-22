@@ -14,6 +14,11 @@ function PaymentButton(props) {
 
   const handleShow = () => setShow(true);
 
+  const handlePayment = () => {
+    // TODO: HANDLE PAYMENT
+    console.log('payment');
+  };
+
   const copyToClipboard = (str) => {
     const el = document.createElement('textarea');
     el.value = str;
@@ -46,7 +51,7 @@ function PaymentButton(props) {
       </>
     );
   }
-  return <Button>Make Payment</Button>;
+  return <Button onClick={handlePayment}>Make Payment</Button>;
 }
 
 function PaymentModal(props) {
@@ -62,7 +67,9 @@ function PaymentModal(props) {
 
   const handlePassword = (e) => {
     e.preventDefault();
-    dispatch(setPin(params.id, password));
+    if (password !== '') {
+      dispatch(setPin(params.id, password));
+    }
   };
 
   return (
@@ -90,17 +97,19 @@ function PaymentModal(props) {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="6 Digit Pin"
             />
-            {success && (
-              <Form.Text>
-                Password set successfully!
-              </Form.Text>
-            )}
+            {success && <Form.Text>Password set successfully!</Form.Text>}
           </Form.Group>
         </Form>
       </Modal.Body>
       <Modal.Footer>
         {!success && (
-          <Button onClick={(e) => handlePassword(e)}>Set Password</Button>
+          <Button
+            title="Set Pin"
+            disabled={password === ''}
+            onClick={(e) => handlePassword(e)}
+          >
+            Set Password
+          </Button>
         )}
         {success && (
           <Button
