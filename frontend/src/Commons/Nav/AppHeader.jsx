@@ -1,17 +1,17 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react';
 import {
   Navbar,
   Container,
   Nav,
-  Button,
   Dropdown,
   NavDropdown,
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../Components/AuthenticationPage/Redux/actions';
+import './app.css';
 
 function AppHeader() {
   const dispatch = useDispatch();
@@ -24,7 +24,7 @@ function AppHeader() {
   };
 
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar className="transparent-bg" expand="lg">
       <Container>
         <Link to="/">
           <Navbar.Brand>BEST RESERVATION SG</Navbar.Brand>
@@ -33,9 +33,6 @@ function AppHeader() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
           <Nav>
-            <Nav.Link className="mx-4">
-              <Link to="/">Home</Link>
-            </Nav.Link>
             {userInfo ? (
               <Dropdown>
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
@@ -44,43 +41,46 @@ function AppHeader() {
 
                 <Dropdown.Menu>
                   <Dropdown.Item>
-                    <Nav.Link>
+                    <div>
                       <Link to="/profile">Profile</Link>
-                    </Nav.Link>
+                    </div>
                   </Dropdown.Item>
                   <Dropdown.Item>
-                    <Nav.Link>
+                    <div>
                       <Link to="/reservation">Reservation</Link>
-                    </Nav.Link>
+                    </div>
                   </Dropdown.Item>
                   <NavDropdown.Divider />
 
                   <Dropdown.Item>
                     <Link to="/">
-                      <Button
+                      <div
                         variant="outline-light"
                         className="text-black"
                         onClick={logoutHandler}
                       >
                         Logout
-                      </Button>
+                      </div>
                     </Link>
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             ) : (
               <>
-                <Nav.Link>
-                  <Link to="/login" className="mx-4">
+                <div className="header-links">
+                  <Link to="/">Home</Link>
+                </div>
+                <div className="header-links">
+                  <Link to="/login">
                     Sign In
                   </Link>
-                </Nav.Link>
+                </div>
 
-                <Nav.Link>
-                  <Link to="/registration" className="mx-4">
+                <div className="header-links">
+                  <Link to="/registration">
                     Sign Up
                   </Link>
-                </Nav.Link>
+                </div>
               </>
             )}
           </Nav>

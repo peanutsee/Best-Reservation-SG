@@ -29,7 +29,7 @@ function RestaurantTabs() {
                 Sat-Sun: 2:00-8:00pm
               </p>
             </div>
-            <div className="col-6 col-md-4 border-right border-dark">
+            <div className="col-6 col-md-4 border-left border-dark">
               <h4>Address</h4>
               <p>
                 123 Restaurant Avenue

@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-nested-ternary */
 import React, { useEffect } from 'react';
@@ -12,7 +12,6 @@ import RestaurantPaginator from './RestaurantPaginator';
 function Restaurants() {
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
-
   const retrieveRestaurantData = useSelector(
     (state) => state.retrieveRestaurantReducer,
   );
@@ -37,13 +36,13 @@ function Restaurants() {
       ) : (
         <>
           <Row>
-            {restaurants.map((restaurant) => (
-              <Col sm={3} className="mb-3">
+            {restaurants.map((restaurant, key) => (
+              <Col key={key} sm={3} className="mb-3">
                 <RestaurantCardModel restaurant={restaurant} />
               </Col>
             ))}
           </Row>
-          <div className="d-flex justify-content-center align-middle">
+          <div className="d-flex justify-content-center mt-5">
             <RestaurantPaginator page={page} pages={pages} />
           </div>
         </>

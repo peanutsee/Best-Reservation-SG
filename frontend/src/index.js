@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable linebreak-style */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable linebreak-style */
@@ -22,8 +23,8 @@ ReactDOM.render(
         <AppHeader />
         <Suspense fallback={<div />}>
           <Routes>
-            {Object.values(NAVIGATION_ROUTES).map((route) => (
-              <Route {...route} />
+            {Object.values(NAVIGATION_ROUTES).map((route, key) => (
+              <Route key={key} {...route} />
             ))}
           </Routes>
         </Suspense>

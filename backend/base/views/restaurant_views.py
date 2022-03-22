@@ -11,7 +11,6 @@ def retrieveAllRestaurants(request):
     """
     Retrieve Restaurant with No Filter
     """
-    print(request.query_params.page)
     # RUN ONCE TO LOAD RESTAURANTS INTO DATABASE
     # file_paths = [r'~/formatted_clean_chinese_food.json',r'~/formatted_clean_muslim_food.json',r'~/formatted_clean_indian_food.json',r'~/formatted_clean_japanese_food.json',r'~/formatted_clean_western_food.json' ]
     # for f in file_paths:
@@ -55,14 +54,13 @@ def retrieveAllRestaurants(request):
     except EmptyPage:
         restaurants_data = paginator.page(paginator.num_pages)
 
-    if page == '':
+    if page == None:
         page = 1
 
     page = int(page)
 
     restaurants_serialized = RestaurantSerializer(restaurants_data, many=True)
     restaurants_data_page = restaurants_serialized.data
-    shuffle(restaurants_data_page)
     
     output = {
         'restaurants_data': restaurants_data_page,
