@@ -66,6 +66,30 @@ def fullBillPaymentSettlement(request, bill_id):
     bill_data = bill_serializer.data
     return Response(bill_data, status=status.HTTP_200_OK)
 
+# Add to Proportions
+@api_view(['POST'])
+def addProportions(request, order_pk):
+    data = request.data
+    order = Order.objects.get(id=order_pk)
+    proportion = Proportion.objects.filter(order=order, telegram_handle=data['telegram_handle'])
+    try:
+        if not proportion.exists():
+            new_proportions = Proportion.objects.create(
+                order=order,
+                telegram_handle= str(data['telegram_handle']),
+                proportions= ", ".join(data['proportions'])
+            )
+            new_proportions.save()
+            new_proportions_serializer = ProportionSerializer(new_proportions, many=False)
+            new_proportions_data = new_proportions_serializer.data
+        
+            return Response(new_proportions_data, status=status.HTTP_201_CREATED)
+        else:
+            assert "Already Exists"
+    except:
+        return Response("Proportion Already Exists!", status=status.HTTP_400_BAD_REQUEST)
+
+
 # Split Payment
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])

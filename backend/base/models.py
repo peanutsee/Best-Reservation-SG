@@ -143,12 +143,12 @@ class TelegramData(models.Model):
     def __str__(self):
         return self.telegram_handle
     
-class Proportions(models.Model):
+class Proportion(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    telegram_handle = models.ForeignKey(TelegramData, on_delete=models.SET_NULL, null=True, blank=True)
+    telegram_handle = models.TextField()
     proportions = models.TextField()
     
     objects = models.Manager()
     
     def __str__(self):
-        return self.telegram_handle.telegram_handle
+        return self.telegram_handle + " in " + str(self.order.id)
