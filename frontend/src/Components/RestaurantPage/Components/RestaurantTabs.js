@@ -46,7 +46,7 @@ function RestaurantTabs() {
               </p>
             </div>
             <div className="pt-3">
-              <Link to="/reservation_confirmation">
+              <Link to="/reservation_confirmation/">
                 <Button variant="success" size="md">
                   Reserve Now
                 </Button>
@@ -54,7 +54,6 @@ function RestaurantTabs() {
             </div>
           </div>
         </Tab>
-
         <Tab eventKey="menu" title="Menu">
           sdsdws
         </Tab>

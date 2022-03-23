@@ -34,7 +34,7 @@ function ActiveReservations(props) {
                 <Dropdown.Menu>
                   <Dropdown.Item>
                     <Nav.Link>
-                      <Link to={`/edit_reservation/${reservation.id}`}>Edit</Link>
+                      <Link to={`/reservation_info/${reservation.id}`}>Edit</Link>
                     </Nav.Link>
                   </Dropdown.Item>
                   <Dropdown.Item>
