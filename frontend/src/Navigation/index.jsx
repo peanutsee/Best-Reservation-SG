@@ -80,6 +80,12 @@ const NAVIGATION_ROUTES = Object.freeze({
     path: '/reservation_confirmation',
     element: <ReservationConfirmationPage />,
   },
+
+  // Pre-Order Routes
+  preOrderConfirmationPage: {
+    path: '/preorder_confirmation',
+    element: <PreOrderConfirmationPage />,
+  },
 });
 
 export default NAVIGATION_ROUTES;
