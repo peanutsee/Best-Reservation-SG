@@ -1,0 +1,35 @@
+#center {
+    text-align: center;
+    vertical-align: middle;
+    padding-right: 5%;
+    padding-bottom: 5%;
+    padding-left: 0%
+}
+
+#ButtonStyle {
+    width: 100%;
+    margin-bottom: 5%;
+}
+
+#ButtonStyle2 {
+    width: 100%;
+    margin-top: 15%;
+    margin-bottom: 5%;
+}
+
+td {
+    vertical-align:middle;
+    text-align:center;
+    padding-left: 0px;
+    margin: 0px;
+}
+
+Table {
+    width: "600px";
+    margin: "0px";
+}
+
+#Table2 {
+    width: 100%;
+    border: 1px solid black;
+}
