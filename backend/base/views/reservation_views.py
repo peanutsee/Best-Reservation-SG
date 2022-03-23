@@ -20,13 +20,43 @@ def getAllReservation(request):
 
     user = request.user
 
+    # Get All Part Of Reservations
+    is_part_of_reservations = IsPartOf.objects.filter(reservation_diner=user)
+    is_part_of_reservations_serialized = IsPartOfSerializer(is_part_of_reservations, many=True)
+    is_part_of_reservations_data = is_part_of_reservations_serialized.data
+
+    part_of_reservations = {"active_part_of": [], 'completed_part_of': []}
+
+    for reservation in is_part_of_reservations_data:
+        # Retrieve Reservation Information
+
+        reservation = Reservation.objects.get(id=reservation['reservation'])
+        reservation_serialized = ReservationSerializer(reservation, many=False)
+        reservation_data = reservation_serialized.data
+
+        restaurant = Restaurant.objects.get(id=reservation_data['reservation_restaurant']).restaurant_name
+        #print(restaurant)
+        reservation_data['reservation_restaurant'] = restaurant
+        date, time = datetime.strptime(reservation_data['reservation_date_time'], '%Y-%m-%dT%H:%M:%SZ').date(), datetime.strptime(reservation_data['reservation_date_time'], '%Y-%m-%dT%H:%M:%SZ').time()
+        reservation_data['reservation_date'] = date
+        reservation_data['reservation_time'] = time
+
+        # Get Pre-Order Field
+        preorder = Order.objects.get(order_reservation=reservation_data['id'])
+        preorder_serialized = OrderSerializer(preorder, many=False)
+        reservation_data.update({"pre_order_id": preorder_serialized.data['id']})
+
+        # Sort Active Is Part Of
+        if not reservation_data['reservation_is_completed']:
+            part_of_reservations['active_part_of'].append(reservation_data)
+
+        # Sort Completed Is Part Of
+        else:
+            part_of_reservations['completed_part_of'].append(reservation_data)
+
+
     # Sort Active Reservation
     active_reservations = Reservation.objects.filter(reservation_owner=user, reservation_is_completed=False)
-    is_part_of_active_reservations = IsPartOf.objects.filter(reservation_diner=user)
-    for is_part_of in is_part_of_active_reservations:
-        if ( is_part_of.reservation.reservation_is_completed == False ):
-            active_reservations.append(is_part_of.reservation)
-
     active_reservations_serialized = ReservationSerializer(active_reservations, many=True)
     active_reservations_data = active_reservations_serialized.data
     for reservation in active_reservations_data:
@@ -44,10 +74,6 @@ def getAllReservation(request):
                    
     # Sort Completed Reservation
     completed_reservations = Reservation.objects.filter(reservation_owner=user, reservation_is_completed=True)
-    is_part_of_completed_reservations = IsPartOf.objects.filter(reservation_diner=user)
-    for is_part_of in is_part_of_completed_reservations:
-        if ( is_part_of.reservation.reservation_is_completed == True ):
-            completed_reservations.append(is_part_of.reservation)
 
     completed_reservations_serialized = ReservationSerializer(completed_reservations, many=True)
     completed_reservations_data = completed_reservations_serialized.data
@@ -60,7 +86,8 @@ def getAllReservation(request):
     
     output = {
         "active_reservations": active_reservations_data,
-        'completed_reservations': completed_reservations_data
+        'completed_reservations': completed_reservations_data,
+        'is_part_of_reservation': part_of_reservations,
     }
     
     return Response(output, status=status.HTTP_200_OK)
@@ -104,7 +131,6 @@ def getReservation(request, pk):
     user = request.user
     try:
         reservation = Reservation.objects.get(id=pk)
-        is_part_of = IsPartOf.objects.filter(reservation=reservation)
         if reservation.reservation_owner == user:
             reservation_serializer = ReservationSerializer(reservation, many=False)
             return Response(reservation_serializer.data, status=status.HTTP_200_OK)
@@ -217,8 +243,8 @@ def deleteReservation(request, pk):
 @permission_classes([IsAuthenticated])
 def joinReservation(request, pk):
 
-    #create and validate link
     user = request.user
+
     try:
         current_reservation = Reservation.objects.filter(id=pk)[0]
         if current_reservation.number_of_users_in_reservation < current_reservation.reservation_pax:
@@ -260,3 +286,14 @@ def removeReservation(request, pk):
 
     message = "User is not authorized!"
     return Response(message, status=status.HTTP_401_UNAUTHORIZED)
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def updatePin(request, pk):
+    data = request.data
+    reservation = Reservation.objects.get(id=pk)
+    reservation.reservation_pin = data['reservation_pin']
+
+    reservation.save()
+    reservation_serializer = ReservationSerializer(reservation, many=False)
+    return Response(reservation_serializer.data, status=status.HTTP_200_OK)

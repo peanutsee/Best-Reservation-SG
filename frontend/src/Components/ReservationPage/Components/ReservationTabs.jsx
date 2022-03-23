@@ -6,23 +6,24 @@ import { Container, Tabs, Tab } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import ActiveReservations from './ActiveReservations';
 import CompletedReservations from './CompletedReservations';
-import { retrieveAllReservations } from '../Redux/actions';
+import { getAllReservations } from '../Redux/actions';
+import './reservation.css';
 
 function ReservationTabs() {
   const dispatch = useDispatch();
 
   const retrieveReservations = useSelector(
-    (state) => state.retrieveReservationsReducer,
+    (state) => state.getAllReservationsReducer,
   );
   const {
-    loading, error, active_reservations, completed_reservations,
+    loading, error, active_reservations, completed_reservations, is_part_of_reservation,
   } = retrieveReservations;
 
   useEffect(() => {
     if (!active_reservations) {
-      dispatch(retrieveAllReservations());
+      dispatch(getAllReservations());
     }
-  }, [dispatch, active_reservations]);
+  }, [dispatch, active_reservations, completed_reservations]);
 
   return (
     <Container className="p-5">
@@ -35,13 +36,17 @@ function ReservationTabs() {
         <Tabs defaultActiveKey="current">
           <Tab eventKey="current" title="Current">
             {active_reservations && (
-              <ActiveReservations active_reservations={active_reservations} />
+              <ActiveReservations
+                active_reservations={active_reservations}
+                is_part_of_reservation={is_part_of_reservation.active_part_of}
+              />
             )}
           </Tab>
           <Tab eventKey="previous" title="Previous">
             {completed_reservations && (
               <CompletedReservations
                 completed_reservations={completed_reservations}
+                is_part_of_reservation={is_part_of_reservation.completed_part_of}
               />
             )}
           </Tab>

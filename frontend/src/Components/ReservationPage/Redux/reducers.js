@@ -1,9 +1,9 @@
 /* eslint-disable default-param-last */
 /* eslint-disable import/prefer-default-export */
 import {
-  RESERVATION_GET_ALL_RESERVATION_REQUEST,
-  RESERVATION_GET_ALL_RESERVATION_SUCCESS,
-  RESERVATION_GET_ALL_RESERVATION_ERROR,
+  RESERVATION_GET_ALL_RESERVATIONS_REQUEST,
+  RESERVATION_GET_ALL_RESERVATIONS_SUCCESS,
+  RESERVATION_GET_ALL_RESERVATIONS_ERROR,
 
   RESERVATION_DELETE_REQUEST,
   RESERVATION_DELETE_SUCCESS,
@@ -18,15 +18,21 @@ import {
   RESERVATION_REMOVE_ERROR,
 } from './constants';
 
-export const getAllReservationReducer = (state = [], action) => {
+export const getAllReservationsReducer = (state = [], action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case RESERVATION_GET_ALL_RESERVATION_REQUEST:
+    case RESERVATION_GET_ALL_RESERVATIONS_REQUEST:
       return { loading: true, success: false };
-    case RESERVATION_GET_ALL_RESERVATION_SUCCESS:
-      return { loading: false, success: true, completedOrders: payload };
-    case RESERVATION_GET_ALL_RESERVATION_ERROR:
+    case RESERVATION_GET_ALL_RESERVATIONS_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+        active_reservations: payload.active_reservations,
+        completed_reservations: payload.completed_reservations,
+        is_part_of_reservation: payload.is_part_of_reservation,
+      };
+    case RESERVATION_GET_ALL_RESERVATIONS_ERROR:
       return { loading: false, success: false, error: payload };
     default:
       return state;

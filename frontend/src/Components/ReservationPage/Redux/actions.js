@@ -2,9 +2,9 @@
 import axios from 'axios';
 import {
 
-  RESERVATION_GET_ALL_RESERVATION_REQUEST,
-  RESERVATION_GET_ALL_RESERVATION_SUCCESS,
-  RESERVATION_GET_ALL_RESERVATION_ERROR,
+  RESERVATION_GET_ALL_RESERVATIONS_REQUEST,
+  RESERVATION_GET_ALL_RESERVATIONS_SUCCESS,
+  RESERVATION_GET_ALL_RESERVATIONS_ERROR,
 
   RESERVATION_DELETE_REQUEST,
   RESERVATION_DELETE_SUCCESS,
@@ -20,10 +20,10 @@ import {
 
 } from './constants';
 
-export const getAllReservation = () => async (dispatch, getState) => {
+export const getAllReservations = () => async (dispatch, getState) => {
   try {
     dispatch({
-      type: RESERVATION_GET_ALL_RESERVATION_REQUEST,
+      type: RESERVATION_GET_ALL_RESERVATIONS_REQUEST,
     });
 
     // to retrieve information from the store
@@ -44,12 +44,12 @@ export const getAllReservation = () => async (dispatch, getState) => {
     );
 
     dispatch({
-      type: RESERVATION_GET_ALL_RESERVATION_SUCCESS,
+      type: RESERVATION_GET_ALL_RESERVATIONS_SUCCESS,
       payload: data,
     });
   } catch (error) {
     dispatch({
-      type: RESERVATION_GET_ALL_RESERVATION_ERROR,
+      type: RESERVATION_GET_ALL_RESERVATIONS_ERROR,
       payload:
         error.response && error.response.data.detail
           ? error.response.data.detail
