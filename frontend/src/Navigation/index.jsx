@@ -15,6 +15,7 @@ const RestaurantPage = lazy(() => import('../Components/RestaurantPage'));
 const ReservationConfirmationPage = lazy(() => import('../Components/ReservationConfirmationPage'));
 const ReservationInfoPage = lazy(() => import('../Components/ReservationInfoPage'));
 const ProportionViewPage = lazy(() => import('../Components/ProportionViewPage'));
+
 const NAVIGATION_ROUTES = Object.freeze({
   // Misc Routes
   homePage: {
