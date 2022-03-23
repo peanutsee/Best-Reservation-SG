@@ -14,6 +14,7 @@ const PreOrderPage = lazy(() => import('../Components/PreOrderPage'));
 const RestaurantPage = lazy(() => import('../Components/RestaurantPage'));
 const ReservationConfirmationPage = lazy(() => import('../Components/ReservationConfirmationPage'));
 const ReservationInfoPage = lazy(() => import('../Components/ReservationInfoPage'));
+const ProportionViewPage = lazy(() => import('../Components/ProportionViewPage'));
 const NAVIGATION_ROUTES = Object.freeze({
   // Misc Routes
   homePage: {
@@ -64,6 +65,11 @@ const NAVIGATION_ROUTES = Object.freeze({
   splitBillPage: {
     path: '/split_bill/:id',
     element: <SplitBillPage />,
+  },
+
+  proportionViewingPage: {
+    path: '/proportion_view',
+    element: <ProportionViewPage />,
   },
 
   // Pre-Order Routes
