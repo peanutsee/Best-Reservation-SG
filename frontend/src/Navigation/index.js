@@ -18,6 +18,7 @@ const SplitBillPage = lazy(() => import('../Components/SplitBillPage'));
 const PreOrderPage = lazy(() => import('../Components/PreOrderPage'));
 const RestaurantPage = lazy(() => import('../Components/RestaurantPage'));
 const ReservationConfirmationPage = lazy(() => import('../Components/ReservationConfirmationPage'));
+const PreOrderConfirmationPage = lazy(() => import('../Components/PreOrderConfirmationPage'));
 
 const NAVIGATION_ROUTES = Object.freeze({
   homePage: {
@@ -60,18 +61,22 @@ const NAVIGATION_ROUTES = Object.freeze({
   splitBillPage: {
     path: '/split_bill',
     element: <SplitBillPage />,
-    preOrderPage: {
-      path: '/preorder',
-      element: <PreOrderPage />,
-    },
-    restaurantPage: {
-      path: '/restaurant/:id/',
-      element: <RestaurantPage />,
-    },
-    reservationConfirmationPage: {
-      path: '/reservation_confirmation',
-      element: <ReservationConfirmationPage />,
-    },
+  },
+  preOrderPage: {
+    path: '/preorder',
+    element: <PreOrderPage />,
+  },
+  restaurantPage: {
+    path: '/restaurant/:id/',
+    element: <RestaurantPage />,
+  },
+  reservationConfirmationPage: {
+    path: '/reservation_confirmation',
+    element: <ReservationConfirmationPage />,
+  },
+  preOrderConfirmationPage: {
+    path: '/preorder_confirmation',
+    element: <PreOrderConfirmationPage />,
   },
 });
 
