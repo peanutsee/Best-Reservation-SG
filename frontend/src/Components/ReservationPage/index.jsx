@@ -1,9 +1,9 @@
 import React from 'react';
-import SplitBill from './Components/SplitBill';
+import ReservationTabs from './Components/ReservationTabs';
 
 function index() {
   return (
-    <SplitBill />
+    <ReservationTabs />
   );
 }
 

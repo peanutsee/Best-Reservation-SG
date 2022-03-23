@@ -1,14 +1,16 @@
-import { React, useState } from 'react';
+/* eslint-disable react/prop-types */
+import React from 'react';
 import {
   Button,
   InputGroup,
   FormControl,
 } from 'react-bootstrap';
 
-function QuantityChange() {
-  const [quantity, setQuantity] = useState(0);
+function QuantityChange(props) {
+  const { item, setQuantity, quantity } = props;
+
   const increaseQuantity = () => {
-    if (quantity < 10) {
+    if (quantity < item.order_item_qty) {
       setQuantity(Number(quantity) + 1);
     }
   };
