@@ -1,3 +1,5 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-plusplus */
 /* eslint-disable max-len */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/self-closing-comp */
@@ -9,10 +11,10 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import {
-  Container, Table, Button, Modal, Form,
+  Container, Table, Button, Modal, Form, Alert,
 } from 'react-bootstrap';
 import OrderItem from './OrderItem';
-import { retrievePayment } from '../Redux/actions';
+import { retrievePayment, submitProportion } from '../Redux/actions';
 
 function SplitBill() {
   const dispatch = useDispatch();
@@ -21,14 +23,22 @@ function SplitBill() {
   const details = useSelector((state) => state.retrieveBillReducer);
   const { bill_details } = details;
 
+  const proportion = useSelector((state) => state.submitProportionReducer);
+  const { success, error } = proportion;
+
   const [auth, setAuth] = useState(false);
   const [actualPin, setActualPin] = useState('');
   const [telegram, setTelegram] = useState('');
-  const [proportion, setProportion] = useState({});
+  const [proportions, setProportions] = useState([]);
+  const [orderQty] = useState([]);
 
   const handlePayment = () => {
-    // TODO: SUBMIT PROPORTIONS FOR VETTING
-    console.log(telegram);
+    const final_proportions = [];
+    for (let i = 0; i < orderQty.length; i++) {
+      const qty = orderQty[i];
+      final_proportions.push(`${proportions[i].order_item_id} - ${qty}`);
+    }
+    dispatch(submitProportion(params.id, telegram, final_proportions));
   };
 
   useEffect(() => {
@@ -37,6 +47,19 @@ function SplitBill() {
     }
     if (bill_details) {
       setActualPin(bill_details.bill_pin);
+
+      for (const [key, value] of Object.entries(bill_details.order_items)) {
+        if (!proportions[key]) {
+          proportions.push({
+            id: key,
+            order_item_id: value.id,
+            quantity: 0,
+            value,
+          });
+          orderQty.push(0);
+        }
+      }
+      setProportions(proportions);
     }
   }, [bill_details]);
 
@@ -53,8 +76,33 @@ function SplitBill() {
     <Container className="py-5 my-5">
       <AuthModal show={!auth} submit={handleAccess} />
       <h1 className="text-left">
-        <strong>Final Order #ID</strong>
+        <strong>
+          Final Order #ID:
+          {' '}
+          {params.id}
+        </strong>
       </h1>
+      {success && (
+      <Alert variant="success">
+        Proportion submitted! Please access
+        {' '}
+        <a href="t.me/Best_Reservation_SG_bot">@Best_Reservation_SG_bot</a>
+        {' '}
+        on
+        telegram if you haven&apos;t already done so!
+      </Alert>
+      )}
+
+      {error && (
+      <Alert variant="danger">
+        Proportion already submitted! Please access
+        {' '}
+        <strong>@Best_Reservation_SG_bot</strong>
+        {' '}
+        on
+        telegram if you haven&apos;t already done so!
+      </Alert>
+      )}
       <Table className="table table-striped table-sm">
         <thead>
           <tr>
@@ -70,9 +118,14 @@ function SplitBill() {
           </tr>
         </thead>
         <tbody>
-          {bill_details
-            && bill_details.order_items.map((item, key) => (
-              <OrderItem key={key} item={item} proportion={proportion} setProportion={setProportion} />
+          {proportions.length !== 0
+            && proportions.map((item) => (
+              <OrderItem
+                item={item}
+                orderQty={orderQty}
+                proportions={proportions}
+                setProportions={setProportions}
+              />
             ))}
         </tbody>
       </Table>
@@ -81,7 +134,10 @@ function SplitBill() {
         <Button onClick={handlePayment}>Tap to Submit</Button>
       </div>
       <div className="d-flex justify-content-end">
-        <p className="small">Reservation Owner will verify and send out PayLah! request to your telegram!</p>
+        <p className="small">
+          Reservation Owner will verify and send out PayLah! request to your
+          telegram!
+        </p>
       </div>
     </Container>
   );
@@ -125,7 +181,11 @@ function AuthModal(props) {
             <Form.Text>Telegram handle without &apos;@&apos;</Form.Text>
           </Form.Group>
           <div className="d-flex justify-content-end">
-            <Button type="submit" onClick={handleSubmit}>
+            <Button
+              type="submit"
+              disabled={telegram === ''}
+              onClick={handleSubmit}
+            >
               Submit Details
             </Button>
           </div>
