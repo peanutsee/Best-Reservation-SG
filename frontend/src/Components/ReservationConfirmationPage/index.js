@@ -4,9 +4,7 @@ import AccordionOptions from './Components/AccordionOptions';
 
 function index() {
   return (
-    <div>
-      <AccordionOptions />
-    </div>
+    <AccordionOptions />
   );
 }
 

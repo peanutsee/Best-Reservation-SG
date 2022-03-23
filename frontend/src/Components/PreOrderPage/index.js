@@ -1,3 +1,6 @@
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/prop-types */
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable quotes */
 /* eslint-disable react/jsx-filename-extension */
 import React, { useState } from 'react';
@@ -50,9 +53,7 @@ function OrderMenu(props) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p>
-          
-        </p>
+        <p />
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={props.onHide}>
