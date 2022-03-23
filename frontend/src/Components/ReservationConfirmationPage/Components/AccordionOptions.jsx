@@ -1,5 +1,7 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { Container, Accordion } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import DetailsForm from './DetailsForm';
 import Authentication from './Authentication';
 import ConfirmationDetails from './ConfirmationDetails';
@@ -7,6 +9,9 @@ import ConfirmationDetails from './ConfirmationDetails';
 function AccordionOptions() {
   return (
     <Container className="p-3">
+      <div className="py-3">
+        <Link to="/restaurant/1">Back</Link>
+      </div>
       <h3>Complete your reservation</h3>
       <Accordion defaultActiveKey="0">
         <Accordion.Item eventKey="0">
