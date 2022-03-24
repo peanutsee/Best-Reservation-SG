@@ -15,6 +15,7 @@ const RestaurantPage = lazy(() => import('../Components/RestaurantPage'));
 const ReservationConfirmationPage = lazy(() => import('../Components/ReservationConfirmationPage'));
 const ReservationInfoPage = lazy(() => import('../Components/ReservationInfoPage'));
 const ProportionViewPage = lazy(() => import('../Components/ProportionViewPage'));
+const PostConfirmationPage = lazy(() => import('../Components/PostConfirmationPage'));
 
 const NAVIGATION_ROUTES = Object.freeze({
   // Misc Routes
@@ -89,6 +90,11 @@ const NAVIGATION_ROUTES = Object.freeze({
   reservationConfirmationPage: {
     path: '/reservation_confirmation/:id',
     element: <ReservationConfirmationPage />,
+  },
+
+  postConfirmationPage: {
+    path: '/post_confirmation/:id',
+    element: <PostConfirmationPage />,
   },
 });
 

@@ -1,9 +1,11 @@
 /* eslint-disable react/jsx-filename-extension */
 import React from 'react';
-import Restaurant from './Components/Restaurant';
+import Confirmation from './Components/Confirmation';
 
 function index() {
-  return <Restaurant />;
+  return (
+    <Confirmation />
+  );
 }
 
 export default index;
