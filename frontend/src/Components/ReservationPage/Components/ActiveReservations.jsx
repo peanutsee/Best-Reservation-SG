@@ -1,12 +1,16 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable camelcase */
 /* eslint-disable react/no-array-index-key */
-import React from 'react';
-import { Dropdown, Nav, Table } from 'react-bootstrap';
+import React, { useState } from 'react';
+import {
+  Dropdown, Nav, Table,
+} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import RemovePopUpModal from './RemoveReservations';
 
 function ActiveReservations(props) {
   const { active_reservations, is_part_of_reservation } = props;
+  const [modalShow, setModalShow] = useState(false);
 
   return (
     <>
@@ -111,9 +115,15 @@ function ActiveReservations(props) {
                             <Link to={`/preorder/${reservation.pre_order_id}`}>Order</Link>
                           </Nav.Link>
                         </Dropdown.Item>
-                        <Dropdown.Item>
+                        <Dropdown.Item onClick={() => setModalShow(true)}>
+
                           <p> Leave Reservation. To do up idk modal?and some useeffect? </p>
                           <p> To add in somewhere to join reservation as well</p>
+                          <RemovePopUpModal
+                            show={modalShow}
+                            onHide={() => setModalShow(false)}
+                            reservation={reservation}
+                          />
                         </Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
