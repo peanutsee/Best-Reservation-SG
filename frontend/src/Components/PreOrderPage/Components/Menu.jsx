@@ -1,14 +1,9 @@
-/* eslint-disable quotes */
-/* eslint-disable react/jsx-filename-extension */
-import React, { useState } from 'react';
-import {
-  Container, Table, Image, FormControl, Row, Col, Button
-} from "react-bootstrap";
+import React from 'react';
 
 function Menu() {
-    return (
-        <p>placeholder</p>
-    );
+  return (
+    <div>Menu</div>
+  );
 }
 
 export default Menu;

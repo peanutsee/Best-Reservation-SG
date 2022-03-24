@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable camelcase */
+/* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import {
@@ -6,7 +9,8 @@ import {
 import { Link } from 'react-router-dom';
 import './app.css';
 
-function RestaurantTabs() {
+function RestaurantTabs(props) {
+  const { reservation_confirmation } = props;
   return (
     <Container>
       <Tabs defaultActiveKey="about">
@@ -46,7 +50,7 @@ function RestaurantTabs() {
               </p>
             </div>
             <div className="pt-3">
-              <Link to="/reservation_confirmation">
+              <Link to="/reservation_confirmation/1">
                 <Button variant="success" size="md">
                   Reserve Now
                 </Button>
@@ -54,7 +58,6 @@ function RestaurantTabs() {
             </div>
           </div>
         </Tab>
-
         <Tab eventKey="menu" title="Menu">
           sdsdws
         </Tab>

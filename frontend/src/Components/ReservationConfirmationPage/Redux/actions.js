@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable import/prefer-default-export */
 import axios from 'axios';
 import {
@@ -7,7 +8,7 @@ import {
 } from './constants';
 
 // eslint-disable-next-line max-len
-export const createReservation = (restaurantID, reservationTime, reservationPax) => async (dispatch, getState) => {
+export const createReservation = (restaurant_id, reservation_date_time, reservation_pax) => async (dispatch, getState) => {
   try {
     dispatch({
       type: RESERVATION_CREATION_REQUEST,
@@ -28,7 +29,7 @@ export const createReservation = (restaurantID, reservationTime, reservationPax)
     const { data } = await axios.post(
       '/api/resevation/create-reservation/',
       {
-        restaurantID, reservationTime, reservationPax,
+        restaurant_id, reservation_date_time, reservation_pax,
       },
       config,
     );
@@ -41,9 +42,9 @@ export const createReservation = (restaurantID, reservationTime, reservationPax)
     dispatch({
       type: RESERVATION_CREATION_ERROR,
       payload:
-                    error.response && error.response.data.detail
-                      ? error.response.data.detail
-                      : error.message,
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
     });
   }
 };

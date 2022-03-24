@@ -72,3 +72,15 @@ def removeItemInOrder(request, item_order_key):
     order_item = OrderItemInOrder.objects.get(id=item_order_key)
     order_item.delete()
     return Response("Order Item Deleted", status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def retrieveMenu(request, restaurant_id):
+    restaurant = Restaurant.objects.get(id=restaurant_id)
+    menu = Menu.objects.get(menu_restaurant=restaurant)
+    menu_items = MenuItem.objects.get(menu_item_menu_restaurant=menu)
+    menu_items_serialized = MenuItemSerializer(menu_items, many=True)
+    menu_items_data = menu_items_serialized.data
+    
+    return Response(menu_items_data, status=status.HTTP_200_OK)

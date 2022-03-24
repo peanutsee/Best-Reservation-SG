@@ -59,7 +59,7 @@ def updatePin(request, order_pk):
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def fullBillPaymentSettlement(request, bill_id):
-    bill = BillDetail.objects.filter(id=bill_id)[0]
+    bill = BillDetail.objects.get(id=bill_id)
     bill.bill_is_paid = True
     bill.save()
     bill_serializer = BillDetailSerializer(bill, many=False)

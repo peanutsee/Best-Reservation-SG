@@ -8,6 +8,10 @@ import {
   SET_PASSWORD_REQUEST,
   SET_PASSWORD_SUCCESS,
   SET_PASSWORD_ERROR,
+
+  PAYMENT_REQUEST,
+  PAYMENT_SUCCESS,
+  PAYMENT_ERROR,
 } from './constants';
 
 export const retrievePaymentReducer = (state = {}, action) => {
@@ -32,6 +36,20 @@ export const setPasswordReducer = (state = {}, action) => {
     case SET_PASSWORD_SUCCESS:
       return { loading: false, success: true };
     case SET_PASSWORD_ERROR:
+      return { loading: false, success: false, error: payload };
+    default:
+      return state;
+  }
+};
+
+export const billPaymentReducer = (state = {}, action) => {
+  const { type, payload } = action;
+  switch (type) {
+    case PAYMENT_REQUEST:
+      return { loading: true, success: false };
+    case PAYMENT_SUCCESS:
+      return { loading: false, success: true };
+    case PAYMENT_ERROR:
       return { loading: false, success: false, error: payload };
     default:
       return state;
