@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/prop-types */
 /* eslint-disable camelcase */
@@ -5,7 +6,7 @@ import { React, useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { retrievePayment } from '../Redux/actions';
+import { retrievePayment, makePayment } from '../Redux/actions';
 import OrderItemList from './OrderItemList';
 import Receipt from './Receipt';
 import PaymentButton from './PaymentButton';
@@ -17,11 +18,14 @@ function Payment() {
   const payment = useSelector((state) => state.retrievePaymentReducer);
   const { loading, error, bill_details } = payment;
 
+  const madePayment = useSelector((state) => state.billPaymentReducer);
+  const { success: successPay } = madePayment;
+
   useEffect(() => {
-    if (!bill_details) {
+    if (!bill_details || successPay) {
       dispatch(retrievePayment(params.id));
     }
-  }, [dispatch]);
+  }, [dispatch, successPay]);
 
   return (
     <Container className="py-5 my-5">
@@ -43,9 +47,7 @@ function Payment() {
           )}
           {bill_details && <Receipt bill_details={bill_details} />}
           {bill_details && (
-            <div className="d-flex justify-content-end">
-              <PaymentButton bill_details={bill_details} />
-            </div>
+            <PaymentButton bill_details={bill_details} payment={makePayment} />
           )}
         </>
       )}
