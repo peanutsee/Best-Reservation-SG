@@ -15,7 +15,7 @@ function PreOrderList() {
             <Image fluid className="w-70" src="static/assets/burgers.jpg" width={176} height={180} />
           </td>
           <td>Hamburger</td>
-          <td width={120}>
+          <td width={150}>
             <FormControl
               className="text-center"
               size="smaller-input"
@@ -37,7 +37,7 @@ function PreOrderList() {
             <Image fluid className="w-70" src="static/assets/fries.jpg" width={176} height={180} />
           </td>
           <td>Fries</td>
-          <td width={120}>
+          <td width={150}>
             <FormControl
               className="text-center"
               size="smaller-input"
