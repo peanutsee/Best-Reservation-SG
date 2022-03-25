@@ -69,7 +69,7 @@ export const getReservation = (reservationID) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.post(
+    const { data } = await axios.get(
       `/api/reservation/get-reservation/reservation_id=${reservationID}`,
       config,
     );

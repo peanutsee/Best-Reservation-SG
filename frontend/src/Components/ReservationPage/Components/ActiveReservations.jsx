@@ -3,7 +3,8 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useState } from 'react';
 import {
-  Dropdown, Nav, Table,
+  Button,
+  Dropdown, DropdownButton, Nav, Table,
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import RemovePopUpModal from './RemoveReservations';
@@ -11,6 +12,7 @@ import RemovePopUpModal from './RemoveReservations';
 function ActiveReservations(props) {
   const { active_reservations, is_part_of_reservation } = props;
   const [modalShow, setModalShow] = useState(false);
+  const [dropDownShow, setDropDownShow] = useState(false);
 
   return (
     <>
@@ -25,8 +27,9 @@ function ActiveReservations(props) {
             <th>Date</th>
           </tr>
         </thead>
-
-        {active_reservations !== []
+        {/* checking empty array , if not empty run true block
+        https://www.codegrepper.com/code-examples/javascript/how+to+check+if+an+array+is+empty+in+react */}
+        {active_reservations.length
           ? (
             <tbody align="center">
               {active_reservations.map((reservation, index) => (
@@ -37,32 +40,34 @@ function ActiveReservations(props) {
                   <td width="10%">{reservation.reservation_time}</td>
                   <td width="15%">{reservation.reservation_date}</td>
                   <td>
-                    <Dropdown className="d-flex justify-content-center align-center">
-                      <Dropdown.Toggle>Manage Reservation</Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Dropdown.Item>
-                          <Nav.Link>
-                            <Link to={`/reservation_info/${reservation.id}`}>Edit</Link>
-                          </Nav.Link>
-                        </Dropdown.Item>
-                        <Dropdown.Item>
-                          <Nav.Link>
-                            <Link to={`/delete_reservation/${reservation.id}`}>Delete</Link>
-                          </Nav.Link>
-                        </Dropdown.Item>
-                        <Dropdown.Item>
-                          <Nav.Link>
-                            <Link to={`/preorder/${reservation.pre_order_id}`}>Order</Link>
-                          </Nav.Link>
-                        </Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
+                    <DropdownButton className="d-flex justify-content-center align-center" title="Manage Reservation" onToggle={() => setDropDownShow(!dropDownShow)} show={dropDownShow}>
+                      <Dropdown.Item>
+                        <Button onToggle={() => setDropDownShow(!dropDownShow)}>
+                          Hello
+                        </Button>
+                      </Dropdown.Item>
+                      <Dropdown.Item>
+                        <Nav.Link>
+                          <Link to={`/reservation_info/${reservation.id}`}>View and Edit</Link>
+                        </Nav.Link>
+                      </Dropdown.Item>
+                      <Dropdown.Item>
+                        <Nav.Link>
+                          <Link to={`/delete_reservation/${reservation.id}`}>Delete</Link>
+                        </Nav.Link>
+                      </Dropdown.Item>
+                      <Dropdown.Item>
+                        <Nav.Link>
+                          <Link to={`/preorder/${reservation.pre_order_id}`}>Order</Link>
+                        </Nav.Link>
+                      </Dropdown.Item>
+
+                    </DropdownButton>
                   </td>
                 </tr>
               ))}
             </tbody>
-          )
-          : (
+          ) : (
             <tbody align="center">
               <td colSpan={4}>
                 It seem like you do not own any reservation.
@@ -83,8 +88,9 @@ function ActiveReservations(props) {
             <th>Date</th>
           </tr>
         </thead>
-
-        {is_part_of_reservation !== null
+        {/* checking empty array , if not empty run true block
+        https://www.codegrepper.com/code-examples/javascript/how+to+check+if+an+array+is+empty+in+react */}
+        {is_part_of_reservation.length
           ? (
             <tbody align="center">
 
@@ -102,12 +108,21 @@ function ActiveReservations(props) {
                       <Dropdown.Menu>
                         <Dropdown.Item>
                           <Nav.Link>
-                            <Link to={`/reservation_info/${reservation.id}`}>Edit</Link>
+                            <Link
+                              to={`/reservation_info/${reservation.id}`}
+                              state={{ reservation_id: reservation.reservation_id }}
+                            >
+                              View and Edit
+                            </Link>
                           </Nav.Link>
                         </Dropdown.Item>
                         <Dropdown.Item>
                           <Nav.Link>
-                            <Link to={`/delete_reservation/${reservation.id}`}>Delete</Link>
+                            <Link
+                              to={`/delete_reservation/${reservation.id}`}
+                            >
+                              Delete
+                            </Link>
                           </Nav.Link>
                         </Dropdown.Item>
                         <Dropdown.Item>
@@ -119,17 +134,19 @@ function ActiveReservations(props) {
 
                           <p> Leave Reservation. To do up idk modal?and some useeffect? </p>
                           <p> To add in somewhere to join reservation as well</p>
-                          <RemovePopUpModal
-                            show={modalShow}
-                            onHide={() => setModalShow(false)}
-                            reservation={reservation}
-                          />
+
                         </Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
                   </td>
+                  <RemovePopUpModal
+                    show={modalShow}
+                    onHide={() => setModalShow(false)}
+                    reservation={reservation}
+                  />
                 </tr>
               ))}
+
             </tbody>
           )
           : (
@@ -140,6 +157,7 @@ function ActiveReservations(props) {
             </tbody>
           )}
       </Table>
+
     </>
   );
 }
