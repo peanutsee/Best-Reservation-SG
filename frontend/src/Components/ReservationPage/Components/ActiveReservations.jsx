@@ -1,22 +1,45 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/prop-types */
 /* eslint-disable camelcase */
 /* eslint-disable react/no-array-index-key */
-import React, { useState } from 'react';
+import { React, useState } from 'react';
 import {
-  Button,
-  Dropdown, DropdownButton, Nav, Table,
+  Dropdown, Nav, Table, Modal, Button,
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import RemovePopUpModal from './RemoveReservations';
 
+function PopUpModal(props) {
+  const { active_reservations } = props;
+  return (
+    <Modal
+      {...props}
+      size="md"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">
+          <h5>Delete Reservation</h5>
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <h4>Are you sure you want to delete this reservation?</h4>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="danger">Delete Reservation</Button>
+      </Modal.Footer>
+    </Modal>
+  );
+}
 function ActiveReservations(props) {
   const { active_reservations, is_part_of_reservation } = props;
   const [modalShow, setModalShow] = useState(false);
-  const [dropDownShow, setDropDownShow] = useState(false);
-
+  const [removeModalShow, setRemoveModalShow] = useState(false);
   return (
     <>
-      <h5 className="pt-3 pb-2"> Reservation Owned</h5>
+      <h5 className="pt-3 pb-2"> Reservations Owned</h5>
       <Table striped bordered hover>
         <thead align="center">
           <tr>
@@ -40,29 +63,30 @@ function ActiveReservations(props) {
                   <td width="10%">{reservation.reservation_time}</td>
                   <td width="15%">{reservation.reservation_date}</td>
                   <td>
-                    <DropdownButton className="d-flex justify-content-center align-center" title="Manage Reservation" onToggle={() => setDropDownShow(!dropDownShow)} show={dropDownShow}>
-                      <Dropdown.Item>
-                        <Button onToggle={() => setDropDownShow(!dropDownShow)}>
-                          Hello
-                        </Button>
-                      </Dropdown.Item>
-                      <Dropdown.Item>
-                        <Nav.Link>
-                          <Link to={`/reservation_info/${reservation.id}`}>View and Edit</Link>
-                        </Nav.Link>
-                      </Dropdown.Item>
-                      <Dropdown.Item>
-                        <Nav.Link>
-                          <Link to={`/delete_reservation/${reservation.id}`}>Delete</Link>
-                        </Nav.Link>
-                      </Dropdown.Item>
-                      <Dropdown.Item>
-                        <Nav.Link>
-                          <Link to={`/preorder/${reservation.pre_order_id}`}>Order</Link>
-                        </Nav.Link>
-                      </Dropdown.Item>
+                    <Dropdown className="d-flex justify-content-center align-center">
+                      <Dropdown.Toggle>Manage Reservation</Dropdown.Toggle>
+                      <Dropdown.Menu>
+                        <Dropdown.Item>
+                          <Link
+                            to={`/reservation_info/${reservation.id}`}
+                            state={{ reservation_id: reservation.reservation_id }}
+                          >
+                            View and Edit
 
-                    </DropdownButton>
+                          </Link>
+                        </Dropdown.Item>
+                        <Dropdown.Item onClick={() => setModalShow(true)}>
+                          Delete
+                        </Dropdown.Item>
+                        <PopUpModal
+                          show={modalShow}
+                          onHide={() => setModalShow(false)}
+                        />
+                        <Dropdown.Item>
+                          <Link to={`/preorder/${reservation.pre_order_id}`}>Order</Link>
+                        </Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
                   </td>
                 </tr>
               ))}
@@ -107,35 +131,27 @@ function ActiveReservations(props) {
 
                       <Dropdown.Menu>
                         <Dropdown.Item>
-                          <Nav.Link>
-                            <Link
-                              to={`/reservation_info/${reservation.id}`}
-                              state={{ reservation_id: reservation.reservation_id }}
-                            >
-                              View and Edit
-                            </Link>
-                          </Nav.Link>
+                          <Link to={`/reservation_info/${reservation.id}`}>Edit</Link>
                         </Dropdown.Item>
                         <Dropdown.Item>
-                          <Nav.Link>
-                            <Link
-                              to={`/delete_reservation/${reservation.id}`}
-                            >
-                              Delete
-                            </Link>
-                          </Nav.Link>
+                          <Link to={`/delete_reservation/${reservation.id}`}>Delete</Link>
                         </Dropdown.Item>
+                        <PopUpModal
+                          show={modalShow}
+                          onHide={() => setModalShow(false)}
+                        />
                         <Dropdown.Item>
-                          <Nav.Link>
-                            <Link to={`/preorder/${reservation.pre_order_id}`}>Order</Link>
-                          </Nav.Link>
+                          <Link to={`/preorder/${reservation.pre_order_id}`}>Order</Link>
                         </Dropdown.Item>
-                        <Dropdown.Item onClick={() => setModalShow(true)}>
 
-                          <p> Leave Reservation. To do up idk modal?and some useeffect? </p>
-                          <p> To add in somewhere to join reservation as well</p>
-
+                        <Dropdown.Item onClick={() => setRemoveModalShow(true)}>
+                          Leave Reservation
                         </Dropdown.Item>
+                        <RemovePopUpModal
+                          show={removeModalShow}
+                          onHide={() => setRemoveModalShow(false)}
+                        />
+
                       </Dropdown.Menu>
                     </Dropdown>
                   </td>
