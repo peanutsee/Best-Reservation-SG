@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import { Row, Col, Container } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
