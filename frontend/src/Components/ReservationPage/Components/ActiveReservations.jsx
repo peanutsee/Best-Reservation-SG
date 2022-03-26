@@ -1,16 +1,26 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/prop-types */
 /* eslint-disable camelcase */
 /* eslint-disable react/no-array-index-key */
-import React from 'react';
-import { Dropdown, Nav, Table } from 'react-bootstrap';
+import { React, useState } from 'react';
+import {
+  Dropdown, Table,
+} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import RemovePopUpModal from './RemoveReservations';
+import DeletePopUpModal from './DeleteReservations';
 
 function ActiveReservations(props) {
-  const { active_reservations, is_part_of_reservation } = props;
+  // Please Do not Remove this documentation
+  // useState "setDeleteRemove" passed in as props from previous page (ReservationTab)
+  // to be passed into RemoveModal and DeleteModal for onclick confirmation button change state
+  const { active_reservations, is_part_of_reservation, setDeleteRemove } = props;
+  const [deleteModalShow, setDeleteModalShow] = useState(false);
+  const [removeModalShow, setRemoveModalShow] = useState(false);
 
   return (
     <>
-      <h5 className="pt-3 pb-2"> Reservation Owned</h5>
+      <h5 className="pt-3 pb-2"> Reservations Owned</h5>
       <Table striped bordered hover>
         <thead align="center">
           <tr>
@@ -21,8 +31,9 @@ function ActiveReservations(props) {
             <th>Date</th>
           </tr>
         </thead>
-
-        {active_reservations !== []
+        {/* checking empty array , if not empty run true block
+        https://www.codegrepper.com/code-examples/javascript/how+to+check+if+an+array+is+empty+in+react */}
+        {active_reservations.length
           ? (
             <tbody align="center">
               {active_reservations.map((reservation, index) => (
@@ -37,19 +48,25 @@ function ActiveReservations(props) {
                       <Dropdown.Toggle>Manage Reservation</Dropdown.Toggle>
                       <Dropdown.Menu>
                         <Dropdown.Item>
-                          <Nav.Link>
-                            <Link to={`/reservation_info/${reservation.id}`}>Edit</Link>
-                          </Nav.Link>
+                          <Link
+                            to={`/reservation_info/${reservation.id}`}
+                            state={{ reservation_id: reservation.reservation_id }}
+                          >
+                            View and Edit
+                          </Link>
                         </Dropdown.Item>
-                        <Dropdown.Item>
-                          <Nav.Link>
-                            <Link to={`/delete_reservation/${reservation.id}`}>Delete</Link>
-                          </Nav.Link>
+                        <Dropdown.Item onClick={() => setDeleteModalShow(true)}>
+                          Delete
                         </Dropdown.Item>
+                        <DeletePopUpModal
+                          reservation={reservation}
+                          setDeleteModalShow={setDeleteModalShow}
+                          setDeleteRemove={setDeleteRemove}
+                          show={deleteModalShow}
+                          onHide={() => setDeleteModalShow(false)}
+                        />
                         <Dropdown.Item>
-                          <Nav.Link>
-                            <Link to={`/preorder/${reservation.pre_order_id}`}>Order</Link>
-                          </Nav.Link>
+                          <Link to={`/preorder/${reservation.pre_order_id}`}>Order</Link>
                         </Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
@@ -57,8 +74,7 @@ function ActiveReservations(props) {
                 </tr>
               ))}
             </tbody>
-          )
-          : (
+          ) : (
             <tbody align="center">
               <td colSpan={4}>
                 It seem like you do not own any reservation.
@@ -79,8 +95,9 @@ function ActiveReservations(props) {
             <th>Date</th>
           </tr>
         </thead>
-
-        {is_part_of_reservation !== null
+        {/* checking empty array , if not empty run true block
+        https://www.codegrepper.com/code-examples/javascript/how+to+check+if+an+array+is+empty+in+react */}
+        {is_part_of_reservation.length
           ? (
             <tbody align="center">
 
@@ -97,29 +114,46 @@ function ActiveReservations(props) {
 
                       <Dropdown.Menu>
                         <Dropdown.Item>
-                          <Nav.Link>
-                            <Link to={`/reservation_info/${reservation.id}`}>Edit</Link>
-                          </Nav.Link>
+                          <Link
+                            to={`/reservation_info/${reservation.id}`}
+                            state={{ reservation_id: reservation.reservation_id }}
+                          >
+                            View and Edit
+                          </Link>
                         </Dropdown.Item>
+                        <Dropdown.Item onClick={() => setDeleteModalShow(true)}>
+                          Delete
+                        </Dropdown.Item>
+                        <DeletePopUpModal
+                          reservation={reservation}
+                          setDeleteModalShow={setDeleteModalShow}
+                          setDeleteRemove={setDeleteRemove}
+                          show={deleteModalShow}
+                          onHide={() => setDeleteModalShow(false)}
+                        />
+
                         <Dropdown.Item>
-                          <Nav.Link>
-                            <Link to={`/delete_reservation/${reservation.id}`}>Delete</Link>
-                          </Nav.Link>
+                          <Link to={`/preorder/${reservation.pre_order_id}`}>Order</Link>
                         </Dropdown.Item>
-                        <Dropdown.Item>
-                          <Nav.Link>
-                            <Link to={`/preorder/${reservation.pre_order_id}`}>Order</Link>
-                          </Nav.Link>
+
+                        <Dropdown.Item onClick={() => setRemoveModalShow(true)}>
+                          Leave Reservation
                         </Dropdown.Item>
-                        <Dropdown.Item>
-                          <p> Leave Reservation. To do up idk modal?and some useeffect? </p>
-                          <p> To add in somewhere to join reservation as well</p>
-                        </Dropdown.Item>
+                        <RemovePopUpModal
+                          reservation={reservation}
+                          setRemoveModalShow={setRemoveModalShow}
+                          setDeleteRemove={setDeleteRemove}
+                          show={removeModalShow}
+                          onHide={() => setRemoveModalShow(false)}
+                        />
+
                       </Dropdown.Menu>
                     </Dropdown>
                   </td>
+
                 </tr>
               ))}
+
             </tbody>
           )
           : (
@@ -130,6 +164,7 @@ function ActiveReservations(props) {
             </tbody>
           )}
       </Table>
+
     </>
   );
 }
