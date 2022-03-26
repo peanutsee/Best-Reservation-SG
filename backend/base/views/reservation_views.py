@@ -83,7 +83,12 @@ def getAllReservation(request):
         date, time = datetime.strptime(reservation['reservation_date_time'], '%Y-%m-%dT%H:%M:%SZ').date(), datetime.strptime(reservation['reservation_date_time'], '%Y-%m-%dT%H:%M:%SZ').time()
         reservation['reservation_date'] = date
         reservation['reservation_time'] = time 
-    
+
+        # Get Pre-Order Field
+        preorder = Order.objects.get(order_reservation=reservation['id'])
+        preorder_serialized = OrderSerializer(preorder, many=False)
+        reservation.update({"pre_order_id": preorder_serialized.data['id']})
+
     output = {
         "active_reservations": active_reservations_data,
         'completed_reservations': completed_reservations_data,
@@ -132,8 +137,37 @@ def getReservation(request, pk):
     try:
         reservation = Reservation.objects.get(id=pk)
         if reservation.reservation_owner == user:
+            #print(reservation)
             reservation_serializer = ReservationSerializer(reservation, many=False)
-            return Response(reservation_serializer.data, status=status.HTTP_200_OK)
+            #print(reservation_serializer.data)
+            reservation_data = reservation_serializer.data
+
+            # restaurant = Restaurant.objects.get(id=reservation_data['reservation_restaurant']).restaurant_name
+            # Get restaurant data
+            restaurant = Restaurant.objects.get(id=reservation_data['reservation_restaurant'])
+            restaurant_serialized = RestaurantSerializer(restaurant, many=False)
+            # update the return value with one more key value pair(Restaurant and its data)
+            reservation_data.update({"Restaurant": restaurant_serialized.data})
+
+            date, time = datetime.strptime(reservation_data['reservation_date_time'],
+                                           '%Y-%m-%dT%H:%M:%SZ').date(), datetime.strptime(
+                reservation_data['reservation_date_time'], '%Y-%m-%dT%H:%M:%SZ').time()
+            reservation_data['reservation_date'] = date
+            reservation_data['reservation_time'] = time
+
+            # Get Pre-Order Field
+            preorder = Order.objects.get(order_reservation=reservation_data['id'])
+            preorder_serialized = OrderSerializer(preorder, many=False)
+            reservation_data.update({"pre_order_id": preorder_serialized.data['id']})
+
+            # print(reservation_data['reservation_owner'])
+            # print(Profile.objects.get(user=reservation_data['reservation_owner']).user.first_name)
+            reservation_owner_user_object = Profile.objects.get(user=reservation_data['reservation_owner']).user
+            reservation_owner_name = reservation_owner_user_object.first_name + ' ' + reservation_owner_user_object.last_name
+            # print(reservation_owner_name)
+            reservation_data['reservation_owner'] = reservation_owner_name
+            # print( restaurant)
+            return Response(reservation_data, status=status.HTTP_200_OK)
 
         # If they are reservation diner of the reservation
         all_reservation_diner_in_all_reservation = IsPartOf.objects.all()
@@ -142,7 +176,26 @@ def getReservation(request, pk):
                 if part_of.reservation == reservation:
                     # then they can get the reservation details
                     reservation_serializer = ReservationSerializer(reservation, many=False)
-                    return Response(reservation_serializer.data, status=status.HTTP_200_OK)
+                    reservation_data = reservation_serializer.data
+
+                    restaurant = Restaurant.objects.get(id=reservation_data['reservation_restaurant']).restaurant_name
+                    reservation_data['reservation_restaurant'] = restaurant
+                    date, time = datetime.strptime(reservation_data['reservation_date_time'],
+                                                   '%Y-%m-%dT%H:%M:%SZ').date(), datetime.strptime(
+                        reservation_data['reservation_date_time'], '%Y-%m-%dT%H:%M:%SZ').time()
+                    reservation_data['reservation_date'] = date
+                    reservation_data['reservation_time'] = time
+
+                    # Get Pre-Order Field
+                    preorder = Order.objects.get(order_reservation=reservation_data['id'])
+                    preorder_serialized = OrderSerializer(preorder, many=False)
+                    reservation_data.update({"pre_order_id": preorder_serialized.data['id']})
+
+                    reservation_owner_user_object = Profile.objects.get(user=reservation_data['reservation_owner']).user
+                    reservation_owner_name = reservation_owner_user_object.first_name + ' ' + reservation_owner_user_object.last_name
+                    reservation_data['reservation_owner'] = reservation_owner_name
+
+                    return Response(reservation_data, status=status.HTTP_200_OK)
 
     except:
         return Response(f"Reservation id {pk} do not exist", status=status.HTTP_400_BAD_REQUEST)
@@ -247,6 +300,11 @@ def joinReservation(request, pk):
 
     try:
         current_reservation = Reservation.objects.filter(id=pk)[0]
+        is_part_of_reservations = IsPartOf.objects.filter(reservation_diner=user)
+        for part_of in is_part_of_reservations:
+            if part_of.reservation == current_reservation:
+                return Response("Already joined the Reservation", status=status.HTTP_400_BAD_REQUEST)
+        
         if current_reservation.number_of_users_in_reservation < current_reservation.reservation_pax:
             current_reservation.number_of_users_in_reservation += 1
             current_reservation.save()
