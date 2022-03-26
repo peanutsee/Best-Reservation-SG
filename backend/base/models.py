@@ -53,8 +53,13 @@ class Reservation(models.Model):
     number_of_users_in_reservation = models.IntegerField(default=1)
     reservation_pin = models.TextField(default='NO PIN')
     reservation_url = models.URLField(default='www.example.com')
+<<<<<<< HEAD
     reservation_deposit_is_paid = models.BooleanField(default=False)
     
+=======
+#    reservation_deposit_is_paid = models.BooleanField(default=False)
+
+>>>>>>> d34eaa1a5bcfaa68115ce88ef342edcc3e740236
     objects = models.Manager()
 
     def __str__(self):

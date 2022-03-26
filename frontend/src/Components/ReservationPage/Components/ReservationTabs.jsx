@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable camelcase */
-import React, { useEffect } from 'react';
+import { React, useEffect, useState } from 'react';
 import { Container, Tabs, Tab } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import ActiveReservations from './ActiveReservations';
@@ -11,7 +11,7 @@ import './reservation.css';
 
 function ReservationTabs() {
   const dispatch = useDispatch();
-
+  const [deleteRemove, setDeleteRemove] = useState(false);
   const retrieveReservations = useSelector(
     (state) => state.getAllReservationsReducer,
   );
@@ -23,7 +23,11 @@ function ReservationTabs() {
     if (!active_reservations) {
       dispatch(getAllReservations());
     }
-  }, [dispatch, active_reservations, completed_reservations]);
+    if (deleteRemove === true) {
+      dispatch(getAllReservations());
+      setDeleteRemove(false);
+    }
+  }, [dispatch, active_reservations, completed_reservations, deleteRemove]);
 
   return (
     <Container className="p-5">
@@ -39,6 +43,7 @@ function ReservationTabs() {
               <ActiveReservations
                 active_reservations={active_reservations}
                 is_part_of_reservation={is_part_of_reservation.active_part_of}
+                setDeleteRemove={setDeleteRemove}
               />
             )}
           </Tab>

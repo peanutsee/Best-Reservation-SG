@@ -10,7 +10,7 @@ import {
   RESERVATION_GET_ERROR,
 } from './constants';
 
-export const updateReservationReducer = (state = {}, action) => {
+export const updateReservationReducer = (state = [], action) => {
   const { type, payload } = action;
 
   switch (type) {
@@ -25,14 +25,18 @@ export const updateReservationReducer = (state = {}, action) => {
   }
 };
 
-export const getReservationReducer = (state = {}, action) => {
+export const getReservationReducer = (state = [], action) => {
   const { type, payload } = action;
 
   switch (type) {
     case RESERVATION_GET_REQUEST:
       return { loading: true, success: false };
     case RESERVATION_GET_SUCCESS:
-      return { loading: false, success: true };
+      return {
+        loading: false,
+        success: true,
+        reservation: payload,
+      };
     case RESERVATION_GET_ERROR:
       return { loading: false, success: false, error: payload };
     default:
