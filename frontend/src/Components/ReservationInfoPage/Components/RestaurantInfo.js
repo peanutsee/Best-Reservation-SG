@@ -4,9 +4,11 @@
 /* eslint-disable react/jsx-filename-extension */
 import { React, useState } from 'react';
 import {
-  Container, Button, Modal, Tab, Tabs,
+  Container, Button, Modal, Tab, Tabs, Form,
 } from 'react-bootstrap';
 import './app.css';
+import DateForm from './DateForm';
+import TimeForm from './TimeForm';
 
 function PopUpModal(props) {
   return (
@@ -18,11 +20,32 @@ function PopUpModal(props) {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          TITLE
+          Edit Reservation
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        BODY
+        <Form>
+          <Form.Label>Reservation Date</Form.Label>
+          <Form.Group>
+            <DateForm />
+          </Form.Group>
+        </Form>
+        <Form>
+          <Form.Label>Reservation Time</Form.Label>
+          <Form.Group>
+            <TimeForm />
+          </Form.Group>
+        </Form>
+        <Form.Group>
+          <Form.Label>Number of Guests</Form.Label>
+          <Form.Select>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+          </Form.Select>
+        </Form.Group>
       </Modal.Body>
       <Modal.Footer>
         <Button>Confirm</Button>
