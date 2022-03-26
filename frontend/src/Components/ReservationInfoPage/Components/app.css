@@ -11,3 +11,7 @@
     transform: scale(1.05);
     transition: 0.1s;
 }
+
+.nav-item {
+    margin-right: 0.01rem !important;
+}

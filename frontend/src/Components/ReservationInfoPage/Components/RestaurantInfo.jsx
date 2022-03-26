@@ -33,22 +33,28 @@ function PopUpModal(props) {
 function RestaurantInfo(props) {
   const { reservation } = props;
   const [modalShow, setModalShow] = useState(false);
+
   return (
     <Container>
       <Tabs defaultActiveKey="reservation_details">
         <Tab eventKey="reservation_details" title="Reservation Details">
           <div className="row p-3">
             <div className="col-12 col-md-8 ">
-              <h4>Name</h4>
-              <p>Customer Name</p>
-              <h4>Number of Guests</h4>
-              <p>4</p>
+              <h3>Reservation Owner</h3>
+              <h5>{reservation.reservation_owner}</h5>
+              <p> </p>
+              <h3>Number of Guests</h3>
+              <p>{reservation.reservation_pax}</p>
             </div>
             <div className="col-6 col-md-4 border-left border-dark">
-              <h4>Reservation Date</h4>
-              <p>1 June 2022</p>
-              <h4>Reservation Time</h4>
-              <p>19:00</p>
+              <h3>Reservation Date</h3>
+              <p>{reservation.reservation_date}</p>
+              <h3>
+                Reservation Time
+              </h3>
+              <p>
+                {reservation.reservation_time}
+              </p>
             </div>
             <div className="pt-3">
               <Button variant="primary" onClick={() => setModalShow(true)}>
@@ -67,10 +73,9 @@ function RestaurantInfo(props) {
             <div className="col-12 col-md-8 ">
               <h4>Overview</h4>
               <p>
-                Western cuisine made from scratch where you’ll enjoy delicious
-                food.
+                {reservation.Restaurant.restaurant_longer_description}
                 <br />
-                Reserve a table now!
+                <br />
               </p>
               <h4>Opening Hours</h4>
               <p>
@@ -84,17 +89,58 @@ function RestaurantInfo(props) {
             <div className="col-6 col-md-4 border-left border-dark">
               <h4>Address</h4>
               <p>
-                123 Restaurant Avenue
+                {reservation.Restaurant.restaurant_street_name !== ''
+                  ? (
+                    reservation.Restaurant.restaurant_street_name
+                  ) : (
+                    <span>123 Restaurant Avenue(outdated address)</span>
+                  )}
                 <br />
-                #01-234
+
+                {'# '}
+                {reservation.Restaurant.restaurant_floor_number !== ''
+                  ? (
+                    reservation.Restaurant.restaurant_floor_number
+                  ) : (
+                    <span>01</span>
+                  )}
+                {' - '}
+                {reservation.Restaurant.restaurant_unit_number !== ''
+                  ? (
+                    reservation.Restaurant.restaurant_unit_number
+                  ) : (
+                    <span>234</span>
+                  )}
                 <br />
-                Singapore 123456
+
+                <p>
+                  {' '}
+                  Singapore
+                  {' '}
+                  {reservation.Restaurant.restaurant_postal_code}
+                  {' '}
+                </p>
               </p>
               <h4>Contact</h4>
               <p>
-                Phone: 6123 4567
+                {'Phone: '}
+                {reservation.Restaurant.restaurant_primary_contact}
                 <br />
-                Email: restaurant@gmail.com
+                {'Email: '}
+                {reservation.Restaurant.restaurant_official_email !== ''
+                  ? (
+                    reservation.Restaurant.restaurant_official_email
+                  ) : (
+                    <span>restaurant@gmail.com</span>
+                  )}
+                <br />
+                {'Website: '}
+                {reservation.Restaurant.restaurant_official_website !== ''
+                  ? (
+                    reservation.Restaurant.restaurant_official_website
+                  ) : (
+                    <span>www.restaurant.com</span>
+                  )}
               </p>
             </div>
           </div>
