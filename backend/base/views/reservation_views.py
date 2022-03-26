@@ -300,6 +300,11 @@ def joinReservation(request, pk):
 
     try:
         current_reservation = Reservation.objects.filter(id=pk)[0]
+        is_part_of_reservations = IsPartOf.objects.filter(reservation_diner=user)
+        for part_of in is_part_of_reservations:
+            if part_of.reservation == current_reservation:
+                return Response("Already joined the Reservation", status=status.HTTP_400_BAD_REQUEST)
+        
         if current_reservation.number_of_users_in_reservation < current_reservation.reservation_pax:
             current_reservation.number_of_users_in_reservation += 1
             current_reservation.save()

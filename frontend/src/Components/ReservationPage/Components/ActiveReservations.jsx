@@ -1,42 +1,23 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/prop-types */
 /* eslint-disable camelcase */
 /* eslint-disable react/no-array-index-key */
 import { React, useState } from 'react';
 import {
-  Dropdown, Nav, Table, Modal, Button,
+  Dropdown, Table,
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import RemovePopUpModal from './RemoveReservations';
+import DeletePopUpModal from './DeleteReservations';
 
-function PopUpModal(props) {
-  const { active_reservations } = props;
-  return (
-    <Modal
-      {...props}
-      size="md"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          <h5>Delete Reservation</h5>
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <h4>Are you sure you want to delete this reservation?</h4>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="danger">Delete Reservation</Button>
-      </Modal.Footer>
-    </Modal>
-  );
-}
 function ActiveReservations(props) {
-  const { active_reservations, is_part_of_reservation } = props;
-  const [modalShow, setModalShow] = useState(false);
+  // Please Do not Remove this documentation
+  // useState "setDeleteRemove" passed in as props from previous page (ReservationTab)
+  // to be passed into RemoveModal and DeleteModal for onclick confirmation button change state
+  const { active_reservations, is_part_of_reservation, setDeleteRemove } = props;
+  const [deleteModalShow, setDeleteModalShow] = useState(false);
   const [removeModalShow, setRemoveModalShow] = useState(false);
+
   return (
     <>
       <h5 className="pt-3 pb-2"> Reservations Owned</h5>
@@ -72,15 +53,17 @@ function ActiveReservations(props) {
                             state={{ reservation_id: reservation.reservation_id }}
                           >
                             View and Edit
-
                           </Link>
                         </Dropdown.Item>
-                        <Dropdown.Item onClick={() => setModalShow(true)}>
+                        <Dropdown.Item onClick={() => setDeleteModalShow(true)}>
                           Delete
                         </Dropdown.Item>
-                        <PopUpModal
-                          show={modalShow}
-                          onHide={() => setModalShow(false)}
+                        <DeletePopUpModal
+                          reservation={reservation}
+                          setDeleteModalShow={setDeleteModalShow}
+                          setDeleteRemove={setDeleteRemove}
+                          show={deleteModalShow}
+                          onHide={() => setDeleteModalShow(false)}
                         />
                         <Dropdown.Item>
                           <Link to={`/preorder/${reservation.pre_order_id}`}>Order</Link>
@@ -131,15 +114,24 @@ function ActiveReservations(props) {
 
                       <Dropdown.Menu>
                         <Dropdown.Item>
-                          <Link to={`/reservation_info/${reservation.id}`}>Edit</Link>
+                          <Link
+                            to={`/reservation_info/${reservation.id}`}
+                            state={{ reservation_id: reservation.reservation_id }}
+                          >
+                            View and Edit
+                          </Link>
                         </Dropdown.Item>
-                        <Dropdown.Item>
-                          <Link to={`/delete_reservation/${reservation.id}`}>Delete</Link>
+                        <Dropdown.Item onClick={() => setDeleteModalShow(true)}>
+                          Delete
                         </Dropdown.Item>
-                        <PopUpModal
-                          show={modalShow}
-                          onHide={() => setModalShow(false)}
+                        <DeletePopUpModal
+                          reservation={reservation}
+                          setDeleteModalShow={setDeleteModalShow}
+                          setDeleteRemove={setDeleteRemove}
+                          show={deleteModalShow}
+                          onHide={() => setDeleteModalShow(false)}
                         />
+
                         <Dropdown.Item>
                           <Link to={`/preorder/${reservation.pre_order_id}`}>Order</Link>
                         </Dropdown.Item>
@@ -148,6 +140,9 @@ function ActiveReservations(props) {
                           Leave Reservation
                         </Dropdown.Item>
                         <RemovePopUpModal
+                          reservation={reservation}
+                          setRemoveModalShow={setRemoveModalShow}
+                          setDeleteRemove={setDeleteRemove}
                           show={removeModalShow}
                           onHide={() => setRemoveModalShow(false)}
                         />
@@ -155,11 +150,7 @@ function ActiveReservations(props) {
                       </Dropdown.Menu>
                     </Dropdown>
                   </td>
-                  <RemovePopUpModal
-                    show={modalShow}
-                    onHide={() => setModalShow(false)}
-                    reservation={reservation}
-                  />
+
                 </tr>
               ))}
 

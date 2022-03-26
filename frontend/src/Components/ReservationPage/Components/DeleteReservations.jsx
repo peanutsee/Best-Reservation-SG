@@ -9,23 +9,23 @@ import {
   Modal, Button,
 } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { removeReservation } from '../Redux/actions';
+import { deleteReservation } from '../Redux/actions';
 
-function RemovePopUpModal(props) {
+function DeletePopUpModal(props) {
   // Please Do not Remove this documentation
-  // useStates "setRemoveModalShow and setDeleteRemove" passed in as prop from ActiveReservation
+  // useStates "setDeleteModalShow and setDeleteRemove" passed in as prop from ActiveReservation
   // to be updated to false to close modal and true to refresh page(useEffect) in RTab respectively
-  const { reservation, setRemoveModalShow, setDeleteRemove } = props;
+  const { reservation, setDeleteModalShow, setDeleteRemove } = props;
   const dispatch = useDispatch();
   // https://reactjs.org/docs/handling-events.html
   // handle events such as onClick
-  const handleRemove = (e) => {
+  const handleDelete = (e) => {
     e.preventDefault();
-    dispatch(removeReservation(reservation.id));
+    dispatch(deleteReservation(reservation.id));
     // update useState that is tracked by useEffect in ReservationTab to call API on change
     setDeleteRemove(true);
     // update useState to close modal
-    setRemoveModalShow(false);
+    setDeleteModalShow(false);
   };
 
   return (
@@ -46,7 +46,7 @@ function RemovePopUpModal(props) {
       </Modal.Header>
       <Modal.Body>
         <p>
-          Are you sure you want to LEAVE the reservation for
+          Are you sure you want to DELETE the reservation for
           {' '}
           {reservation.reservation_restaurant}
           {' '}
@@ -60,7 +60,7 @@ function RemovePopUpModal(props) {
       <Modal.Footer>
         <Button
           variant="danger"
-          onClick={handleRemove}
+          onClick={handleDelete}
         >
           Leave Reservation
         </Button>
@@ -68,4 +68,4 @@ function RemovePopUpModal(props) {
     </Modal>
   );
 }
-export default RemovePopUpModal;
+export default DeletePopUpModal;
