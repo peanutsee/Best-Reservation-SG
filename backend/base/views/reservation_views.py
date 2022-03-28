@@ -81,10 +81,10 @@ def getAllReservation(request):
         reservation['reservation_time'] = time 
 
         # Get Pre-Order Field
-        bill = BillDetail.objects.get(bill_reservation=reservation['id'])
-        bill_serialized = BillDetailSerializer(bill, many=False)
-        bill_data = bill_serialized.data
-        reservation['bill_id'] = bill_data['id']
+        order = Order.objects.get(order_reservation=reservation['id'])
+        order_serialized = OrderSerializer(order, many=False)
+        order_data = order_serialized.data
+        reservation['order_id'] = order_data['id']
 
     output = {
         "active_reservations": active_reservations_data,

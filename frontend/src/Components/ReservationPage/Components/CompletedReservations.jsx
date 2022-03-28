@@ -34,7 +34,7 @@ function CompletedReservations(props) {
                   <td width="10%">{reservation.reservation_time}</td>
                   <td width="15%">{reservation.reservation_date}</td>
                   <td>
-                    <Link to={`/payment/${reservation.bill_id}`}><button type="button" className="btn btn-primary">Split Bill</button></Link>
+                    <Link to={`/payment/${reservation.order_id}`}><button type="button" className="btn btn-primary">Split Bill</button></Link>
                   </td>
                 </tr>
               ))}

@@ -13,13 +13,14 @@ function Receipt(props) {
 
   return (
     <Row>
-      {bill_details.bill_is_paid === true ? (
-        <Col md={6} className="d-flex justify-content-center align-middle">
+      <Col md={6} className="d-flex justify-content-center align-middle">
+        {bill_details.bill_is_paid === true ? (
           <Image fluid className="h-50" src="/static/assets/paid.png" />
-        </Col>
-      ) : null}
+        ) : null}
+      </Col>
+
       <Col md={6}>
-        <Table className="d-flex justify-content-end">
+        <Table className="d-flex justify-content-end" responsive>
           <tbody>
             <tr>
               <td>Total Bill:</td>
@@ -59,7 +60,7 @@ function Receipt(props) {
                 payment={makePayment}
               />
             )}
-            {bill_details.bill_is_split && (
+            {bill_details.bill_is_split && bill_details.bill_is_paid && (
               <Button className="btn btn-info mt-3">
                 <Link to={`/proportion_view/${bill_details.id}`}>
                   Proportions
