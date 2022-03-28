@@ -13,7 +13,7 @@ def fullBillPaymentTabulation(request, order_pk):
     order_items = OrderItemInOrder.objects.filter(order=order)
     order_items_serialized = OrderItemInOrderSerializer(order_items, many=True)
     order_items_data = order_items_serialized.data
-    print(order_items_data)
+
     for item in order_items_data:
         menu_item = MenuItem.objects.get(id=item['order_item'])
         item_serialized = MenuItemSerializer(menu_item, many=False)
