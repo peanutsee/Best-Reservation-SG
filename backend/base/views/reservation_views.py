@@ -29,7 +29,6 @@ def getAllReservation(request):
         reservation_data = reservation_serialized.data
 
         restaurant = Restaurant.objects.get(id=reservation_data['reservation_restaurant']).restaurant_name
-        #print(restaurant)
         reservation_data['reservation_restaurant'] = restaurant
         date, time = datetime.strptime(reservation_data['reservation_date_time'], '%Y-%m-%dT%H:%M:%SZ').date(), datetime.strptime(reservation_data['reservation_date_time'], '%Y-%m-%dT%H:%M:%SZ').time()
         reservation_data['reservation_date'] = date
@@ -134,9 +133,7 @@ def getReservation(request, pk):
     try:
         reservation = Reservation.objects.get(id=pk)
         if reservation.reservation_owner == user:
-            #print(reservation)
             reservation_serializer = ReservationSerializer(reservation, many=False)
-            #print(reservation_serializer.data)
             reservation_data = reservation_serializer.data
 
             # restaurant = Restaurant.objects.get(id=reservation_data['reservation_restaurant']).restaurant_name
@@ -157,13 +154,10 @@ def getReservation(request, pk):
             preorder_serialized = OrderSerializer(preorder, many=False)
             reservation_data.update({"pre_order_id": preorder_serialized.data['id']})
 
-            # print(reservation_data['reservation_owner'])
-            # print(Profile.objects.get(user=reservation_data['reservation_owner']).user.first_name)
             reservation_owner_user_object = Profile.objects.get(user=reservation_data['reservation_owner']).user
             reservation_owner_name = reservation_owner_user_object.first_name + ' ' + reservation_owner_user_object.last_name
-            # print(reservation_owner_name)
             reservation_data['reservation_owner'] = reservation_owner_name
-            # print( restaurant)
+
             return Response(reservation_data, status=status.HTTP_200_OK)
 
         # If they are reservation diner of the reservation
@@ -352,3 +346,22 @@ def updatePin(request, pk):
     reservation.save()
     reservation_serializer = ReservationSerializer(reservation, many=False)
     return Response(reservation_serializer.data, status=status.HTTP_200_OK)
+
+# Set Completed 
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def reservationCompleted(request, reservation_id):
+    reservation = Reservation.objects.get(id=reservation_id)
+    if reservation.reservation_is_completed:
+        return Response('Reservation Completed!', status=status.HTTP_401_OK)
+    
+    reservation.reservation_is_completed = True
+    reservation.save()
+    
+    reservation_serializer = ReservationSerializer(reservation, many=False)
+    reservation_data = reservation_serializer.data
+    
+    return Response(reservation_data, status=status.HTTP_200_OK)
+    
+
+    

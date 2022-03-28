@@ -13,6 +13,10 @@ import {
   PAYMENT_REQUEST,
   PAYMENT_SUCCESS,
   PAYMENT_ERROR,
+
+  SET_RESERVATION_COMPLETE_REQUEST,
+  SET_RESERVATION_COMPLETE_SUCCESS,
+  SET_RESERVATION_COMPLETE_ERROR,
 } from './constants';
 
 export const retrievePayment = (order_id) => async (dispatch, getState) => {
@@ -89,7 +93,44 @@ export const setPin = (order_id, password) => async (dispatch, getState) => {
   }
 };
 
-export const makePayment = (bill_id) => async (dispatch, getState) => {
+export const setComplete = (reservation_id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: SET_RESERVATION_COMPLETE_REQUEST,
+    });
+
+    const {
+      userLoginReducer: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    await axios.put(
+      `/api/reservation/complete-reservation/reservation_id=${reservation_id}/`,
+      {},
+      config,
+    );
+
+    dispatch({
+      type: SET_RESERVATION_COMPLETE_SUCCESS,
+    });
+  } catch (error) {
+    dispatch({
+      type: SET_RESERVATION_COMPLETE_ERROR,
+      payload:
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
+    });
+  }
+};
+
+export const makePayment = (bill_id, reservation_id) => async (dispatch, getState) => {
   try {
     dispatch({
       type: PAYMENT_REQUEST,
@@ -116,6 +157,8 @@ export const makePayment = (bill_id) => async (dispatch, getState) => {
       type: PAYMENT_SUCCESS,
       payload: data,
     });
+
+    dispatch(setComplete(reservation_id));
   } catch (error) {
     dispatch({
       type: PAYMENT_ERROR,

@@ -25,7 +25,7 @@ function PaymentButton(props) {
   const addPayPalScript = () => {
     const script = document.createElement('script');
     script.type = 'text/javascript';
-    script.src = 'https://www.paypal.com/sdk/js?client-id=AblsefRPw4Dp2V1_u2Dd6MY-IYJUe3OvtFXU0o5XDz-IKjsDC1MmHtguz4ExhBYMvlCtwekZLVZhxy8W&currency=SGD';
+    script.src = 'https://www.paypal.com/sdk/js?client-id=AblsefRPw4Dp2V1_u2Dd6MY-IYJUe3OvtFXU0o5XDz-IKjsDC1MmHtguz4ExhBYMvlCtwekZLVZhxy8W&currency=USD';
     script.async = true;
     script.onload = () => {
       setSdkReady(true);
@@ -36,7 +36,7 @@ function PaymentButton(props) {
   // Dispatch Payment Update
   const handlePayment = (paymentResult) => {
     if (paymentResult.status === 'COMPLETED') {
-      dispatch(payment(bill_details.id));
+      dispatch(payment(bill_details.id, bill_details.bill_reservation));
     }
   };
 
