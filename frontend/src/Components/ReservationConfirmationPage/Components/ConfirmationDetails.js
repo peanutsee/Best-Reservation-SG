@@ -6,24 +6,27 @@ import { React } from 'react';
 import { Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { VscQuestion } from 'react-icons/vsc';
+import PaymentButton from './PaymentButton';
 
 function ConfirmationDetails(props) {
-  const { post_confirmation } = props;
+  const {
+    userInfo, reservationDate, reservationTime, reservationPax,
+  } = props;
   return (
     <div className="p-5 shadow shadow-100 row">
       <h1 className="text-center">Confirm Reservation</h1>
       <div className="pt-5 row">
         <div className="col-sm">
           <h4>Name</h4>
-          <p>Customer Name</p>
+          <p>{userInfo.first_name}</p>
           <h4>Reservation Date</h4>
-          <p>1 June 2022</p>
+          <p>{reservationDate}</p>
         </div>
         <div className="col-sm">
           <h4>Number of Guests</h4>
-          <p>4</p>
+          <p>{reservationPax}</p>
           <h4>Reservation Time</h4>
-          <p>19:00</p>
+          <p>{reservationTime}</p>
         </div>
         <div className="col-sm">
           <OverlayTrigger

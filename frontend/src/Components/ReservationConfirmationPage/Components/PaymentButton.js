@@ -10,7 +10,8 @@ import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 function PaymentButton(props) {
-  const { reservation_details, payment } = props;
+  const { payment } = props;
+  const [paid, setPaid] = useState(false);
   const [show, setShow] = useState(false);
   const [sdkReady, setSdkReady] = useState(false);
 
@@ -27,13 +28,6 @@ function PaymentButton(props) {
       setSdkReady(true);
     };
     document.body.appendChild(script);
-  };
-
-  // Dispatch Payment Update
-  const handlePayment = (paymentResult) => {
-    if (paymentResult.status === 'COMPLETED') {
-      dispatch(payment(reservation_details.id));
-    }
   };
 
   const copyToClipboard = (str) => {
@@ -56,44 +50,40 @@ function PaymentButton(props) {
   };
 
   useEffect(() => {
-    if (!reservation_details.deposit_is_paid) {
+    if (!paid) {
       if (!window.paypal) {
         addPayPalScript();
       } else {
         setSdkReady(true);
       }
     }
-  }, [reservation_details]);
+  }, [paid]);
 
-  if (reservation_details.deposit_is_paid) {
-    return (
+  return (
+    <>
       <div className="d-flex justify-content-end">
         <Button onClick={handleShow}>Pay Deposit</Button>
         <PaymentModal
+          setPaid={setPaid}
           show={show}
           onHide={() => setShow(false)}
           copyToClipboard={copyToClipboard}
         />
       </div>
-    );
-  }
-  if (!reservation_details.deposit_is_paid) {
-    return (
       <div className="d-flex justify-content-end px-5">
         <PayPalButton
           amount={20.00}
-          onSuccess={handlePayment}
         />
       </div>
-    );
-  }
+      );
+    </>
+  );
 }
 
 function PaymentModal(props) {
   const dispatch = useDispatch();
   const params = useParams();
-
-  const { copyToClipboard, url } = props;
+  const { copyToClipboard, url, setPaid } = props;
 
   const [password, setPassword] = useState('');
 

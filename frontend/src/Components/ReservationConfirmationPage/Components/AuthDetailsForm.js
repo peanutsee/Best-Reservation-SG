@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable no-console */
 /* eslint-disable react/prop-types */
-import { React } from 'react';
+import { React, useEffect, useState } from 'react';
 import {
   Form, Button, Row, Col,
 } from 'react-bootstrap';
@@ -24,18 +24,20 @@ const SCHEMA = yup.object().shape({
     .max(8, 'Enter Valid Contact Number'),
 });
 
-function UpdatedDetailsForm() {
+function AuthDetailsForm(props) {
+  const { userInfo, setReservationDate, reservationDate } = props;
+
+  // const [reservationDate, setReservationDate] = useState('');
+  console.log(userInfo);
   const dispatch = useDispatch();
 
-  const updateHandler = (e) => {
+  const updateHandler = (e) => {};
 
-  };
-
-  const INTIALVALUES = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    contact: '',
+  const initialValues = {
+    firstName: userInfo.first_name,
+    lastName: userInfo.last_name,
+    email: userInfo.email,
+    contact: userInfo.contact,
   };
 
   return (
@@ -47,7 +49,7 @@ function UpdatedDetailsForm() {
           <Form>
             <Form.Label>Reservation Date</Form.Label>
             <Form.Group>
-              <DateForm />
+              <DateForm setReservationDate={setReservationDate} />
             </Form.Group>
           </Form>
         </div>
@@ -64,19 +66,17 @@ function UpdatedDetailsForm() {
           <Form.Group>
             <Form.Label>Number of Guests</Form.Label>
             <Form.Select>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
+              <option value={1}>1</option>
+              <option value={2}>2</option>
+              <option value={3}>3</option>
+              <option value={4}>4</option>
+              <option value={5}>5</option>
+
             </Form.Select>
           </Form.Group>
         </div>
       </div>
-      <Formik
-        validationSchema={SCHEMA}
-        initialValues={INTIALVALUES}
-      >
+      <Formik validationSchema={SCHEMA} initialValues={initialValues}>
         {({
           handleChange, values, touched, errors,
         }) => (
@@ -93,7 +93,7 @@ function UpdatedDetailsForm() {
                     isInvalid={!!errors.firstName}
                     isValid={touched.firstName && !errors.firstName}
                     feedback={errors.firstName}
-                    placeholder="John"
+                    placeholder={initialValues.firstName}
                   />
                   {errors.firstName && (
                   <Form.Control.Feedback type="invalid">
@@ -113,7 +113,7 @@ function UpdatedDetailsForm() {
                     isInvalid={!!errors.lastName}
                     isValid={touched.lastName && !errors.lastName}
                     feedback={errors.lastName}
-                    placeholder="Apple"
+                    placeholder={initialValues.lastName}
                   />
                   {errors.lastName && (
                   <Form.Control.Feedback type="invalid">
@@ -136,7 +136,7 @@ function UpdatedDetailsForm() {
                     isInvalid={!!errors.email}
                     isValid={touched.email && !errors.email}
                     feedback={errors.email}
-                    placeholder="john.apple@helloworld.com"
+                    placeholder={initialValues.email}
                   />
                   {errors.email && (
                   <Form.Control.Feedback type="invalid">
@@ -157,7 +157,7 @@ function UpdatedDetailsForm() {
                     isInvalid={!!errors.contact}
                     isValid={touched.contact && !errors.contact}
                     feedback={errors.contact}
-                    placeholder="1234 5678"
+                    placeholder={initialValues.contact}
                   />
                   {errors.contact && (
                   <Form.Control.Feedback type="invalid">
@@ -169,11 +169,7 @@ function UpdatedDetailsForm() {
               </Col>
             </Row>
             <div className="d-grid gap-2">
-              <Button
-                className="btn btn-primary my-5"
-              >
-                Enter Details
-              </Button>
+              <Button className="btn btn-primary my-5">Enter Details</Button>
             </div>
           </Form>
         )}
@@ -182,4 +178,4 @@ function UpdatedDetailsForm() {
   );
 }
 
-export default UpdatedDetailsForm;
+export default AuthDetailsForm;
