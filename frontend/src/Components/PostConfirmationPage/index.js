@@ -5,6 +5,7 @@ import Confirmation from './Components/Confirmation';
 function index() {
   return (
     <Confirmation />
+
   );
 }
 

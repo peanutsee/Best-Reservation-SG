@@ -6,10 +6,9 @@ import { React, useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { retrievePayment, makePayment } from '../Redux/actions';
+import { retrievePayment } from '../Redux/actions';
 import OrderItemList from './OrderItemList';
 import Receipt from './Receipt';
-import PaymentButton from './PaymentButton';
 
 function Payment() {
   const params = useParams();
@@ -46,9 +45,6 @@ function Payment() {
             <OrderItemList order_items={bill_details.order_items} />
           )}
           {bill_details && <Receipt bill_details={bill_details} />}
-          {bill_details && (
-            <PaymentButton bill_details={bill_details} payment={makePayment} />
-          )}
         </>
       )}
     </Container>

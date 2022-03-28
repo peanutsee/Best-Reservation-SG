@@ -21,8 +21,9 @@ function CompletedReservations(props) {
             <th>Date</th>
           </tr>
         </thead>
-
-        {completed_reservations !== []
+        {/* checking empty array , if not empty run true block
+        https://www.codegrepper.com/code-examples/javascript/how+to+check+if+an+array+is+empty+in+react */}
+        {completed_reservations.length
           ? (
             <tbody align="center">
               {completed_reservations.map((reservation, index) => (
@@ -33,7 +34,7 @@ function CompletedReservations(props) {
                   <td width="10%">{reservation.reservation_time}</td>
                   <td width="15%">{reservation.reservation_date}</td>
                   <td>
-                    <Link to="/split_bill/:id"><button type="button" className="btn btn-primary">Split Bill , need to fix link</button></Link>
+                    <Link to={`/payment/${reservation.order_id}`}><button type="button" className="btn btn-primary">Split Bill</button></Link>
                   </td>
                 </tr>
               ))}
@@ -60,8 +61,7 @@ function CompletedReservations(props) {
             <th>Date</th>
           </tr>
         </thead>
-
-        {is_part_of_reservation == null
+        {is_part_of_reservation.length
           ? (
             <tbody align="center">
               {is_part_of_reservation.map((reservation, index) => (
@@ -72,7 +72,7 @@ function CompletedReservations(props) {
                   <td width="10%">{reservation.reservation_time}</td>
                   <td width="15%">{reservation.reservation_date}</td>
                   <td>
-                    <button type="button" className="btn btn-primary">Primary</button>
+                    <a href={reservation.bill_url}><button type="button" className="btn btn-primary">Join Split Bill</button></a>
                   </td>
                 </tr>
               ))}

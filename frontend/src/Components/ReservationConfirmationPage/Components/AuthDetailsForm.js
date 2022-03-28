@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable no-console */
 /* eslint-disable react/prop-types */
-import { React, useEffect } from 'react';
+import { React, useEffect, useState } from 'react';
 import {
   Form, Button, Row, Col,
 } from 'react-bootstrap';
@@ -24,16 +24,20 @@ const SCHEMA = yup.object().shape({
     .max(8, 'Enter Valid Contact Number'),
 });
 
-function AuthDetailsForm() {
+function AuthDetailsForm(props) {
+  const { userInfo, setReservationDate, reservationDate } = props;
+
+  // const [reservationDate, setReservationDate] = useState('');
+  console.log(userInfo);
   const dispatch = useDispatch();
 
   const updateHandler = (e) => {};
 
   const initialValues = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    contact: '',
+    firstName: userInfo.first_name,
+    lastName: userInfo.last_name,
+    email: userInfo.email,
+    contact: userInfo.contact,
   };
 
   return (
@@ -45,7 +49,7 @@ function AuthDetailsForm() {
           <Form>
             <Form.Label>Reservation Date</Form.Label>
             <Form.Group>
-              <DateForm />
+              <DateForm setReservationDate={setReservationDate} />
             </Form.Group>
           </Form>
         </div>
@@ -67,6 +71,7 @@ function AuthDetailsForm() {
               <option value={3}>3</option>
               <option value={4}>4</option>
               <option value={5}>5</option>
+
             </Form.Select>
           </Form.Group>
         </div>
@@ -88,7 +93,7 @@ function AuthDetailsForm() {
                     isInvalid={!!errors.firstName}
                     isValid={touched.firstName && !errors.firstName}
                     feedback={errors.firstName}
-                    placeholder="John"
+                    placeholder={initialValues.firstName}
                   />
                   {errors.firstName && (
                   <Form.Control.Feedback type="invalid">
@@ -108,7 +113,7 @@ function AuthDetailsForm() {
                     isInvalid={!!errors.lastName}
                     isValid={touched.lastName && !errors.lastName}
                     feedback={errors.lastName}
-                    placeholder="Apple"
+                    placeholder={initialValues.lastName}
                   />
                   {errors.lastName && (
                   <Form.Control.Feedback type="invalid">
@@ -131,7 +136,7 @@ function AuthDetailsForm() {
                     isInvalid={!!errors.email}
                     isValid={touched.email && !errors.email}
                     feedback={errors.email}
-                    placeholder="john.apple@helloworld.com"
+                    placeholder={initialValues.email}
                   />
                   {errors.email && (
                   <Form.Control.Feedback type="invalid">
@@ -152,7 +157,7 @@ function AuthDetailsForm() {
                     isInvalid={!!errors.contact}
                     isValid={touched.contact && !errors.contact}
                     feedback={errors.contact}
-                    placeholder="1234 5678"
+                    placeholder={initialValues.contact}
                   />
                   {errors.contact && (
                   <Form.Control.Feedback type="invalid">

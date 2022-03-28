@@ -9,3 +9,7 @@
     border-left: none !important;
   }
 }
+
+.nav-item {
+  margin-right: 0.01rem !important;
+}

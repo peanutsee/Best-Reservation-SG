@@ -6,6 +6,7 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { login } from '../../AuthenticationPage/Redux/actions';
 
 const INTIALVALUES = {
   email: '',
@@ -30,6 +31,10 @@ function Authentication() {
     setPasswordShown(!passwordShown);
   };
 
+  const loginHandler = (e) => {
+    dispatch(login(e.email, e.password));
+  };
+
   return (
     <div className="p-5 shadow shadow-100">
       <h1 className="text-center">User Authentication</h1>
@@ -37,6 +42,7 @@ function Authentication() {
       <Formik
         validationSchema={SCHEMA}
         initialValues={INTIALVALUES}
+        onSubmit={loginHandler}
       >
         {({
           handleSubmit, handleChange, values, touched, errors,
@@ -86,7 +92,6 @@ function Authentication() {
             >
               <Form.Check type="checkbox" label="Show Password" />
             </Form.Group>
-            <Link to="/email_verification">Forgot password?</Link>
             <div className="d-grid gap-2">
               <Button
                 type="submit"
@@ -99,11 +104,6 @@ function Authentication() {
           </Form>
         )}
       </Formik>
-      <p>
-        Need an account?
-        {' '}
-        <Link to="/registration">Sign up here</Link>
-      </p>
     </div>
   );
 }

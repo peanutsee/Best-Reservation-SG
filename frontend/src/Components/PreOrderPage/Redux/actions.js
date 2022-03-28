@@ -7,6 +7,7 @@ import {
   REMOVE_PRE_ORDER_ITEM_REQUEST,
   REMOVE_PRE_ORDER_ITEM_SUCCESS,
   REMOVE_PRE_ORDER_ITEM_ERROR,
+  REMOVE_PRE_ORDER_ITEM_RESET,
   ADD_PRE_ORDER_ITEM_REQUEST,
   ADD_PRE_ORDER_ITEM_SUCCESS,
   ADD_PRE_ORDER_ITEM_ERROR,
@@ -34,7 +35,7 @@ export const getPreOrderDetails = (order_id) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get(
-      `/api/payment/list-order-items/order_id==${order_id}/`,
+      `/api/pre_order/list-order-items/order_id=${order_id}/`,
       config,
     );
 
@@ -66,7 +67,7 @@ export const addItem = (order_id, item_id) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.post(
-      `/api/payment/add-item-to-order/order_id=${order_id}/item_id=${item_id}/`,
+      `/api/pre_order/add-item-to-order/order_id=${order_id}/item_id=${item_id}/`,
       config,
     );
 
@@ -82,7 +83,7 @@ export const addItem = (order_id, item_id) => async (dispatch, getState) => {
   }
 };
 
-export const removeItem = (order_item_id) => async (dispatch, getState) => {
+export const removeItem = (order_item_id, order_id) => async (dispatch, getState) => {
   try {
     dispatch({ type: REMOVE_PRE_ORDER_ITEM_REQUEST });
 
@@ -97,12 +98,20 @@ export const removeItem = (order_item_id) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.delete(
-      `/api/payment/delete-order-items/item_order_key=${order_item_id}/`,
+    await axios.delete(
+      `/api/pre_order/delete-order-items/item_order_key=${order_item_id}/`,
       config,
     );
 
-    dispatch({ type: REMOVE_PRE_ORDER_ITEM_SUCCESS, payload: data });
+    dispatch({ type: REMOVE_PRE_ORDER_ITEM_SUCCESS });
+
+    dispatch(getPreOrderDetails(order_id));
+
+    window.setTimeout(() => {
+      dispatch({
+        type: REMOVE_PRE_ORDER_ITEM_RESET,
+      });
+    }, 4000);
   } catch (error) {
     dispatch({
       type: REMOVE_PRE_ORDER_ITEM_ERROR,
@@ -130,7 +139,7 @@ export const updateItem = (order_item_id) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.put(
-      `/api/payment/update-order-items-qty/item_order_key=${order_item_id}/`,
+      `/api/pre_order/update-order-items-qty/item_order_key=${order_item_id}/`,
       config,
     );
 
@@ -162,7 +171,7 @@ export const getMenuDetails = (restaurant_id) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get(
-      `/api/payment/retrieve-menu-items/restaurant_id=${restaurant_id}/`,
+      `/api/pre_order/retrieve-menu-items/restaurant_id=${restaurant_id}/`,
       config,
     );
 
