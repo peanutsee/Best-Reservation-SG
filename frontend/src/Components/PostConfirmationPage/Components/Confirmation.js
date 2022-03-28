@@ -2,10 +2,13 @@
 import React from 'react';
 import { Container, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import Pdf from 'react-to-pdf';
+
+const ref = React.createRef();
 
 function Confirmation() {
   return (
-    <Container className="px-5">
+    <Container ref={ref} className="px-5">
       <h1> Reservation Confirmation </h1>
       <div className=" pt-5 row">
         <div className="col-6">
@@ -31,12 +34,13 @@ function Confirmation() {
 
         <div className="col-6">
           <h3>QR CODE</h3>
-          <Button variant="primary">
-            Download
-          </Button>
+          <Pdf targetRef={ref} filename="reservation-confirmation.pdf">
+            {({ toPdf }) => <Button onClick={toPdf}>Generate Pdf</Button>}
+          </Pdf>
         </div>
       </div>
     </Container>
+
   );
 }
 
