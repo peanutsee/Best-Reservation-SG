@@ -63,7 +63,7 @@ function PaymentButton(props) {
         setSdkReady(true);
       }
     }
-  }, [bill_details]);
+  }, [bill_details, sdkReady]);
 
   if (bill_details.bill_is_paid) {
     return (

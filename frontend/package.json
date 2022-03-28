@@ -45,7 +45,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "coverage": "npm run test -- --coverage",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "aws s3 sync build/ s3://cz2006-project-frontend --profile darryl-see"
   },
   "eslintConfig": {
     "extends": [
