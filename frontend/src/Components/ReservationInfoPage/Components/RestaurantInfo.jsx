@@ -146,8 +146,12 @@ function RestaurantInfo(props) {
               </p>
               <h4>Contact</h4>
               <p>
-                {'Phone: '}
-                {reservation.Restaurant.restaurant_primary_contact}
+                {reservation.Restaurant.restaurant_primary_contact !== ''
+                  ? (
+                    reservation.Restaurant.restaurant_primary_contact
+                  ) : (
+                    <span> 12345678</span>
+                  )}
                 <br />
                 {'Email: '}
                 {reservation.Restaurant.restaurant_official_email !== ''

@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import './app.css';
 
 function RestaurantTabs(props) {
-  const { reservation_confirmation } = props;
+  const { reservation_confirmation, restaurant } = props;
   return (
     <Container>
       <Tabs defaultActiveKey="about">
@@ -19,8 +19,7 @@ function RestaurantTabs(props) {
             <div className="col-12 col-md-8 ">
               <h4>Overview</h4>
               <p>
-                Western cuisine made from scratch where you’ll enjoy delicious
-                food.
+                {restaurant.restaurant_longer_description}
                 <br />
                 Reserve a table now!
               </p>
@@ -36,17 +35,63 @@ function RestaurantTabs(props) {
             <div className="col-6 col-md-4 border-left border-dark">
               <h4>Address</h4>
               <p>
-                123 Restaurant Avenue
+                {restaurant.restaurant_street_name !== ''
+                  ? (
+                    restaurant.restaurant_street_name
+                  ) : (
+                    <span>123 Restaurant Avenue(outdated address)</span>
+                  )}
                 <br />
-                #01-234
+
+                {'# '}
+                {restaurant.restaurant_floor_number !== ''
+                  ? (
+                    restaurant.restaurant_floor_number
+                  ) : (
+                    <span>01</span>
+                  )}
+                {' - '}
+                {restaurant.restaurant_unit_number !== ''
+                  ? (
+                    restaurant.restaurant_unit_number
+                  ) : (
+                    <span>234</span>
+                  )}
                 <br />
-                Singapore 123456
+
+                <p>
+                  {' '}
+                  Singapore
+                  {' '}
+                  {restaurant.restaurant_postal_code}
+                  {' '}
+                </p>
               </p>
               <h4>Contact</h4>
               <p>
-                Phone: 6123 4567
+                {'Phone: '}
+                {restaurant.restaurant_primary_contact !== ''
+                  ? (
+                    restaurant.restaurant_primary_contact
+                  ) : (
+                    <span>+65 87654321</span>
+                  )}
                 <br />
-                Email: restaurant@gmail.com
+                {'Email: '}
+                {restaurant.restaurant_official_email !== ''
+                  ? (
+                    restaurant.restaurant_official_email
+                  ) : (
+                    <span>restaurant@gmail.com</span>
+                  )}
+                <br />
+                {'Website: '}
+                {restaurant.restaurant_official_website !== ''
+                  ? (
+                    restaurant.restaurant_official_website
+                  ) : (
+                    <span>www.restaurant.com</span>
+                  )}
               </p>
             </div>
             <div className="pt-3">
