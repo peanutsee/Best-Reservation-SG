@@ -70,7 +70,7 @@ const NAVIGATION_ROUTES = Object.freeze({
   },
 
   proportionViewingPage: {
-    path: '/proportion_view',
+    path: '/proportion_view/:id',
     element: <ProportionViewPage />,
   },
 

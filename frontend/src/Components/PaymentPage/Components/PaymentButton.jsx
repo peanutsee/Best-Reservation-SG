@@ -7,15 +7,19 @@ import { PayPalButton } from 'react-paypal-button-v2';
 import { Button, Modal, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { setPin } from '../Redux/actions';
+import { setPin, retrievePayment } from '../Redux/actions';
 
 function PaymentButton(props) {
+  const dispatch = useDispatch();
+
   const { bill_details, payment } = props;
   const [show, setShow] = useState(false);
   const [sdkReady, setSdkReady] = useState(false);
-
+  const handleClose = () => {
+    setShow(false);
+    dispatch(retrievePayment(bill_details.id));
+  };
   const handleShow = () => setShow(true);
-  const dispatch = useDispatch();
 
   // Add PayPal Script
   const addPayPalScript = () => {
@@ -67,17 +71,18 @@ function PaymentButton(props) {
 
   if (bill_details.bill_is_paid) {
     return (
-      <div className="d-flex justify-content-end">
+      <div className="d-grid gap-2">
         <Button onClick={handleShow}>Split Bill</Button>
         <PaymentModal
           show={show}
-          onHide={() => setShow(false)}
+          onHide={() => handleClose()}
           url={bill_details.bill_url}
           copyToClipboard={copyToClipboard}
         />
       </div>
     );
   }
+
   if (!bill_details.bill_is_paid) {
     return (
       <div className="d-flex justify-content-end px-5">

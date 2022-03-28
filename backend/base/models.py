@@ -83,6 +83,7 @@ class BillDetail(models.Model):
     bill_is_paid = models.BooleanField(default=False)
     bill_pin = models.TextField(default='NO PIN')
     bill_url = models.URLField(default='www.example.com')
+    bill_is_split = models.BooleanField(default=False)
 
     objects = models.Manager()
 

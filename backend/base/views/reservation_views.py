@@ -8,12 +8,6 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from datetime import datetime
 
-# Not sure how implement the following tasks:
-# TODO add Download PDF of reservation
-# TODO add generate reservation link
-# TODO add auto changing of status to Reservation Completed --> can come under BillDetails? idk
-# TODO auto delete Reservation if abandon Reservation , deposit forfeited
-
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getAllReservation(request):
@@ -42,9 +36,10 @@ def getAllReservation(request):
         reservation_data['reservation_time'] = time
 
         # Get Pre-Order Field
-        preorder = Order.objects.get(order_reservation=reservation_data['id'])
-        preorder_serialized = OrderSerializer(preorder, many=False)
-        reservation_data.update({"pre_order_id": preorder_serialized.data['id']})
+        bill = BillDetail.objects.get(bill_reservation=reservation_data['id'])
+        bill_serialized = BillDetailSerializer(bill, many=False)
+        bill_data = bill_serialized.data
+        reservation_data['bill_url'] = bill_data['bill_url']
 
         # Sort Active Is Part Of
         if not reservation_data['reservation_is_completed']:
@@ -77,6 +72,7 @@ def getAllReservation(request):
 
     completed_reservations_serialized = ReservationSerializer(completed_reservations, many=True)
     completed_reservations_data = completed_reservations_serialized.data
+    
     for reservation in completed_reservations_data:
         restaurant = Restaurant.objects.get(id=reservation['reservation_restaurant']).restaurant_name
         reservation['reservation_restaurant'] = restaurant
@@ -85,9 +81,10 @@ def getAllReservation(request):
         reservation['reservation_time'] = time 
 
         # Get Pre-Order Field
-        preorder = Order.objects.get(order_reservation=reservation['id'])
-        preorder_serialized = OrderSerializer(preorder, many=False)
-        reservation.update({"pre_order_id": preorder_serialized.data['id']})
+        bill = BillDetail.objects.get(bill_reservation=reservation['id'])
+        bill_serialized = BillDetailSerializer(bill, many=False)
+        bill_data = bill_serialized.data
+        reservation['bill_id'] = bill_data['id']
 
     output = {
         "active_reservations": active_reservations_data,

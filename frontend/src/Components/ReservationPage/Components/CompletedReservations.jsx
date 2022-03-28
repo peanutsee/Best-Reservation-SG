@@ -34,7 +34,7 @@ function CompletedReservations(props) {
                   <td width="10%">{reservation.reservation_time}</td>
                   <td width="15%">{reservation.reservation_date}</td>
                   <td>
-                    <Link to={`/payment/${reservation.pre_order_id}`}><button type="button" className="btn btn-primary">Split Bill</button></Link>
+                    <Link to={`/payment/${reservation.bill_id}`}><button type="button" className="btn btn-primary">Split Bill</button></Link>
                   </td>
                 </tr>
               ))}
@@ -61,8 +61,6 @@ function CompletedReservations(props) {
             <th>Date</th>
           </tr>
         </thead>
-        {/* checking empty array , if not empty run true block
-        https://www.codegrepper.com/code-examples/javascript/how+to+check+if+an+array+is+empty+in+react */}
         {is_part_of_reservation.length
           ? (
             <tbody align="center">
@@ -74,7 +72,7 @@ function CompletedReservations(props) {
                   <td width="10%">{reservation.reservation_time}</td>
                   <td width="15%">{reservation.reservation_date}</td>
                   <td>
-                    <Link to={`/payment/${reservation.pre_order_id}`}><button type="button" className="btn btn-primary">Join Split Bill</button></Link>
+                    <a href={reservation.bill_url}><button type="button" className="btn btn-primary">Join Split Bill</button></a>
                   </td>
                 </tr>
               ))}

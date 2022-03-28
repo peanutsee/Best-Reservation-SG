@@ -69,7 +69,7 @@ export const setPin = (order_id, password) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.put(
+    await axios.put(
       `/api/payment/update-bill-password/order_id=${order_id}/`,
       { bill_password: password },
       config,
@@ -77,7 +77,6 @@ export const setPin = (order_id, password) => async (dispatch, getState) => {
 
     dispatch({
       type: SET_PASSWORD_SUCCESS,
-      payload: data,
     });
   } catch (error) {
     dispatch({

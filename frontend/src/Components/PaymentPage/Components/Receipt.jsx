@@ -2,8 +2,11 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import {
-  Row, Col, Image, Table,
+  Row, Col, Image, Table, Button,
 } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import PaymentButton from './PaymentButton';
+import { makePayment } from '../Redux/actions';
 
 function Receipt(props) {
   const { bill_details } = props;
@@ -11,11 +14,11 @@ function Receipt(props) {
   return (
     <Row>
       {bill_details.bill_is_paid === true ? (
-        <Col md={{ span: 4, offset: 2 }}>
-          <Image fluid className="w-70" src="/static/assets/paid.png" />
+        <Col md={6} className="d-flex justify-content-center align-middle">
+          <Image fluid className="h-50" src="/static/assets/paid.png" />
         </Col>
       ) : null}
-      <Col>
+      <Col md={6}>
         <Table className="d-flex justify-content-end">
           <tbody>
             <tr>
@@ -48,6 +51,23 @@ function Receipt(props) {
             </tr>
           </tbody>
         </Table>
+        <div className="d-flex justify-content-end">
+          <div className="w-50 d-grid gap-2">
+            {bill_details && (
+              <PaymentButton
+                bill_details={bill_details}
+                payment={makePayment}
+              />
+            )}
+            {bill_details.bill_is_split && (
+              <Button className="btn btn-info mt-3">
+                <Link to={`/proportion_view/${bill_details.id}`}>
+                  Proportions
+                </Link>
+              </Button>
+            )}
+          </div>
+        </div>
       </Col>
     </Row>
   );
