@@ -53,6 +53,7 @@ class Reservation(models.Model):
     number_of_users_in_reservation = models.IntegerField(default=1)
     reservation_pin = models.TextField(default='NO PIN')
     reservation_url = models.URLField(default='www.example.com')
+    reservation_deposit_is_paid = models.BooleanField(default=False)
     
     objects = models.Manager()
 
@@ -82,6 +83,7 @@ class BillDetail(models.Model):
     bill_is_paid = models.BooleanField(default=False)
     bill_pin = models.TextField(default='NO PIN')
     bill_url = models.URLField(default='www.example.com')
+    bill_is_split = models.BooleanField(default=False)
 
     objects = models.Manager()
 
