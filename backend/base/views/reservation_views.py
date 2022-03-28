@@ -8,12 +8,6 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from datetime import datetime
 
-# Not sure how implement the following tasks:
-# TODO add Download PDF of reservation
-# TODO add generate reservation link
-# TODO add auto changing of status to Reservation Completed --> can come under BillDetails? idk
-# TODO auto delete Reservation if abandon Reservation , deposit forfeited
-
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getAllReservation(request):
@@ -35,16 +29,16 @@ def getAllReservation(request):
         reservation_data = reservation_serialized.data
 
         restaurant = Restaurant.objects.get(id=reservation_data['reservation_restaurant']).restaurant_name
-        #print(restaurant)
         reservation_data['reservation_restaurant'] = restaurant
         date, time = datetime.strptime(reservation_data['reservation_date_time'], '%Y-%m-%dT%H:%M:%SZ').date(), datetime.strptime(reservation_data['reservation_date_time'], '%Y-%m-%dT%H:%M:%SZ').time()
         reservation_data['reservation_date'] = date
         reservation_data['reservation_time'] = time
 
         # Get Pre-Order Field
-        preorder = Order.objects.get(order_reservation=reservation_data['id'])
-        preorder_serialized = OrderSerializer(preorder, many=False)
-        reservation_data.update({"pre_order_id": preorder_serialized.data['id']})
+        bill = BillDetail.objects.get(bill_reservation=reservation_data['id'])
+        bill_serialized = BillDetailSerializer(bill, many=False)
+        bill_data = bill_serialized.data
+        reservation_data['bill_url'] = bill_data['bill_url']
 
         # Sort Active Is Part Of
         if not reservation_data['reservation_is_completed']:
@@ -77,6 +71,7 @@ def getAllReservation(request):
 
     completed_reservations_serialized = ReservationSerializer(completed_reservations, many=True)
     completed_reservations_data = completed_reservations_serialized.data
+    
     for reservation in completed_reservations_data:
         restaurant = Restaurant.objects.get(id=reservation['reservation_restaurant']).restaurant_name
         reservation['reservation_restaurant'] = restaurant
@@ -85,9 +80,10 @@ def getAllReservation(request):
         reservation['reservation_time'] = time 
 
         # Get Pre-Order Field
-        preorder = Order.objects.get(order_reservation=reservation['id'])
-        preorder_serialized = OrderSerializer(preorder, many=False)
-        reservation.update({"pre_order_id": preorder_serialized.data['id']})
+        order = Order.objects.get(order_reservation=reservation['id'])
+        order_serialized = OrderSerializer(order, many=False)
+        order_data = order_serialized.data
+        reservation['order_id'] = order_data['id']
 
     output = {
         "active_reservations": active_reservations_data,
@@ -137,9 +133,7 @@ def getReservation(request, pk):
     try:
         reservation = Reservation.objects.get(id=pk)
         if reservation.reservation_owner == user:
-            #print(reservation)
             reservation_serializer = ReservationSerializer(reservation, many=False)
-            #print(reservation_serializer.data)
             reservation_data = reservation_serializer.data
 
             # restaurant = Restaurant.objects.get(id=reservation_data['reservation_restaurant']).restaurant_name
@@ -160,13 +154,10 @@ def getReservation(request, pk):
             preorder_serialized = OrderSerializer(preorder, many=False)
             reservation_data.update({"pre_order_id": preorder_serialized.data['id']})
 
-            # print(reservation_data['reservation_owner'])
-            # print(Profile.objects.get(user=reservation_data['reservation_owner']).user.first_name)
             reservation_owner_user_object = Profile.objects.get(user=reservation_data['reservation_owner']).user
             reservation_owner_name = reservation_owner_user_object.first_name + ' ' + reservation_owner_user_object.last_name
-            # print(reservation_owner_name)
             reservation_data['reservation_owner'] = reservation_owner_name
-            # print( restaurant)
+
             return Response(reservation_data, status=status.HTTP_200_OK)
 
         # If they are reservation diner of the reservation
@@ -355,3 +346,22 @@ def updatePin(request, pk):
     reservation.save()
     reservation_serializer = ReservationSerializer(reservation, many=False)
     return Response(reservation_serializer.data, status=status.HTTP_200_OK)
+
+# Set Completed 
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def reservationCompleted(request, reservation_id):
+    reservation = Reservation.objects.get(id=reservation_id)
+    if reservation.reservation_is_completed:
+        return Response('Reservation Completed!', status=status.HTTP_401_OK)
+    
+    reservation.reservation_is_completed = True
+    reservation.save()
+    
+    reservation_serializer = ReservationSerializer(reservation, many=False)
+    reservation_data = reservation_serializer.data
+    
+    return Response(reservation_data, status=status.HTTP_200_OK)
+    
+
+    

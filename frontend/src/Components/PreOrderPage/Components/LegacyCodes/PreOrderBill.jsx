@@ -4,7 +4,6 @@ import React from 'react';
 import {
   Table,
 } from "react-bootstrap";
-import '../App.css';
 
 function PreOrderBill() {
   return (

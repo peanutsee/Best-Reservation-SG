@@ -6,6 +6,7 @@ import {
   REMOVE_PRE_ORDER_ITEM_REQUEST,
   REMOVE_PRE_ORDER_ITEM_SUCCESS,
   REMOVE_PRE_ORDER_ITEM_ERROR,
+  REMOVE_PRE_ORDER_ITEM_RESET,
   ADD_PRE_ORDER_ITEM_REQUEST,
   ADD_PRE_ORDER_ITEM_SUCCESS,
   ADD_PRE_ORDER_ITEM_ERROR,
@@ -37,9 +38,11 @@ export const removePreOrderItemReducer = (state = {}, action) => {
     case REMOVE_PRE_ORDER_ITEM_REQUEST:
       return { loading: true, success: false };
     case REMOVE_PRE_ORDER_ITEM_SUCCESS:
-      return { loading: false, success: true, pre_order_details: payload };
+      return { loading: false, success: true };
     case REMOVE_PRE_ORDER_ITEM_ERROR:
       return { loading: false, success: false, error: payload };
+    case REMOVE_PRE_ORDER_ITEM_RESET:
+      return {};
     default:
       return state;
   }

@@ -13,9 +13,9 @@ def fullBillPaymentTabulation(request, order_pk):
     order_items = OrderItemInOrder.objects.filter(order=order)
     order_items_serialized = OrderItemInOrderSerializer(order_items, many=True)
     order_items_data = order_items_serialized.data
-    
+
     for item in order_items_data:
-        menu_item = MenuItem.objects.get(id=item['id'])
+        menu_item = MenuItem.objects.get(id=item['order_item'])
         item_serialized = MenuItemSerializer(menu_item, many=False)
         item_data = item_serialized.data
         item_name = item_data['menu_item_name']
@@ -48,7 +48,8 @@ def updatePin(request, order_pk):
     bill = BillDetail.objects.get(bill_reservation=order.order_reservation)
     
     bill.bill_pin = data['bill_password']
-
+    bill.bill_is_split = True
+    
     bill.save()
     bill_serializer = BillDetailSerializer(bill, many=False)
     bill_data = bill_serializer.data
@@ -149,4 +150,5 @@ def splitBillPayment(request, order_pk):
         bot.send_message(text=f"Hey there, please pay SGD$ {amount} for your meal!", chat_id=user)
     
     return Response('OK', status=status.HTTP_200_OK)
+
 

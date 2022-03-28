@@ -7,21 +7,25 @@ import { PayPalButton } from 'react-paypal-button-v2';
 import { Button, Modal, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { setPin } from '../Redux/actions';
+import { setPin, retrievePayment } from '../Redux/actions';
 
 function PaymentButton(props) {
+  const dispatch = useDispatch();
+
   const { bill_details, payment } = props;
   const [show, setShow] = useState(false);
   const [sdkReady, setSdkReady] = useState(false);
-
+  const handleClose = () => {
+    setShow(false);
+    dispatch(retrievePayment(bill_details.id));
+  };
   const handleShow = () => setShow(true);
-  const dispatch = useDispatch();
 
   // Add PayPal Script
   const addPayPalScript = () => {
     const script = document.createElement('script');
     script.type = 'text/javascript';
-    script.src = 'https://www.paypal.com/sdk/js?client-id=AblsefRPw4Dp2V1_u2Dd6MY-IYJUe3OvtFXU0o5XDz-IKjsDC1MmHtguz4ExhBYMvlCtwekZLVZhxy8W&currency=SGD';
+    script.src = 'https://www.paypal.com/sdk/js?client-id=AblsefRPw4Dp2V1_u2Dd6MY-IYJUe3OvtFXU0o5XDz-IKjsDC1MmHtguz4ExhBYMvlCtwekZLVZhxy8W&currency=USD';
     script.async = true;
     script.onload = () => {
       setSdkReady(true);
@@ -32,7 +36,7 @@ function PaymentButton(props) {
   // Dispatch Payment Update
   const handlePayment = (paymentResult) => {
     if (paymentResult.status === 'COMPLETED') {
-      dispatch(payment(bill_details.id));
+      dispatch(payment(bill_details.id, bill_details.bill_reservation));
     }
   };
 
@@ -63,21 +67,22 @@ function PaymentButton(props) {
         setSdkReady(true);
       }
     }
-  }, [bill_details]);
+  }, [bill_details, sdkReady]);
 
   if (bill_details.bill_is_paid) {
     return (
-      <div className="d-flex justify-content-end">
+      <div className="d-grid gap-2">
         <Button onClick={handleShow}>Split Bill</Button>
         <PaymentModal
           show={show}
-          onHide={() => setShow(false)}
+          onHide={() => handleClose()}
           url={bill_details.bill_url}
           copyToClipboard={copyToClipboard}
         />
       </div>
     );
   }
+
   if (!bill_details.bill_is_paid) {
     return (
       <div className="d-flex justify-content-end px-5">
