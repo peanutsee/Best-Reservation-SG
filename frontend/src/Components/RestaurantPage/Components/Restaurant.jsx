@@ -20,11 +20,8 @@ function Restaurant() {
   } = retrieveRestaurant;
 
   useEffect(() => {
-    if (!restaurant) {
-      dispatch(getRestaurant(params.id));
-    }
-  }, [dispatch, restaurant]);
-  const reservation_confirmation = null;
+    dispatch(getRestaurant(params.id));
+  }, [dispatch]);
 
   return (
     <div>
@@ -42,7 +39,6 @@ function Restaurant() {
             {restaurant.restaurant_name}
           </h1>
           <RestaurantTabs
-            props={reservation_confirmation}
             restaurant={restaurant}
           />
         </Container>
