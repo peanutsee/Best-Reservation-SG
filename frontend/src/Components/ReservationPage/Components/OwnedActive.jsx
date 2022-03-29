@@ -68,7 +68,7 @@ function OwnedActive(props) {
         ) : (
           <tbody align="center">
             <td colSpan={4}>
-              It seem like you do not own any reservation.
+              It seem that you do not own any reservations.
               <Link to="/">Make a Reservation now!</Link>
             </td>
           </tbody>
