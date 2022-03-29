@@ -18,7 +18,6 @@ function ConfirmationDetails(props) {
       <div className="pt-5 row">
         <div className="col-sm">
           <h4>Name</h4>
-          <p>{userInfo.first_name}</p>
           <h4>Reservation Date</h4>
           <p>{reservationDate}</p>
         </div>
@@ -52,7 +51,7 @@ function ConfirmationDetails(props) {
 
       <Link to="/post_confirmation/1">
         <div className="d-grid gap-2">
-          <Button className="my-3" variant="primary">Confirm Reservation</Button>
+          <Button className="my-3s" variant="primary">Confirm Reservation</Button>
         </div>
       </Link>
     </div>
