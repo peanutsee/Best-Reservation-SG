@@ -3,7 +3,8 @@ import React from 'react';
 import {
   Col, Row, Tab, Nav,
 } from 'react-bootstrap';
-import ReservationTabs from './Components/ReservationTabs';
+import JoinedTabs from './Components/JoinedTabs';
+import OwnedTabs from './Components/OwnedTabs';
 
 function index() {
   return (
@@ -23,8 +24,12 @@ function index() {
           </Col>
           <Col sm={10}>
             <Tab.Content className="shadow shadow-100 p-5">
-              <Tab.Pane eventKey="owned" />
-              <Tab.Pane eventKey="joined" />
+              <Tab.Pane eventKey="owned">
+                <OwnedTabs />
+              </Tab.Pane>
+              <Tab.Pane eventKey="joined">
+                <JoinedTabs />
+              </Tab.Pane>
             </Tab.Content>
           </Col>
         </Row>

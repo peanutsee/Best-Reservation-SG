@@ -37,18 +37,24 @@ function ConfirmationDetails(props) {
             )}
           >
             <span className="d-inline-block">
-              <Button variant="link" disabled style={{ pointerEvents: 'none' }}>
-                Deposit
-                <VscQuestion />
-              </Button>
+              <div className="d-flex justify-content-end px-5">
+                <Button variant="link" disabled style={{ pointerEvents: 'none' }}>
+                  Deposit
+                  <VscQuestion />
+                </Button>
+              </div>
             </span>
           </OverlayTrigger>
           <br />
-          <Link to="/post_confirmation/1">
-            <Button variant="primary">Confirm Reservation</Button>
-          </Link>
+          <PaymentButton />
         </div>
       </div>
+
+      <Link to="/post_confirmation/1">
+        <div className="d-grid gap-2">
+          <Button className="my-3" variant="primary">Confirm Reservation</Button>
+        </div>
+      </Link>
     </div>
   );
 }
