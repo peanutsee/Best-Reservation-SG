@@ -25,7 +25,7 @@ export const updateReservationPinReducer = (state = [], action) => {
   }
 };
 
-export const getReservationReducer = (state = [], action) => {
+export const getConfirmedReservationReducer = (state = [], action) => {
   const { type, payload } = action;
 
   switch (type) {

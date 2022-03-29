@@ -30,9 +30,9 @@ export const updateReservationPin = (reservationID, reservation_pin) => async (d
       },
     };
     const { data } = await axios.put(
-      `/api/reservation/update-reservation-password/reservation_id=${reservationID}`,
+      `/api/reservation/update-reservation-password/reservation_id=${reservationID}/`,
       {
-        reservationID, reservation_pin,
+        reservation_pin,
       },
       config,
     );
@@ -52,7 +52,7 @@ export const updateReservationPin = (reservationID, reservation_pin) => async (d
   }
 };
 
-export const getReservation = (reservationID) => async (dispatch, getState) => {
+export const getConfirmedReservation = (reservationID) => async (dispatch, getState) => {
   try {
     dispatch({
       type: RESERVATION_GET_REQUEST,
