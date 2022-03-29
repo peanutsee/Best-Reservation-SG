@@ -6,7 +6,7 @@ import {
   RESTAURANT_GET_ERROR,
 } from './constants';
 
-export const getRestaurantReducer = (state = [], action) => {
+export const getRestaurantReducer = (state = {}, action) => {
   const { type, payload } = action;
 
   switch (type) {

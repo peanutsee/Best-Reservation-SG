@@ -10,8 +10,9 @@ import PaymentButton from './PaymentButton';
 
 function ConfirmationDetails(props) {
   const {
-    userInfo, reservationDate, reservationTime, reservationPax,
+    userInfo, reservationDate, reservationTime, reservationPax, nGuest,
   } = props;
+
   return (
     <div className="p-5 shadow shadow-100 row">
       <h1 className="text-center">Confirm Reservation</h1>
@@ -24,7 +25,7 @@ function ConfirmationDetails(props) {
         </div>
         <div className="col-sm">
           <h4>Number of Guests</h4>
-          <p>{reservationPax}</p>
+          <p>{nGuest}</p>
           <h4>Reservation Time</h4>
           <p>{reservationTime}</p>
         </div>
@@ -50,7 +51,7 @@ function ConfirmationDetails(props) {
         </div>
       </div>
 
-      <Link to="/post_confirmation/1">
+      <Link to="/post_confirmation">
         <div className="d-grid gap-2">
           <Button className="my-3" variant="primary">Confirm Reservation</Button>
         </div>

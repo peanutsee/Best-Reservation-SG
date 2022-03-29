@@ -35,7 +35,7 @@ function LinkPopUpModal(props) {
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={() => {
-          navigator.clipboard.writeText(`URL: ${reservation.reservation_url}\nPassword: ${reservation.reservation_pin}\n${reservation.reservation_owner} is inviting you to join them at ${reservation.Restaurant.restaurant_name} on ${reservation.reservation_date} at ${reservation.reservation_time}`);
+          navigator.clipboard.writeText(`URL: ${reservation.reservation_url}\nPassword: ${reservation.reservation_pin}\n${reservation.reservation_owner} is inviting you to join them at ${reservation.reservation_restaurant} on ${reservation.reservation_date} at ${reservation.reservation_time}`);
         }}
         >
           Copy Link
