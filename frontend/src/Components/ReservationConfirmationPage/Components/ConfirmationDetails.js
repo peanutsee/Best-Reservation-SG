@@ -16,6 +16,13 @@ function ConfirmationDetails(props) {
     userInfo, reservationDate, reservationTime, reservationPax, nGuest, restaurantID,
   } = props;
 
+  const createsReservation = useSelector(
+    (state) => state.createReservationReducer,
+  );
+  const {
+    reservation,
+  } = createsReservation;
+
   const reservation_date_time = `${reservationDate} ${reservationTime}`;
   // console.log(reservation_date_time);
   // console.log(restaurantID);
@@ -24,6 +31,8 @@ function ConfirmationDetails(props) {
   const handleCreate = (e) => {
     e.preventDefault();
     dispatch(createReservation(restaurantID, reservation_date_time, nGuest));
+    console.log(reservation.id);
+    window.open(`/post_confirmation/${reservation.id}`);
   };
   return (
     <div className="p-5 shadow shadow-100 row">

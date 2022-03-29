@@ -93,7 +93,7 @@ const NAVIGATION_ROUTES = Object.freeze({
   },
 
   postConfirmationPage: {
-    path: '/post_confirmation',
+    path: '/post_confirmation/:id',
     element: <PostConfirmationPage />,
   },
 });
