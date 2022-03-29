@@ -4,10 +4,10 @@
 import { React, useEffect, useState } from 'react';
 import { Container, Tabs, Tab } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import ActiveReservations from './ActiveReservations';
-import CompletedReservations from './CompletedReservations';
 import { getAllReservations } from '../Redux/actions';
 import './reservation.css';
+import JoinedActive from './JoinedActive';
+import JoinedCompleted from './JoinedCompleted';
 
 function ReservationTabs() {
   const dispatch = useDispatch();
@@ -30,8 +30,8 @@ function ReservationTabs() {
   }, [dispatch, active_reservations, completed_reservations, deleteRemove]);
 
   return (
-    <Container className="p-5">
-      <h1 className="mb-5">Reservation Management</h1>
+    <Container className="p-3">
+      <h1 className="mb-5">Reservations Joined</h1>
       {loading ? (
         <h1>Loading Reservations...</h1>
       ) : error ? (
@@ -40,7 +40,7 @@ function ReservationTabs() {
         <Tabs defaultActiveKey="current">
           <Tab eventKey="current" title="Current">
             {active_reservations && (
-              <ActiveReservations
+              <JoinedActive
                 active_reservations={active_reservations}
                 is_part_of_reservation={is_part_of_reservation.active_part_of}
                 setDeleteRemove={setDeleteRemove}
@@ -49,7 +49,7 @@ function ReservationTabs() {
           </Tab>
           <Tab eventKey="previous" title="Previous">
             {completed_reservations && (
-              <CompletedReservations
+              <JoinedCompleted
                 completed_reservations={completed_reservations}
                 is_part_of_reservation={is_part_of_reservation.completed_part_of}
               />

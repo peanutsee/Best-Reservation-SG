@@ -41,9 +41,8 @@ function AuthDetailsForm(props) {
   };
 
   return (
-    <>
+    <div className="p-5 shadow shadow-100 row">
       <h1 className="text-center">Enter Your Reservation Details</h1>
-
       <div className="row">
         <div className="col-6 col-md-4">
           <Form>
@@ -96,9 +95,9 @@ function AuthDetailsForm(props) {
                     placeholder={initialValues.firstName}
                   />
                   {errors.firstName && (
-                  <Form.Control.Feedback type="invalid">
-                    {errors.firstName}
-                  </Form.Control.Feedback>
+                    <Form.Control.Feedback type="invalid">
+                      {errors.firstName}
+                    </Form.Control.Feedback>
                   )}
                 </Form.Group>
               </Col>
@@ -116,9 +115,9 @@ function AuthDetailsForm(props) {
                     placeholder={initialValues.lastName}
                   />
                   {errors.lastName && (
-                  <Form.Control.Feedback type="invalid">
-                    {errors.lastName}
-                  </Form.Control.Feedback>
+                    <Form.Control.Feedback type="invalid">
+                      {errors.lastName}
+                    </Form.Control.Feedback>
                   )}
                 </Form.Group>
               </Col>
@@ -139,9 +138,9 @@ function AuthDetailsForm(props) {
                     placeholder={initialValues.email}
                   />
                   {errors.email && (
-                  <Form.Control.Feedback type="invalid">
-                    {errors.email}
-                  </Form.Control.Feedback>
+                    <Form.Control.Feedback type="invalid">
+                      {errors.email}
+                    </Form.Control.Feedback>
                   )}
                   <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                 </Form.Group>
@@ -160,9 +159,9 @@ function AuthDetailsForm(props) {
                     placeholder={initialValues.contact}
                   />
                   {errors.contact && (
-                  <Form.Control.Feedback type="invalid">
-                    {errors.contact}
-                  </Form.Control.Feedback>
+                    <Form.Control.Feedback type="invalid">
+                      {errors.contact}
+                    </Form.Control.Feedback>
                   )}
                   <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                 </Form.Group>
@@ -174,7 +173,7 @@ function AuthDetailsForm(props) {
           </Form>
         )}
       </Formik>
-    </>
+    </div>
   );
 }
 

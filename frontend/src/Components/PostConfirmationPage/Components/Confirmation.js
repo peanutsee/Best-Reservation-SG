@@ -21,14 +21,18 @@ function Confirmation() {
           <p>4</p>
           <h5>Reservation Time</h5>
           <p>19:00</p>
-          <div className="pb-4">
-            <Link to="/">
-              <Button size="md">
+          <Link to="/">
+            <div className="d-grid gap-2">
+              <Button className="mt-1" size="md">
                 Go to home page
               </Button>
-            </Link>
-            {' '}
-            <Button variant="success" className="ml-2" size="md">I want to order</Button>
+
+            </div>
+
+          </Link>
+          <br />
+          <div className="d-grid gap-2">
+            <Button variant="success" className="mb-3" size="md">I want to order</Button>
           </div>
         </div>
 
