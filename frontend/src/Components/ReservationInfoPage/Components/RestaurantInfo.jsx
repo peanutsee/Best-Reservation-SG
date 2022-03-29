@@ -4,58 +4,16 @@
 /* eslint-disable react/jsx-filename-extension */
 import { React, useState } from 'react';
 import {
-  Container, Button, Modal, Tab, Tabs, Form,
+  Container, Button, Tab, Tabs,
 } from 'react-bootstrap';
 import './app.css';
-import DateForm from './DateForm';
-import TimeForm from './TimeForm';
+import EditPopUpModal from './EditReservation';
+import LinkPopUpModal from './ReservationLink';
 
-function PopUpModal(props) {
-  return (
-    <Modal
-      {...props}
-      size="md"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Edit Reservation
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Form>
-          <Form.Label>Reservation Date</Form.Label>
-          <Form.Group>
-            <DateForm />
-          </Form.Group>
-        </Form>
-        <Form>
-          <Form.Label>Reservation Time</Form.Label>
-          <Form.Group>
-            <TimeForm />
-          </Form.Group>
-        </Form>
-        <Form.Group>
-          <Form.Label>Number of Guests</Form.Label>
-          <Form.Select>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-          </Form.Select>
-        </Form.Group>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button>Confirm</Button>
-      </Modal.Footer>
-    </Modal>
-  );
-}
 function RestaurantInfo(props) {
   const { reservation } = props;
-  const [modalShow, setModalShow] = useState(false);
+  const [editModalShow, setEditModalShow] = useState(false);
+  const [linkModalShow, setLinkModalShow] = useState(false);
 
   return (
     <Container>
@@ -80,12 +38,21 @@ function RestaurantInfo(props) {
               </p>
             </div>
             <div className="pt-3">
-              <Button variant="primary" onClick={() => setModalShow(true)}>
+              <Button variant="primary" onClick={() => setEditModalShow(true)}>
                 Edit Reservation
               </Button>
-              <PopUpModal
-                show={modalShow}
-                onHide={() => setModalShow(false)}
+              <EditPopUpModal
+                show={editModalShow}
+                onHide={() => setEditModalShow(false)}
+                reservation={reservation}
+              />
+              {' '}
+              <Button variant="primary" onClick={() => setLinkModalShow(true)}>
+                Reservation Link
+              </Button>
+              <LinkPopUpModal
+                show={linkModalShow}
+                onHide={() => setLinkModalShow(false)}
                 reservation={reservation}
               />
             </div>
