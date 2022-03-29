@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 /* eslint-disable default-param-last */
 import {
   RESERTAURANT_GET_REQUEST,
@@ -5,7 +6,7 @@ import {
   RESERTAURANT_GET_ERROR,
 } from './constants';
 
-export const getRestaurantReducer = (state = [], action) => {
+export const getRestaurantReducer = (state = {}, action) => {
   const { type, payload } = action;
 
   switch (type) {
@@ -23,5 +24,3 @@ export const getRestaurantReducer = (state = [], action) => {
       return state;
   }
 };
-
-export default getRestaurantReducer;

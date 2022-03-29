@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable camelcase */
 import { React, useEffect } from 'react';
@@ -12,18 +13,15 @@ function Restaurant() {
   const dispatch = useDispatch();
   const params = useParams();
 
-  const retrieveRestaurant = useSelector(
-    (state) => state.getRestaurantReducer,
-  );
-  const {
-    loading, error, restaurant,
-  } = retrieveRestaurant;
+  const retrieveRestaurant = useSelector((state) => state.getRestaurantReducer);
+  const { loading, error, restaurant } = retrieveRestaurant;
 
   useEffect(() => {
     if (!restaurant) {
       dispatch(getRestaurant(params.id));
     }
   }, [dispatch, restaurant]);
+
   const reservation_confirmation = null;
 
   return (
@@ -39,12 +37,14 @@ function Restaurant() {
           </div>
           <CarouselSection />
           <h1 className="py-3" style={{ textAlign: 'center' }}>
-            {restaurant.restaurant_name}
+            {restaurant && restaurant.restaurant_name}
           </h1>
-          <RestaurantTabs
-            props={reservation_confirmation}
-            restaurant={restaurant}
-          />
+          {restaurant && (
+            <RestaurantTabs
+              reservation_confirmation={reservation_confirmation}
+              restaurant={restaurant}
+            />
+          )}
         </Container>
       )}
     </div>
