@@ -1,15 +1,16 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable camelcase */
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-/* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import {
   Button, Container, Tabs, Tab,
 } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import './app.css';
 
 function RestaurantTabs(props) {
+  const params = useParams();
+
   const { reservation_confirmation, restaurant } = props;
   return (
     <Container>
@@ -95,7 +96,7 @@ function RestaurantTabs(props) {
               </p>
             </div>
             <div className="pt-3">
-              <Link to="/reservation_confirmation/1">
+              <Link to={`/reservation_confirmation/${params.id}`}>
                 <Button variant="success" size="md">
                   Reserve Now
                 </Button>
