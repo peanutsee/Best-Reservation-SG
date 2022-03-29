@@ -8,7 +8,7 @@ import {
 } from './constants';
 
 // eslint-disable-next-line max-len
-export const createReservation = (restaurant_id, reservation_date_time, reservation_pax) => async (dispatch, getState) => {
+export const createReservation = (restaurant_id, reservation_time, reservation_pax) => async (dispatch, getState) => {
   try {
     dispatch({
       type: RESERVATION_CREATION_REQUEST,
@@ -27,9 +27,9 @@ export const createReservation = (restaurant_id, reservation_date_time, reservat
     };
 
     const { data } = await axios.post(
-      '/api/resevation/create-reservation/',
+      '/api/reservation/create-reservation/',
       {
-        restaurant_id, reservation_date_time, reservation_pax,
+        restaurant_id, reservation_time, reservation_pax,
       },
       config,
     );

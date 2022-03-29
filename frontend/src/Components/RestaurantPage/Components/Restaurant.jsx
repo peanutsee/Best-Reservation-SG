@@ -17,17 +17,12 @@ function Restaurant() {
   const { loading, error, restaurant } = retrieveRestaurant;
 
   useEffect(() => {
-<<<<<<< HEAD
-    dispatch(getRestaurant(params.id));
-  }, [dispatch]);
-=======
     if (!restaurant) {
       dispatch(getRestaurant(params.id));
     }
   }, [dispatch, restaurant]);
 
   const reservation_confirmation = null;
->>>>>>> 0397295ea1890f4ed0845407c9f94103fe994e1d
 
   return (
     <div>
@@ -44,18 +39,12 @@ function Restaurant() {
           <h1 className="py-3" style={{ textAlign: 'center' }}>
             {restaurant && restaurant.restaurant_name}
           </h1>
-<<<<<<< HEAD
-          <RestaurantTabs
-            restaurant={restaurant}
-          />
-=======
           {restaurant && (
             <RestaurantTabs
               reservation_confirmation={reservation_confirmation}
               restaurant={restaurant}
             />
           )}
->>>>>>> 0397295ea1890f4ed0845407c9f94103fe994e1d
         </Container>
       )}
     </div>
