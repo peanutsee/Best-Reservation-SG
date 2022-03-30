@@ -7,10 +7,13 @@ import {
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import DeletePopUpModal from './DeleteReservations';
+import LinkPopUpModal from './InviteFriends';
 
 function OwnedActive(props) {
   const { active_reservations, setDeleteRemove } = props;
   const [deleteModalShow, setDeleteModalShow] = useState(false);
+  const [linkModalShow, setLinkModalShow] = useState(false);
+
   return (
     <Table striped bordered hover>
       <thead align="center">
@@ -59,6 +62,15 @@ function OwnedActive(props) {
                       <Dropdown.Item>
                         <Link to={`/preorder/${reservation.pre_order_id}`}>Order</Link>
                       </Dropdown.Item>
+                      <Dropdown.Item onClick={() => setLinkModalShow(true)}>
+                        Invite Friends
+                      </Dropdown.Item>
+                      <LinkPopUpModal
+                        reservation={reservation}
+                        setLinkModalShow={setLinkModalShow}
+                        show={linkModalShow}
+                        onHide={() => setLinkModalShow(false)}
+                      />
                     </Dropdown.Menu>
                   </Dropdown>
                 </td>
@@ -68,7 +80,7 @@ function OwnedActive(props) {
         ) : (
           <tbody align="center">
             <td colSpan={4}>
-              It seem like you do not own any reservation.
+              It seem that you do not own any reservations.
               <Link to="/">Make a Reservation now!</Link>
             </td>
           </tbody>

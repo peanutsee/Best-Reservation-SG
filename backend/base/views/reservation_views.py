@@ -59,8 +59,12 @@ def getAllReservation(request):
         reservation['reservation_restaurant'] = restaurant
         date, time = datetime.strptime(reservation['reservation_date_time'], '%Y-%m-%dT%H:%M:%SZ').date(), datetime.strptime(reservation['reservation_date_time'], '%Y-%m-%dT%H:%M:%SZ').time()
         reservation['reservation_date'] = date
-        reservation['reservation_time'] = time 
-        
+        reservation['reservation_time'] = time
+
+        reservation_owner_user_object = Profile.objects.get(user=reservation['reservation_owner']).user
+        reservation_owner_name = reservation_owner_user_object.first_name + ' ' + reservation_owner_user_object.last_name
+        reservation['reservation_owner'] = reservation_owner_name
+
         # Get Pre-Order Field
         preorder = Order.objects.get(order_reservation=reservation['id'])
         preorder_serialized = OrderSerializer(preorder, many=False)

@@ -9,8 +9,6 @@ import {
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import DateForm from './DateForm';
-import TimeForm from './TimeForm';
 import './app.css';
 
 const SCHEMA = yup.object().shape({
@@ -25,13 +23,13 @@ const SCHEMA = yup.object().shape({
 });
 
 function AuthDetailsForm(props) {
-  const { userInfo, setReservationDate, reservationDate } = props;
+  const {
+    userInfo, setReservationDate, setReservationTime, setNGuest,
+  } = props;
 
   // const [reservationDate, setReservationDate] = useState('');
   console.log(userInfo);
   const dispatch = useDispatch();
-
-  const updateHandler = (e) => {};
 
   const initialValues = {
     firstName: userInfo.first_name,
@@ -41,15 +39,17 @@ function AuthDetailsForm(props) {
   };
 
   return (
-    <>
+    <div className="p-5 shadow shadow-100 row">
       <h1 className="text-center">Enter Your Reservation Details</h1>
-
       <div className="row">
         <div className="col-6 col-md-4">
           <Form>
             <Form.Label>Reservation Date</Form.Label>
             <Form.Group>
-              <DateForm setReservationDate={setReservationDate} />
+              <Form.Control
+                type="date"
+                onChange={(e) => setReservationDate(e.target.value)}
+              />
             </Form.Group>
           </Form>
         </div>
@@ -57,7 +57,10 @@ function AuthDetailsForm(props) {
           <Form>
             <Form.Label>Reservation Time</Form.Label>
             <Form.Group>
-              <TimeForm />
+              <Form.Control
+                type="time"
+                onChange={(e) => setReservationTime(e.target.value)}
+              />
             </Form.Group>
           </Form>
         </div>
@@ -65,13 +68,13 @@ function AuthDetailsForm(props) {
         <div className="col-6 col-md-4 border-left border-dark">
           <Form.Group>
             <Form.Label>Number of Guests</Form.Label>
-            <Form.Select>
+            <Form.Select onChange={(e) => setNGuest(e.target.value)}>
+              <option>Select Number of Pax</option>
               <option value={1}>1</option>
               <option value={2}>2</option>
               <option value={3}>3</option>
               <option value={4}>4</option>
               <option value={5}>5</option>
-
             </Form.Select>
           </Form.Group>
         </div>
@@ -168,13 +171,10 @@ function AuthDetailsForm(props) {
                 </Form.Group>
               </Col>
             </Row>
-            <div className="d-grid gap-2">
-              <Button className="btn btn-primary my-5">Enter Details</Button>
-            </div>
           </Form>
         )}
       </Formik>
-    </>
+    </div>
   );
 }
 

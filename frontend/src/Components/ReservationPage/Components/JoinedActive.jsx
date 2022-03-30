@@ -88,7 +88,7 @@ function JoinedActive(props) {
         : (
           <tbody align="center">
             <td colSpan={4}>
-              It seem like you do not have any upcoming reservation.
+              It seems that you do not have any upcoming reservations.
             </td>
           </tbody>
         )}

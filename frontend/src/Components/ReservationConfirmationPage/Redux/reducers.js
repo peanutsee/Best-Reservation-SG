@@ -13,7 +13,7 @@ export const createReservationReducer = (state = {}, action) => {
     case RESERVATION_CREATION_REQUEST:
       return { loading: true, success: false };
     case RESERVATION_CREATION_SUCCESS:
-      return { loading: false, success: true };
+      return { loading: false, success: true, reservation: payload };
     case RESERVATION_CREATION_ERROR:
       return { loading: false, success: false, error: payload };
     default:
