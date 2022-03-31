@@ -89,6 +89,7 @@ function AccordionOptions() {
                 userInfo={userInfo}
                 reservationDate={reservationDate}
                 reservationTime={reservationTime}
+                restaurantID={params.id}
                 nGuest={nGuest}
               />
             </Accordion.Body>

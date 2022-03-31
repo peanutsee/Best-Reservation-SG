@@ -105,7 +105,7 @@ def retrieveAllRestaurantsByMostClicks(request):
 @api_view(['GET'])
 def retrieveRestaurant(request, pk):
     restaurant = Restaurant.objects.get(id=pk)
-    restaurant.num_clicks = restaurant.increaseClick()
+    restaurant.num_clicks = restaurant.increase_click()
     restaurant.save()
     restaurant_serialized = RestaurantSerializer(restaurant, many=False)
     restaurant_data = restaurant_serialized.data

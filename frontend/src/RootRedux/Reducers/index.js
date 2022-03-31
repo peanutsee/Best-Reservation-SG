@@ -6,6 +6,7 @@ import * as RegistrationPageReducer from '../../Components/RegistrationPage/Redu
 import * as RestaurantPageReducer from '../../Components/RestaurantPage/Redux/reducers';
 import * as ProfilePageReducer from '../../Components/ProfilePage/Redux/reducers';
 import * as ReservationConfirmationReducer from '../../Components/ReservationConfirmationPage/Redux/reducers';
+import * as ReservationPostConfirmationReducer from '../../Components/PostConfirmationPage/Redux/reducers';
 import * as ReservationReducer from '../../Components/ReservationPage/Redux/reducers';
 import * as ReservationInfoReducer from '../../Components/ReservationInfoPage/Redux/reducers';
 import * as PaymentReducer from '../../Components/PaymentPage/Redux/reducers';
@@ -19,6 +20,7 @@ const reducers = combineReducers({
   ...RestaurantPageReducer,
   ...ProfilePageReducer,
   ...ReservationConfirmationReducer,
+  ...ReservationPostConfirmationReducer,
   ...ReservationReducer,
   ...ReservationInfoReducer,
   ...PaymentReducer,
