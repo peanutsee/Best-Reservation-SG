@@ -37,3 +37,89 @@ class TestUrls(SimpleTestCase):
         # Discrete Value Test
         url = reverse('add-proportions', kwargs={'order_pk': 1}) 
         self.assertEquals(resolve(url).func, payment_views.addProportions)
+    
+    
+    # Test Cases for Pre Order URLs
+    def test_retrieve_all_orders(self):
+        # Discrete Value Test
+        url = reverse('retrieve-all-orders', kwargs={'order_pk': 1}) 
+        self.assertEquals(resolve(url).func, pre_order_views.retrieveAllOrders)
+        
+    def test_add_item_to_order(self):
+        # Discrete Value Test
+        url = reverse('add-item-orders', kwargs={'order_pk': 1,'item_id':1}) 
+        self.assertEquals(resolve(url).func, pre_order_views.addItemToOrder)
+        
+    def test_update_item_in_order(self):
+        # Discrete Value Test
+        url = reverse('update-item-orders', kwargs={'item_order_key': 1}) 
+        self.assertEquals(resolve(url).func, pre_order_views.updateItemInOrder)
+        
+    def test_remove_item_in_order(self):
+        # Discrete Value Test
+        url = reverse('remove-item-orders', kwargs={'item_order_key': 1}) 
+        self.assertEquals(resolve(url).func, pre_order_views.removeItemInOrder)
+
+    def test_retrieve_menu(self):
+        # Discrete Value Test
+        url = reverse('retrieve-menu', kwargs={'restaurant_id': 1}) 
+        self.assertEquals(resolve(url).func, pre_order_views.retrieveMenu)
+
+    # Test Cases for Reservation URLs
+    # TODO: Test Cases for Reservation URLS (Equals Assertions)
+    
+    # Test Cases for Restaurant URLs
+    def test_retrieve_all_restaurants(self):
+        # Discrete Value Test
+        url = reverse('retrieve-restaurants') 
+        self.assertEquals(resolve(url).func, restaurant_views.retrieveAllRestaurants)
+
+    def test_retrieve_all_restaurants_by_most_clicks(self):
+        # Discrete Value Test
+        url = reverse('retrieve-restaurants-by-popularity') 
+        self.assertEquals(resolve(url).func, restaurant_views.retrieveAllRestaurantsByMostClicks)
+
+    def test_retrieve_restaurant(self):
+        # Discrete Value Test
+        url = reverse('retrieve-restaurant', kwargs={'pk' : 1}) 
+        self.assertEquals(resolve(url).func, restaurant_views.retrieveRestaurant)
+
+    def test_retrieve_restaurant_menu(self):
+        # Discrete Value Test
+        url = reverse('retrieve-restaurant-menu', kwargs={'pk' : 1}) 
+        self.assertEquals(resolve(url).func, restaurant_views.retrieveRestaurantMenuItems)
+        
+    def test_retrieve_restaurant_menu_item(self):
+        # Discrete Value Test
+        url = reverse('retrieve-menu-item', kwargs={'pk': 1}) 
+        self.assertEquals(resolve(url).func, restaurant_views.retrieveMenuItem)
+ 
+    # Test Cases for Users URLs
+    def test_user_login(self):
+        # Discrete Value Test
+        url = reverse('token_obtain_pair') 
+        self.assertEquals(resolve(url).func.view_class, user_views.MyTokenObtainPairView)
+ 
+    def test_user_registration(self):
+        # Discrete Value Test
+        url = reverse('register') 
+        self.assertEquals(resolve(url).func, user_views.registerUser)
+ 
+    # Test Cases for Profile URLs
+    def test_retrieve_profile(self):
+        # Discrete Value Test
+        url = reverse('retrieve-profile') 
+        self.assertEquals(resolve(url).func, profile_views.retrieveUserProfile)
+
+    def test_update_profile(self):
+        # Discrete Value Test
+        url = reverse('update-profile') 
+        self.assertEquals(resolve(url).func, profile_views.updateUserProfile)
+        
+    def test_delete_profile(self):
+        # Discrete Value Test
+        url = reverse('delete-profile') 
+        self.assertEquals(resolve(url).func, profile_views.deleteUserProfile)
+    
+
+
