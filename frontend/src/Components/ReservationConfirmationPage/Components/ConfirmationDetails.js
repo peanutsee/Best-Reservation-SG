@@ -19,6 +19,7 @@ function ConfirmationDetails(props) {
       <div className="pt-5 row">
         <div className="col-sm">
           <h4>Name</h4>
+          <p>{userInfo.first_name}</p>
           <h4>Reservation Date</h4>
           <p>{reservationDate}</p>
         </div>

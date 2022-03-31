@@ -20,6 +20,8 @@ const SCHEMA = yup.object().shape({
     .required('Contact Number Required')
     .matches(/[0-9]{8}/, 'Enter Valid Contact Number')
     .max(8, 'Enter Valid Contact Number'),
+  reservationDate: yup.string().required('Date Required'),
+  reservationTime: yup.string().required('Time Required'),
 });
 
 function AuthDetailsForm(props) {
@@ -41,49 +43,46 @@ function AuthDetailsForm(props) {
   return (
     <div className="p-5 shadow shadow-100 row">
       <h1 className="text-center">Enter Your Reservation Details</h1>
-      <div className="row">
-        <div className="col-6 col-md-4">
-          <Form>
-            <Form.Label>Reservation Date</Form.Label>
-            <Form.Group>
-              <Form.Control
-                type="date"
-                onChange={(e) => setReservationDate(e.target.value)}
-              />
-            </Form.Group>
-          </Form>
-        </div>
-        <div className="col-6 col-md-4">
-          <Form>
-            <Form.Label>Reservation Time</Form.Label>
-            <Form.Group>
-              <Form.Control
-                type="time"
-                onChange={(e) => setReservationTime(e.target.value)}
-              />
-            </Form.Group>
-          </Form>
-        </div>
-
-        <div className="col-6 col-md-4 border-left border-dark">
-          <Form.Group>
-            <Form.Label>Number of Guests</Form.Label>
-            <Form.Select onChange={(e) => setNGuest(e.target.value)}>
-              <option>Select Number of Pax</option>
-              <option value={1}>1</option>
-              <option value={2}>2</option>
-              <option value={3}>3</option>
-              <option value={4}>4</option>
-              <option value={5}>5</option>
-            </Form.Select>
-          </Form.Group>
-        </div>
-      </div>
       <Formik validationSchema={SCHEMA} initialValues={initialValues}>
         {({
           handleChange, values, touched, errors,
         }) => (
           <Form noValidate>
+            <div className="row">
+              <div className="col-6 col-md-4">
+
+                <Form.Label>Reservation Date</Form.Label>
+                <Form.Group>
+                  <Form.Control
+                    type="date"
+                    onChange={(e) => setReservationDate(e.target.value)}
+                  />
+                </Form.Group>
+              </div>
+              <div className="col-6 col-md-4">
+                <Form.Label>Reservation Time</Form.Label>
+                <Form.Group>
+                  <Form.Control
+                    type="time"
+                    onChange={(e) => setReservationTime(e.target.value)}
+                  />
+                </Form.Group>
+              </div>
+
+              <div className="col-6 col-md-4">
+                <Form.Group>
+                  <Form.Label>Number of Guests</Form.Label>
+                  <Form.Select onChange={(e) => setNGuest(e.target.value)}>
+                    <option>Select Number of Pax</option>
+                    <option value={1}>1</option>
+                    <option value={2}>2</option>
+                    <option value={3}>3</option>
+                    <option value={4}>4</option>
+                    <option value={5}>5</option>
+                  </Form.Select>
+                </Form.Group>
+              </div>
+            </div>
             <Row xs={1} md={2}>
               <Col>
                 <Form.Group className="mb-3" controlId="validationFormik01">
