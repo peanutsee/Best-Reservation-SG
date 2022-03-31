@@ -3,7 +3,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-filename-extension */
-import { React } from 'react';
+import { React, useState } from 'react';
 import { Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { VscQuestion } from 'react-icons/vsc';
@@ -15,7 +15,7 @@ function ConfirmationDetails(props) {
   const {
     userInfo, reservationDate, reservationTime, reservationPax, nGuest, restaurantID,
   } = props;
-
+  const [created, setCreated] = useState(false);
   const createsReservation = useSelector(
     (state) => state.createReservationReducer,
   );
@@ -31,9 +31,14 @@ function ConfirmationDetails(props) {
   const handleCreate = (e) => {
     e.preventDefault();
     dispatch(createReservation(restaurantID, reservation_date_time, nGuest));
-    console.log(reservation.id);
-    window.open(`/post_confirmation/${reservation.id}`);
+    setCreated(true);
+    // window.location.href = `/post_confirmation/${reservation.id}`;
   };
+
+  const goToPostConfirmation = (e) => {
+    window.location.href = `/post_confirmation/${reservation.id}`;
+  };
+
   return (
     <div className="p-5 shadow shadow-100 row">
       <h1 className="text-center">Confirm Reservation</h1>
@@ -71,8 +76,7 @@ function ConfirmationDetails(props) {
           <PaymentButton />
         </div>
       </div>
-
-      <Link to="/post_confirmation">
+      { !created ? (
         <div className="d-grid gap-2">
           <Button
             className="my-3"
@@ -80,10 +84,20 @@ function ConfirmationDetails(props) {
             onClick={handleCreate}
           >
             Confirm Reservation
-
           </Button>
         </div>
-      </Link>
+      ) : (
+        <div className="d-grid gap-2">
+          <Button
+            className="my-3"
+            variant="primary"
+            onClick={goToPostConfirmation}
+          >
+            Go to Post Reservation Confirmation page!
+          </Button>
+        </div>
+      )}
+
     </div>
   );
 }
