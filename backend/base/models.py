@@ -36,7 +36,7 @@ class Restaurant(models.Model):
 
     objects = models.Manager()
 
-    def increaseClick(self):
+    def increase_click(self):
         return self.num_clicks + 1
 
     def __str__(self):
@@ -87,6 +87,7 @@ class BillDetail(models.Model):
 
     objects = models.Manager()
 
+    @property
     def calculate_final_bill(self):
         return float(self.before_tax_bill) * float(self.tax) - float(self.deposit)
 
@@ -129,6 +130,7 @@ class OrderItemInOrder(models.Model):
 
     objects = models.Manager()
 
+    @property
     def get_price(self):
         return self.order_item_qty * self.order_item.menu_item_price
 

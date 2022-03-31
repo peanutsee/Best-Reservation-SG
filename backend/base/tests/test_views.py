@@ -3,7 +3,8 @@ from django.urls import reverse
 from base.models import *
 import json
 
-class TestViews(TestCase):
-    # Blackbox ECP
-    
-    # Whitebox CFT
+class TestECPViews(TestCase):
+    pass
+
+class TestCFTViews(TestCase):
+    pass
