@@ -22,6 +22,7 @@ const SCHEMA = yup.object().shape({
     .max(8, 'Enter Valid Contact Number'),
   reservationDate: yup.string().required('Date Required'),
   reservationTime: yup.string().required('Time Required'),
+  nguest: yup.string().required('Number of Guests Required'),
 });
 
 function AuthDetailsForm(props) {
@@ -52,20 +53,36 @@ function AuthDetailsForm(props) {
               <div className="col-6 col-md-4">
 
                 <Form.Label>Reservation Date</Form.Label>
-                <Form.Group>
+                <Form.Group controlId="validationFormik05">
                   <Form.Control
                     type="date"
                     onChange={(e) => setReservationDate(e.target.value)}
+                    isInvalid={!!errors.reservationDate}
+                    isValid={touched.reservationDate && !errors.reservationDate}
+                    feedback={errors.reservationDate}
                   />
+                  {errors.reservationDate && (
+                  <Form.Control.Feedback type="invalid">
+                    {errors.reservationDate}
+                  </Form.Control.Feedback>
+                  )}
                 </Form.Group>
               </div>
               <div className="col-6 col-md-4">
                 <Form.Label>Reservation Time</Form.Label>
-                <Form.Group>
+                <Form.Group controlId="validationFormik06">
                   <Form.Control
                     type="time"
                     onChange={(e) => setReservationTime(e.target.value)}
+                    isInvalid={!!errors.reservationTime}
+                    isValid={touched.reservationTime && !errors.reservationTime}
+                    feedback={errors.reservationTime}
                   />
+                  {errors.reservationTime && (
+                  <Form.Control.Feedback type="invalid">
+                    {errors.reservationTime}
+                  </Form.Control.Feedback>
+                  )}
                 </Form.Group>
               </div>
 
@@ -79,6 +96,11 @@ function AuthDetailsForm(props) {
                     <option value={3}>3</option>
                     <option value={4}>4</option>
                     <option value={5}>5</option>
+                    <option value={6}>6</option>
+                    <option value={7}>7</option>
+                    <option value={8}>8</option>
+                    <option value={9}>9</option>
+                    <option value={10}>10</option>
                   </Form.Select>
                 </Form.Group>
               </div>
