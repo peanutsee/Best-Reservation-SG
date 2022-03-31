@@ -66,8 +66,51 @@ class TestUrls(SimpleTestCase):
         self.assertEquals(resolve(url).func, pre_order_views.retrieveMenu)
 
     # Test Cases for Reservation URLs
-    # TODO: Test Cases for Reservation URLS (Equals Assertions)
-    
+    def test_create_reservation(self):
+        # Discrete Value Test
+        url = reverse('create-reservation')
+        self.assertEquals(resolve(url).func, reservation_views.createReservation)
+
+    def test_get_all_reservation(self):
+        # Discrete Value Test
+        url = reverse('get-all-reservation')
+        self.assertEquals(resolve(url).func, reservation_views.getAllReservation)
+
+    def test_get_reservation(self):
+        # Discrete Value Test
+        url = reverse('get-reservation', kwargs={'pk': 1})
+        self.assertEquals(resolve(url).func, reservation_views.getReservation)
+
+    def test_update_reservation(self):
+        # Discrete Value Test
+        url = reverse('update-reservation', kwargs={'pk': 1})
+        self.assertEquals(resolve(url).func, reservation_views.updateReservation)
+
+    def test_delete_reservation(self):
+        # Discrete Value Test
+        url = reverse('delete-reservation', kwargs={'pk': 1})
+        self.assertEquals(resolve(url).func, reservation_views.deleteReservation)
+
+    def test_join_reservation(self):
+        # Discrete Value Test
+        url = reverse('join-reservation', kwargs={'pk': 1})
+        self.assertEquals(resolve(url).func, reservation_views.joinReservation)
+
+    def test_remove_reservation(self):
+        # Discrete Value Test
+        url = reverse('remove-reservation', kwargs={'pk': 1})
+        self.assertEquals(resolve(url).func, reservation_views.removeReservation)
+
+    def test_update_reservation_password(self):
+        # Discrete Value Test
+        url = reverse('update-reservation-pin', kwargs={'pk': 1})
+        self.assertEquals(resolve(url).func, reservation_views.updatePin)
+
+    def test_complete_reservation(self):
+        # Discrete Value Test
+        url = reverse('complete-reservation', kwargs={'reservation_id': 1})
+        self.assertEquals(resolve(url).func, reservation_views.reservationCompleted)
+
     # Test Cases for Restaurant URLs
     def test_retrieve_all_restaurants(self):
         # Discrete Value Test
