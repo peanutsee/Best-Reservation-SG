@@ -5,44 +5,13 @@ from ..serializers import *
 from random import shuffle
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import json
+import random 
 
 @api_view(['GET'])
 def retrieveAllRestaurants(request):
     """
     Retrieve Restaurant with No Filter
     """
-    # # RUN ONCE TO LOAD RESTAURANTS INTO DATABASE
-    # file_paths = [r'C:/Users/Darryl See/Desktop/cz2006-project/backend/base/views/formatted_clean_chinese_food.json',r'C:/Users/Darryl See/Desktop/cz2006-project/backend/base/views//formatted_clean_muslim_food.json',r'C:/Users/Darryl See/Desktop/cz2006-project/backend/base/views//formatted_clean_indian_food.json',r'C:/Users/Darryl See/Desktop/cz2006-project/backend/base/views//formatted_clean_japanese_food.json',r'C:/Users/Darryl See/Desktop/cz2006-project/backend/base/views//formatted_clean_western_food.json' ]
-    # for f in file_paths:
-    #     with open(f, encoding='utf-8') as file:
-    #         f = json.load(file)
-    #         for key in f.keys():
-    #             data = f.get(key)
-    #             try:
-    #                 restaurant = Restaurant.objects.create(
-    #                     restaurant_uuid=data['uuid'],
-    #                     restaurant_name = data['name'],
-    #                     restaurant_official_website = data['officialWebsite'],
-    #                     restaurant_official_email = data['officialEmail'],
-    #                     restaurant_shorter_description = data['description'],
-    #                     restaurant_primary_contact = data['primaryContactNo'],
-    #                     restaurant_secondary_contact = data['secondaryContactNo'],
-    #                     restaurant_rating = data['rating'],
-    #                     restaurant_block = data['block'],
-    #                     restaurant_street_name = data['streetName'],
-    #                     restaurant_floor_number = data['floorNumber'],
-    #                     restaurant_unit_number = data['unitNumber'],
-    #                     restaurant_building_name = data['buildingName'],
-    #                     restaurant_postal_code = data['postalCode'],
-    #                     restaurant_longer_description = data['body'],
-    #                     restaurant_thumbnail = data['thumbnail'],
-    #                     restaurant_image_1 = data['image_one'],
-    #                     restaurant_image_2 = data['image_two']
-    #                 )
-    #                 restaurant.save()
-    #             except:
-    #                 pass
-            
     restaurants = Restaurant.objects.all()
     
     paginator = Paginator(restaurants, 12)
