@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
-function MenuItem() {
-  return (
-    <div>MenuItem</div>
-  );
+function MenuItem(props) {
+  const { menu_item } = props;
+  
+  return <div>MenuItem</div>;
 }
 
 export default MenuItem;
