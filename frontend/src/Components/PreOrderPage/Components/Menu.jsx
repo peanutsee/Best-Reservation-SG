@@ -4,6 +4,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMenuDetails } from '../Redux/actions';
+import MenuItem from './MenuItem';
 
 function Menu(props) {
   const { restaurant_id } = props;
@@ -16,7 +17,12 @@ function Menu(props) {
     dispatch(getMenuDetails(restaurant_id));
   }, [restaurant_id]);
 
-  return <div className="shadow shadow-100 rounded p-3 mb-4 mt-2">Menu</div>;
+  return (
+    <div className="shadow shadow-100 rounded p-3 mb-4 mt-2">
+      <h4>Restaurant Menu</h4>
+      {menu_data && menu_data.map((item) => <MenuItem menu_item={item} />)}
+    </div>
+  );
 }
 
 export default Menu;
