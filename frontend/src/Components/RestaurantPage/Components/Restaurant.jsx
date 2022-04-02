@@ -14,7 +14,9 @@ function Restaurant() {
   const params = useParams();
 
   const retrieveRestaurant = useSelector((state) => state.getRestaurantReducer);
-  const { loading, error, restaurant } = retrieveRestaurant;
+  const {
+    loading, error, restaurant, menu,
+  } = retrieveRestaurant;
 
   useEffect(() => {
     if (!restaurant) {
@@ -43,6 +45,7 @@ function Restaurant() {
             <RestaurantTabs
               reservation_confirmation={reservation_confirmation}
               restaurant={restaurant}
+              menu={restaurant.menu_data}
             />
           )}
         </Container>

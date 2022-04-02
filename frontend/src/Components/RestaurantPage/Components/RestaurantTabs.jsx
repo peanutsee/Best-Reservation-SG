@@ -5,13 +5,14 @@ import React from 'react';
 import {
   Button, Container, Tabs, Tab,
 } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import './app.css';
+import Menu from './Menu';
 
 function RestaurantTabs(props) {
   const params = useParams();
-
-  const { reservation_confirmation, restaurant } = props;
+  const { reservation_confirmation, restaurant, menu } = props;
   return (
     <Container>
       <Tabs defaultActiveKey="about">
@@ -105,7 +106,10 @@ function RestaurantTabs(props) {
           </div>
         </Tab>
         <Tab eventKey="menu" title="Menu">
-          sdsdws
+          <div className="row p-3 " style={{ textAlign: 'center' }}>
+            <h4>Restaurant Menu</h4>
+            <Menu menu={menu} />
+          </div>
         </Tab>
       </Tabs>
     </Container>

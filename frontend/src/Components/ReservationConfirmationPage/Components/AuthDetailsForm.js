@@ -48,6 +48,7 @@ function AuthDetailsForm(props) {
             <Form.Group>
               <Form.Control
                 type="date"
+                value={new Date()}
                 onChange={(e) => setReservationDate(e.target.value)}
               />
             </Form.Group>

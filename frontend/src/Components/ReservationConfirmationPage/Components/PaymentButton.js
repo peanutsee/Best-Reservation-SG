@@ -38,7 +38,7 @@ function PaymentButton(props) {
         setSdkReady(true);
       }
     }
-  }, [paid, sdkReady]);
+  }, [paid]);
 
   return (
     <div className="d-flex justify-content-end px-5">
