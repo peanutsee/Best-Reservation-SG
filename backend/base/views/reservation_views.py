@@ -35,10 +35,9 @@ def getAllReservation(request):
         reservation_data['reservation_time'] = time
 
         # Get Pre-Order Field
-        bill = BillDetail.objects.get(bill_reservation=reservation_data['id'])
-        bill_serialized = BillDetailSerializer(bill, many=False)
-        bill_data = bill_serialized.data
-        reservation_data['bill_url'] = bill_data['bill_url']
+        preorder = Order.objects.get(order_reservation=reservation_data['id'])
+        preorder_serialized = OrderSerializer(preorder, many=False)
+        reservation_data.update({"pre_order_id": preorder_serialized.data['id']})
 
         # Sort Active Is Part Of
         if not reservation_data['reservation_is_completed']:
@@ -84,10 +83,9 @@ def getAllReservation(request):
         reservation['reservation_time'] = time 
 
         # Get Pre-Order Field
-        order = Order.objects.get(order_reservation=reservation['id'])
-        order_serialized = OrderSerializer(order, many=False)
-        order_data = order_serialized.data
-        reservation['order_id'] = order_data['id']
+        preorder = Order.objects.get(order_reservation=reservation['id'])
+        preorder_serialized = OrderSerializer(preorder, many=False)
+        reservation.update({"pre_order_id": preorder_serialized.data['id']})
 
     output = {
         "active_reservations": active_reservations_data,

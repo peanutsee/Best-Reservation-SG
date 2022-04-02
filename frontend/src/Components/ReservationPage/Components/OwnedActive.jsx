@@ -1,7 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/prop-types */
 /* eslint-disable camelcase */
-import { React, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 import {
   Dropdown, Table,
 } from 'react-bootstrap';
@@ -13,6 +13,45 @@ function OwnedActive(props) {
   const { active_reservations, setDeleteRemove } = props;
   const [deleteModalShow, setDeleteModalShow] = useState(false);
   const [linkModalShow, setLinkModalShow] = useState(false);
+
+  /* A useState is used to track to current reservation that was clicked
+  this useState is changed onClick of the dropdown menu "handleXXX"
+  original useState(active_reservations) is used as a "dummy" placeholder
+  */
+  const [currentReservation, setCurrentReservation] = useState(active_reservations);
+  const [goToReservationInfo, setGoToReservationInfo] = useState(false);
+  const [goToPreOrder, setGoToPreOrder] = useState(false);
+  /*
+  reason why there is href is not inside the following function is cause
+  it needs a delay for "currentReservation" to be change
+  useEffect is then used to detect in change of state of "setGoToReservationInfo"
+  to call href to get to the page, is also true for PreOrder
+  */
+  const handleGoToReservationInfo = (reservation) => {
+    setCurrentReservation(reservation);
+    setGoToReservationInfo(true);
+  };
+  const handleDeleteClick = (reservation) => {
+    setDeleteModalShow(true);
+    setCurrentReservation(reservation);
+  };
+  const handleGoToPreOrder = (reservation) => {
+    setCurrentReservation(reservation);
+    setGoToPreOrder(true);
+  };
+  const handleInviteClick = (reservation) => {
+    setLinkModalShow(true);
+    setCurrentReservation(reservation);
+  };
+
+  useEffect(() => {
+    if (goToReservationInfo === true) {
+      window.location.href = `/reservation_info/${currentReservation.id}`;
+    }
+    if (goToPreOrder === true) {
+      window.location.href = `/preorder/${currentReservation.pre_order_id}`;
+    }
+  }, [goToReservationInfo, goToPreOrder]);
 
   return (
     <Table striped bordered hover>
@@ -41,32 +80,27 @@ function OwnedActive(props) {
                   <Dropdown className="d-flex justify-content-center align-center">
                     <Dropdown.Toggle>Manage Reservation</Dropdown.Toggle>
                     <Dropdown.Menu>
-                      <Dropdown.Item>
-                        <Link
-                          to={`/reservation_info/${reservation.id}`}
-                          state={{ reservation_id: reservation.reservation_id }}
-                        >
-                          View and Edit
-                        </Link>
+                      <Dropdown.Item onClick={() => handleGoToReservationInfo(reservation)}>
+                        View and Edit
                       </Dropdown.Item>
-                      <Dropdown.Item onClick={() => setDeleteModalShow(true)}>
+                      <Dropdown.Item onClick={() => handleDeleteClick(reservation)}>
                         Delete
                       </Dropdown.Item>
                       <DeletePopUpModal
-                        reservation={reservation}
+                        reservation={currentReservation}
                         setDeleteModalShow={setDeleteModalShow}
                         setDeleteRemove={setDeleteRemove}
                         show={deleteModalShow}
                         onHide={() => setDeleteModalShow(false)}
                       />
-                      <Dropdown.Item>
-                        <Link to={`/preorder/${reservation.pre_order_id}`}>Order</Link>
+                      <Dropdown.Item onClick={() => handleGoToPreOrder(reservation)}>
+                        Order
                       </Dropdown.Item>
-                      <Dropdown.Item onClick={() => setLinkModalShow(true)}>
+                      <Dropdown.Item onClick={() => handleInviteClick(reservation)}>
                         Invite Friends
                       </Dropdown.Item>
                       <LinkPopUpModal
-                        reservation={reservation}
+                        reservation={currentReservation}
                         setLinkModalShow={setLinkModalShow}
                         show={linkModalShow}
                         onHide={() => setLinkModalShow(false)}
