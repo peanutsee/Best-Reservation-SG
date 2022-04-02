@@ -7,11 +7,12 @@ import {
 } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
 import './app.css';
+import MenuTab from './MenuTab';
 
 function RestaurantTabs(props) {
   const params = useParams();
 
-  const { reservation_confirmation, restaurant } = props;
+  const { reservation_confirmation, restaurant, menu } = props;
   return (
     <Container>
       <Tabs defaultActiveKey="about">
@@ -105,7 +106,7 @@ function RestaurantTabs(props) {
           </div>
         </Tab>
         <Tab eventKey="menu" title="Menu">
-          sdsdws
+          <MenuTab menu={menu} />
         </Tab>
       </Tabs>
     </Container>
