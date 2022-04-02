@@ -1,11 +1,10 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/prop-types */
 /* eslint-disable camelcase */
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import {
   Dropdown, Table,
 } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import DeletePopUpModal from './DeleteReservations';
 import RemovePopUpModal from './RemoveReservations';
 
@@ -13,6 +12,46 @@ function JoinedActive(props) {
   const { is_part_of_reservation, setDeleteRemove } = props;
   const [deleteModalShow, setDeleteModalShow] = useState(false);
   const [removeModalShow, setRemoveModalShow] = useState(false);
+
+  /* A useState is used to track to current reservation that was clicked
+  this useState is changed onClick of the dropdown menu "handleXXX"
+  original useState(is_part_of_reservation) is used as a "dummy" placeholder
+  */
+  const [currentReservation, setCurrentReservation] = useState(is_part_of_reservation);
+  const [goToReservationInfo, setGoToReservationInfo] = useState(false);
+  const [goToPreOrder, setGoToPreOrder] = useState(false);
+  /*
+  reason why there is href is not inside the following function is cause
+  it needs a delay for "currentReservation" to be change
+  useEffect is then used to detect in change of state of "setGoToReservationInfo"
+  to call href to get to the page, is also true for PreOrder
+  */
+  const handleGoToReservationInfo = (reservation) => {
+    setCurrentReservation(reservation);
+    setGoToReservationInfo(true);
+  };
+  const handleDeleteClick = (reservation) => {
+    setDeleteModalShow(true);
+    setCurrentReservation(reservation);
+  };
+  const handleGoToPreOrder = (reservation) => {
+    setCurrentReservation(reservation);
+    setGoToPreOrder(true);
+  };
+  const handleRemomveClick = (reservation) => {
+    setRemoveModalShow(true);
+    setCurrentReservation(reservation);
+  };
+
+  useEffect(() => {
+    if (goToReservationInfo === true) {
+      window.location.href = `/reservation_info/${currentReservation.id}`;
+    }
+    if (goToPreOrder === true) {
+      window.location.href = `/preorder/${currentReservation.pre_order_id}`;
+    }
+  }, [goToReservationInfo, goToPreOrder]);
+
   return (
     <Table striped bordered hover>
       <thead align="center">
@@ -42,34 +81,29 @@ function JoinedActive(props) {
                     <Dropdown.Toggle>Manage Reservation</Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                      <Dropdown.Item>
-                        <Link
-                          to={`/reservation_info/${reservation.id}`}
-                          state={{ reservation_id: reservation.reservation_id }}
-                        >
-                          View and Edit
-                        </Link>
+                      <Dropdown.Item onClick={() => handleGoToReservationInfo(reservation)}>
+                        View and Edit
                       </Dropdown.Item>
-                      <Dropdown.Item onClick={() => setDeleteModalShow(true)}>
+                      <Dropdown.Item onClick={() => handleDeleteClick(reservation)}>
                         Delete
                       </Dropdown.Item>
                       <DeletePopUpModal
-                        reservation={reservation}
+                        reservation={currentReservation}
                         setDeleteModalShow={setDeleteModalShow}
                         setDeleteRemove={setDeleteRemove}
                         show={deleteModalShow}
                         onHide={() => setDeleteModalShow(false)}
                       />
 
-                      <Dropdown.Item>
-                        <Link to={`/preorder/${reservation.pre_order_id}`}>Order</Link>
+                      <Dropdown.Item onClick={() => handleGoToPreOrder(reservation)}>
+                        Order
                       </Dropdown.Item>
 
-                      <Dropdown.Item onClick={() => setRemoveModalShow(true)}>
+                      <Dropdown.Item onClick={() => handleRemomveClick(reservation)}>
                         Leave Reservation
                       </Dropdown.Item>
                       <RemovePopUpModal
-                        reservation={reservation}
+                        reservation={currentReservation}
                         setRemoveModalShow={setRemoveModalShow}
                         setDeleteRemove={setDeleteRemove}
                         show={removeModalShow}

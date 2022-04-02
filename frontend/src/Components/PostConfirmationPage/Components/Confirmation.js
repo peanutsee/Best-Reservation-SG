@@ -16,7 +16,9 @@ function Confirmation() {
   const dispatch = useDispatch();
   const params = useParams();
   const [editLinkModal, setEditLinkModal] = useState(false);
+  const [showLink, setShowLink] = useState(false);
   const [linkModal, setLinkModal] = useState(false);
+  const [passwordChange, setPasswordChange] = useState(false);
 
   const getConfirmReservation = useSelector(
     (state) => state.getConfirmedReservationReducer,
@@ -27,7 +29,12 @@ function Confirmation() {
 
   useEffect(() => {
     dispatch(getConfirmedReservation(params.id));
-  }, [dispatch]);
+    if (passwordChange === true) {
+      setPasswordChange(false);
+      // show Reservation Link instead of Edit Reservation Link, after pw change
+      setShowLink(true);
+    }
+  }, [dispatch, passwordChange]);
   return (
     <Container ref={ref} className="px-5">
       <h1> Reservation Confirmation </h1>
@@ -72,13 +79,20 @@ function Confirmation() {
                   {({ toPdf }) => <Button onClick={toPdf}>Generate Pdf</Button>}
                 </Pdf>
                 {' '}
-                <Button onClick={() => setEditLinkModal(true)}>
-                  Reservation Link
-                </Button>
+                { !showLink ? (
+                  /* if showLink == false(by default),show editLink, else show CopyLink */
+                  <Button onClick={() => setEditLinkModal(true)}>
+                    Edit Reservation Link
+                  </Button>
+                ) : (
+                  <Button onClick={() => setLinkModal(true)}>
+                    Reservation Link
+                  </Button>
+                )}
                 <EditLinkPopUpModal
                   reservation={reservation}
                   setEditLinkModal={setEditLinkModal}
-                  setLinkModal={setLinkModal}
+                  setPasswordChange={setPasswordChange}
                   show={editLinkModal}
                   onHide={() => setEditLinkModal(false)}
                 />
