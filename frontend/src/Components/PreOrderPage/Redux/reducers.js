@@ -82,7 +82,7 @@ export const retrieveMenuReducer = (state = {}, action) => {
     case RETRIEVE_MENU_REQUEST:
       return { loading: true, success: false };
     case RETRIEVE_MENU_SUCCESS:
-      return { loading: false, success: true, menu: payload };
+      return { loading: false, success: true, menu_data: payload };
     case RETRIEVE_MENU_ERROR:
       return { loading: false, success: false, error: payload };
     default:
