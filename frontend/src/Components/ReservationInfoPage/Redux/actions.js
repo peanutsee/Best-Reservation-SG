@@ -9,6 +9,10 @@ import {
   RESERVATION_GET_REQUEST,
   RESERVATION_GET_SUCCESS,
   RESERVATION_GET_ERROR,
+
+  RESERVATION_JOIN_REQUEST,
+  RESERVATION_JOIN_SUCCESS,
+  RESERVATION_JOIN_ERROR,
 } from './constants';
 
 // eslint-disable-next-line max-len
@@ -81,6 +85,45 @@ export const getReservation = (reservationID) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: RESERVATION_GET_ERROR,
+      payload:
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
+    });
+  }
+};
+
+export const joinReservation = (reservationID, linkPassword) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: RESERVATION_JOIN_REQUEST,
+    });
+
+    // to retrieve information from the store
+    const {
+      userLoginReducer: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.post(
+      `/api/reservation/join-reservation/reservation_id=${reservationID}/`,
+      { linkPassword },
+      config,
+    );
+
+    dispatch({
+      type: RESERVATION_JOIN_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: RESERVATION_JOIN_ERROR,
       payload:
         error.response && error.response.data.detail
           ? error.response.data.detail
