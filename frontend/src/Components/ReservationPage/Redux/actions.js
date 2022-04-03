@@ -10,10 +10,6 @@ import {
   RESERVATION_DELETE_SUCCESS,
   RESERVATION_DELETE_ERROR,
 
-  RESERVATION_JOIN_REQUEST,
-  RESERVATION_JOIN_SUCCESS,
-  RESERVATION_JOIN_ERROR,
-
   RESERVATION_REMOVE_REQUEST,
   RESERVATION_REMOVE_SUCCESS,
   RESERVATION_REMOVE_ERROR,
@@ -87,44 +83,6 @@ export const deleteReservation = (reservationID) => async (dispatch, getState) =
   } catch (error) {
     dispatch({
       type: RESERVATION_DELETE_ERROR,
-      payload:
-        error.response && error.response.data.detail
-          ? error.response.data.detail
-          : error.message,
-    });
-  }
-};
-
-export const joinReservation = (reservationID) => async (dispatch, getState) => {
-  try {
-    dispatch({
-      type: RESERVATION_JOIN_REQUEST,
-    });
-
-    // to retrieve information from the store
-    const {
-      userLoginReducer: { userInfo },
-    } = getState();
-
-    const config = {
-      headers: {
-        'Content-type': 'application/json',
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
-
-    const { data } = await axios.post(
-      `/api/reservation/join-reservation/reservation_id=${reservationID}`,
-      config,
-    );
-
-    dispatch({
-      type: RESERVATION_JOIN_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: RESERVATION_JOIN_ERROR,
       payload:
         error.response && error.response.data.detail
           ? error.response.data.detail
