@@ -33,8 +33,8 @@ export const updateReservation = (reservationID, reservation_date_time, reservat
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.post(
-      `/api/reservation/update-reservation/reservation_id=${reservationID}`,
+    const { data } = await axios.put(
+      `/api/reservation/update-reservation/reservation_id=${reservationID}/`,
       {
         reservationID, reservation_date_time, reservation_pax,
       },

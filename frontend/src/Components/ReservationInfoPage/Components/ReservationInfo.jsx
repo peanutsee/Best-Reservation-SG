@@ -17,6 +17,7 @@ function ReservationInfo() {
 
   const [joinModal, setJoinedModal] = useState(true);
   const [joined, setJoined] = useState(false);
+  const [edited, setEdited] = useState(false);
 
   const retrieveReservation = useSelector(
     (state) => state.getReservationReducer,
@@ -28,7 +29,11 @@ function ReservationInfo() {
       dispatch(getReservation(params.id));
     }
     setJoined(false);
-  }, [dispatch, reservation, joined]);
+    if (edited === true) {
+      dispatch(getReservation(params.id));
+      setEdited(false);
+    }
+  }, [dispatch, reservation, joined, edited]);
 
   return (
     <div>
@@ -52,7 +57,10 @@ function ReservationInfo() {
               <h1 className="py-3 text-center">
                 {reservation.Restaurant.restaurant_name}
               </h1>
-              <RestaurantInfo reservation={reservation} />
+              <RestaurantInfo
+                reservation={reservation}
+                setEdited={setEdited}
+              />
             </>
           )}
         </Container>
