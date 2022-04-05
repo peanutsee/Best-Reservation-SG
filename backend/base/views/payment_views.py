@@ -3,9 +3,11 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from ..serializers import *
-import telegram 
+import telegram
 
 # Full Payment
+
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def fullBillPaymentTabulation(request, order_pk):
@@ -22,23 +24,24 @@ def fullBillPaymentTabulation(request, order_pk):
         item_price = item_data['menu_item_price']
         item.update({'order_item_name': item_name})
         item.update({'order_item_price': item_price})
-        
+
     total_before_tax = 0
     for item in order_items:
         total_before_tax += item.get_price()
     bill = BillDetail.objects.get(bill_reservation=order.order_reservation)
-    
+
     bill.bill_url = f"http://localhost:3000/split_bill/{bill.id}"
     bill.before_tax_bill = total_before_tax
     bill.after_tax_bill = bill.calculate_final_bill()
-    
+
     bill.save()
     bill_serializer = BillDetailSerializer(bill, many=False)
     bill_data = bill_serializer.data
-    
+
     bill_data.update({'order_items': order_items_data})
-    
+
     return Response(bill_data, status=status.HTTP_200_OK)
+
 
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
@@ -46,14 +49,14 @@ def updatePin(request, order_pk):
     data = request.data
     order = Order.objects.get(id=order_pk)
     bill = BillDetail.objects.get(bill_reservation=order.order_reservation)
-    
+
     bill.bill_pin = data['bill_password']
     bill.bill_is_split = True
-    
+
     bill.save()
     bill_serializer = BillDetailSerializer(bill, many=False)
     bill_data = bill_serializer.data
-    
+
     return Response(bill_data, status=status.HTTP_200_OK)
 
 
@@ -67,26 +70,28 @@ def fullBillPaymentSettlement(request, bill_id):
     bill_data = bill_serializer.data
     return Response(bill_data, status=status.HTTP_200_OK)
 
-# Add to Proportions
+
 @api_view(['POST'])
 def addProportions(request, order_pk):
     data = request.data
     order = Order.objects.get(id=order_pk)
-    proportion = Proportion.objects.filter(order=order, telegram_handle=data['telegram_handle'])
+    proportion = Proportion.objects.filter(
+        order=order, telegram_handle=data['telegram_handle'])
     try:
         if not proportion.exists():
             new_proportions = Proportion.objects.create(
                 order=order,
-                telegram_handle= str(data['telegram_handle']),
-                proportions= ", ".join(data['proportions'])
+                telegram_handle=str(data['telegram_handle']),
+                proportions=", ".join(data['proportions'])
             )
             new_proportions.save()
-            new_proportions_serializer = ProportionSerializer(new_proportions, many=False)
+            new_proportions_serializer = ProportionSerializer(
+                new_proportions, many=False)
             new_proportions_data = new_proportions_serializer.data
-        
+
             return Response(new_proportions_data, status=status.HTTP_201_CREATED)
         else:
-            assert "Already Exists"
+            return Response("Already Exists!", status=status.HTTP_400_BAD_REQUEST)
     except:
         return Response("Proportion Already Exists!", status=status.HTTP_400_BAD_REQUEST)
 
@@ -100,25 +105,36 @@ def getProportions(request, bill_pk):
     proportions = Proportion.objects.filter(order=order)
     proportions_serialized = ProportionSerializer(proportions, many=True)
     proportions_data = proportions_serialized.data
+
+    prop_dict = []
+    for index, proportion in enumerate(proportions_data):
+        prop_list = proportion.get('proportions').split(', ')
+        telegram_handle = proportion.get('telegram_handle')
+        prop_dict.append(
+            {'telegram_handle': telegram_handle, 'proportions': []})
+        for item in prop_list:
+            item_id, qty = item.split(' - ')
+            menu_item = MenuItem.objects.get(id=item_id)
+            menu_item_serialized = MenuItemSerializer(menu_item, many=False)
+            menu_item_data = menu_item_serialized.data
+            prop_dict[index]['proportions'].append({'item': menu_item_data, 'quantity': int(qty)})
     
-    # TODO: SPLIT DATA INTO ITEM, QUANTIY, PRICE
-    return Response(proportions_data, status=status.HTTP_202_ACCEPTED)
+    return Response(prop_dict, status=status.HTTP_202_ACCEPTED)
 
 # Split Payment
-# TODO: REVAMP API
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def splitBillPayment(request, order_pk):    
+def splitBillPayment(request, bill_pk):
     # Get Data
     data = request.data
     telegram_handles = data.telegram_handles.split(", ")
-    
+
     # Get Order Details
     order = Order.objects.get(id=order_pk)
     order_items = OrderItemInOrder.objects.filter(order=order)
     order_items_serialized = OrderItemInOrderSerializer(order_items, many=True)
     order_items_data = order_items_serialized.data
-    
+
     for item in order_items_data:
         menu_item = MenuItem.objects.get(id=item['id'])
         item_serialized = MenuItemSerializer(menu_item, many=False)
@@ -127,27 +143,27 @@ def splitBillPayment(request, order_pk):
         item_price = item_data['menu_item_price']
         item.update({'order_item_name': item_name})
         item.update({'order_item_price': item_price})
-    
-    # Instantiate Telegram Bot    
+
+    # Instantiate Telegram Bot
     bot = telegram.Bot(token='5299208701:AAFoSrKG7yvP1_s_-q8gT_8v6tRIdM4iz_4')
     updates = bot.getUpdates()
-    
+
     # Add User to Database
     for i in range(len(updates)):
         chat_id = updates[i].message.chat.id
         username = updates[i].message.chat.username
-        
+
         query_user = TelegramData.objects.filter(telegram_handle=username)
         if not query_user:
             user = TelegramData.objects.create(
-                telegram_handle = username,
-                telegram_id = chat_id
+                telegram_handle=username,
+                telegram_id=chat_id
             )
             user.save()
-        
+
     # Retrieve Users from Database
     users = {}
-    
+
     for user in telegram_handles:
         query_user = TelegramData.objects.get(telegram_handle=user)
         query_user_serialized = TelegramDataSerializer(query_user, many=False)
@@ -157,12 +173,11 @@ def splitBillPayment(request, order_pk):
 
     # Tabulate Proportions
     # TODO: TABULATE TOTALS | EACH CHAT_ID : AMOUNT
-    
+
     # Submit Telegram Message
     for user in users.keys():
         amount = users.get(user).get('amount')
-        bot.send_message(text=f"Hey there, please pay SGD$ {amount} for your meal!", chat_id=user)
-    
+        bot.send_message(
+            text=f"Hey there, please pay SGD$ {amount} for your meal!", chat_id=user)
+
     return Response('OK', status=status.HTTP_200_OK)
-
-

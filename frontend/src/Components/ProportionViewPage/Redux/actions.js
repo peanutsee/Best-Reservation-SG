@@ -30,7 +30,7 @@ export const getProportions = (bill_id) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get(
-      `/api/payment/get-proportions/order_id=${bill_id}/`,
+      `/api/payment/get-proportions/bill_id=${bill_id}/`,
       config,
     );
 
@@ -49,7 +49,7 @@ export const getProportions = (bill_id) => async (dispatch, getState) => {
   }
 };
 
-export const splitProportions = (order_id) => async (dispatch, getState) => {
+export const splitProportions = (bill_id) => async (dispatch, getState) => {
   try {
     dispatch({
       type: SPLIT_PROPORTIONS_REQUEST,
@@ -67,7 +67,7 @@ export const splitProportions = (order_id) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get(
-      `/api/payment/get-proportions/order_id=${order_id}/`,
+      `/api/payment/get-proportions/bill_id=${bill_id}/`,
       config,
     );
 

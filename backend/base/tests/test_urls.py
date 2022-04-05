@@ -30,7 +30,7 @@ class TestUrls(SimpleTestCase):
         
     def test_split_bill_payment(self):
         # Discrete Value Test
-        url = reverse('split-bill-payment', kwargs={'order_pk': 1}) 
+        url = reverse('split-bill-payment', kwargs={'bill_pk': 1}) 
         self.assertEquals(resolve(url).func, payment_views.splitBillPayment)
         
     def test_add_proportions_bill(self):
