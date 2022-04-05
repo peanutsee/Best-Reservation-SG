@@ -5,6 +5,7 @@ import React from 'react';
 import {
   Button, Container, Tabs, Tab,
 } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import './app.css';
 import MenuTab from './MenuTab';
