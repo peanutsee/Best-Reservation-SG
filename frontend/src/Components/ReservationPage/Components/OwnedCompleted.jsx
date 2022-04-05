@@ -1,12 +1,31 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable camelcase */
 /* eslint-disable react/no-array-index-key */
-import { React } from 'react';
+import { React, useState, useEffect } from 'react';
 import { Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 function CompletedReservations(props) {
   const { completed_reservations } = props;
+
+  /*
+  I have checked, both bill, Payment.jsx uses retrieve_payment order_id as parameter
+  Split bill, SplitBill.jsx uses retrieve_payment reducer uses order_id as parameter
+  i.e all reducers in these 2 pages uses order_id
+  Checked commit: 645605fc2336c6d9cf270c150ba4c632ac678be9 ,uses"`/payment/${reservation.order_id}`"
+  */
+  const [currentReservation, setCurrentReservation] = useState(completed_reservations);
+  const [goTosplitBill, setGoToPaymentPage] = useState(false);
+  const handleGoToSplitBill = (reservation) => {
+    setCurrentReservation(reservation);
+    setGoToPaymentPage(true);
+  };
+
+  useEffect(() => {
+    if (goTosplitBill === true) {
+      window.location.href = `/payment/${currentReservation.pre_order_id}`;
+    }
+  }, [goTosplitBill]);
 
   return (
     <Table striped bordered hover>
@@ -32,7 +51,7 @@ function CompletedReservations(props) {
                 <td width="10%">{reservation.reservation_time}</td>
                 <td width="15%">{reservation.reservation_date}</td>
                 <td>
-                  <Link to={`/payment/${reservation.order_id}`}><button type="button" className="btn btn-primary">Split Bill</button></Link>
+                  <button type="button" className="btn btn-primary" onClick={() => handleGoToSplitBill(reservation)}>Split Bill</button>
                 </td>
               </tr>
             ))}

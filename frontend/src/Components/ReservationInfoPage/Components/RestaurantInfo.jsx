@@ -11,7 +11,7 @@ import EditPopUpModal from './EditReservation';
 import LinkPopUpModal from './ReservationLink';
 
 function RestaurantInfo(props) {
-  const { reservation } = props;
+  const { reservation, setEdited } = props;
   const [editModalShow, setEditModalShow] = useState(false);
   const [linkModalShow, setLinkModalShow] = useState(false);
 
@@ -43,8 +43,10 @@ function RestaurantInfo(props) {
               </Button>
               <EditPopUpModal
                 show={editModalShow}
-                onHide={() => setEditModalShow(false)}
+                setEditModalShow={setEditModalShow}
+                setEdited={setEdited}
                 reservation={reservation}
+                onHide={() => setEditModalShow(false)}
               />
               {' '}
               <Button variant="primary" onClick={() => setLinkModalShow(true)}>

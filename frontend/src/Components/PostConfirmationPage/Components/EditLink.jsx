@@ -10,15 +10,18 @@ import { updateReservationPin } from '../Redux/actions';
 // https://stackoverflow.com/questions/39501289/in-reactjs-how-to-copy-text-to-clipboard
 
 function EditLinkPopUpModal(props) {
-  const { reservation, setEditLinkModal, setLinkModal } = props;
+  const {
+    reservation, setEditLinkModal, setPasswordChange,
+  } = props;
   const dispatch = useDispatch();
   const [pin, setPin] = useState('');
 
   const handlePasswordChange = (e) => {
     e.preventDefault();
     dispatch(updateReservationPin(reservation.id, pin));
+    /* Close Edit Link, refresh page/call Api to get updated pw */
     setEditLinkModal(false);
-    setLinkModal(true);
+    setPasswordChange(true);
   };
   return (
     <Modal

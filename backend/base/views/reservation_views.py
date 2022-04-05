@@ -8,10 +8,10 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from datetime import datetime
 
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getAllReservation(request):
-
     user = request.user
 
     # Get All Part Of Reservations
@@ -30,15 +30,16 @@ def getAllReservation(request):
 
         restaurant = Restaurant.objects.get(id=reservation_data['reservation_restaurant']).restaurant_name
         reservation_data['reservation_restaurant'] = restaurant
-        date, time = datetime.strptime(reservation_data['reservation_date_time'], '%Y-%m-%dT%H:%M:%SZ').date(), datetime.strptime(reservation_data['reservation_date_time'], '%Y-%m-%dT%H:%M:%SZ').time()
+        date, time = datetime.strptime(reservation_data['reservation_date_time'],
+                                       '%Y-%m-%dT%H:%M:%SZ').date(), datetime.strptime(
+            reservation_data['reservation_date_time'], '%Y-%m-%dT%H:%M:%SZ').time()
         reservation_data['reservation_date'] = date
         reservation_data['reservation_time'] = time
 
         # Get Pre-Order Field
-        bill = BillDetail.objects.get(bill_reservation=reservation_data['id'])
-        bill_serialized = BillDetailSerializer(bill, many=False)
-        bill_data = bill_serialized.data
-        reservation_data['bill_url'] = bill_data['bill_url']
+        preorder = Order.objects.get(order_reservation=reservation_data['id'])
+        preorder_serialized = OrderSerializer(preorder, many=False)
+        reservation_data.update({"pre_order_id": preorder_serialized.data['id']})
 
         # Sort Active Is Part Of
         if not reservation_data['reservation_is_completed']:
@@ -48,7 +49,6 @@ def getAllReservation(request):
         else:
             part_of_reservations['completed_part_of'].append(reservation_data)
 
-
     # Sort Active Reservation
     active_reservations = Reservation.objects.filter(reservation_owner=user, reservation_is_completed=False)
     active_reservations_serialized = ReservationSerializer(active_reservations, many=True)
@@ -57,7 +57,9 @@ def getAllReservation(request):
         # Update Fields
         restaurant = Restaurant.objects.get(id=reservation['reservation_restaurant']).restaurant_name
         reservation['reservation_restaurant'] = restaurant
-        date, time = datetime.strptime(reservation['reservation_date_time'], '%Y-%m-%dT%H:%M:%SZ').date(), datetime.strptime(reservation['reservation_date_time'], '%Y-%m-%dT%H:%M:%SZ').time()
+        date, time = datetime.strptime(reservation['reservation_date_time'],
+                                       '%Y-%m-%dT%H:%M:%SZ').date(), datetime.strptime(
+            reservation['reservation_date_time'], '%Y-%m-%dT%H:%M:%SZ').time()
         reservation['reservation_date'] = date
         reservation['reservation_time'] = time
 
@@ -69,39 +71,39 @@ def getAllReservation(request):
         preorder = Order.objects.get(order_reservation=reservation['id'])
         preorder_serialized = OrderSerializer(preorder, many=False)
         reservation.update({"pre_order_id": preorder_serialized.data['id']})
-                   
+
     # Sort Completed Reservation
     completed_reservations = Reservation.objects.filter(reservation_owner=user, reservation_is_completed=True)
 
     completed_reservations_serialized = ReservationSerializer(completed_reservations, many=True)
     completed_reservations_data = completed_reservations_serialized.data
-    
+
     for reservation in completed_reservations_data:
         restaurant = Restaurant.objects.get(id=reservation['reservation_restaurant']).restaurant_name
         reservation['reservation_restaurant'] = restaurant
-        date, time = datetime.strptime(reservation['reservation_date_time'], '%Y-%m-%dT%H:%M:%SZ').date(), datetime.strptime(reservation['reservation_date_time'], '%Y-%m-%dT%H:%M:%SZ').time()
+        date, time = datetime.strptime(reservation['reservation_date_time'],
+                                       '%Y-%m-%dT%H:%M:%SZ').date(), datetime.strptime(
+            reservation['reservation_date_time'], '%Y-%m-%dT%H:%M:%SZ').time()
         reservation['reservation_date'] = date
-        reservation['reservation_time'] = time 
+        reservation['reservation_time'] = time
 
         # Get Pre-Order Field
-        order = Order.objects.get(order_reservation=reservation['id'])
-        order_serialized = OrderSerializer(order, many=False)
-        order_data = order_serialized.data
-        reservation['order_id'] = order_data['id']
+        preorder = Order.objects.get(order_reservation=reservation['id'])
+        preorder_serialized = OrderSerializer(preorder, many=False)
+        reservation.update({"pre_order_id": preorder_serialized.data['id']})
 
     output = {
         "active_reservations": active_reservations_data,
         'completed_reservations': completed_reservations_data,
         'is_part_of_reservation': part_of_reservations,
     }
-    
+
     return Response(output, status=status.HTTP_200_OK)
 
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def createReservation(request):
-
     user = request.user
     data = request.data
 
@@ -113,18 +115,18 @@ def createReservation(request):
         reservation_pax=data['reservation_pax'],
     )
 
-    reservation.reservation_url = f"http://localhost:3000/reservation/{reservation.id}"
+    reservation.reservation_url = f"http://localhost:3000/reservation_info/{reservation.id}"
 
     bill = BillDetail.objects.create(
         bill_reservation=reservation,
-        before_tax_bill = 0.00,
+        before_tax_bill=0.00,
     )
-    
+
     order = Order.objects.create(order_reservation=reservation)
     bill.save()
     order.save()
     reservation.save()
-    
+
     reservation_serializer = ReservationSerializer(reservation, many=False)
     return Response(reservation_serializer.data, status=status.HTTP_201_CREATED)  # return it in our api response
 
@@ -132,7 +134,6 @@ def createReservation(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getReservation(request, pk):
-
     user = request.user
     try:
         reservation = Reservation.objects.get(id=pk)
@@ -173,8 +174,11 @@ def getReservation(request, pk):
                     reservation_serializer = ReservationSerializer(reservation, many=False)
                     reservation_data = reservation_serializer.data
 
-                    restaurant = Restaurant.objects.get(id=reservation_data['reservation_restaurant']).restaurant_name
-                    reservation_data['reservation_restaurant'] = restaurant
+                    restaurant = Restaurant.objects.get(id=reservation_data['reservation_restaurant'])
+                    restaurant_serialized = RestaurantSerializer(restaurant, many=False)
+                    # update the return value with one more key value pair(Restaurant and its data)
+                    reservation_data.update({"Restaurant": restaurant_serialized.data})
+
                     date, time = datetime.strptime(reservation_data['reservation_date_time'],
                                                    '%Y-%m-%dT%H:%M:%SZ').date(), datetime.strptime(
                         reservation_data['reservation_date_time'], '%Y-%m-%dT%H:%M:%SZ').time()
@@ -198,10 +202,10 @@ def getReservation(request, pk):
     message = "User is not authorized!"
     return Response(message, status=status.HTTP_401_UNAUTHORIZED)
 
+
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def updateReservation(request, pk):
-
     user = request.user
     data = request.data
 
@@ -252,10 +256,10 @@ def updateReservation(request, pk):
     message = "User is not authorized!"
     return Response(message, status=status.HTTP_401_UNAUTHORIZED)
 
+
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def deleteReservation(request, pk):
-
     user = request.user
     try:
         reservation = Reservation.objects.filter(id=pk)[0]
@@ -287,19 +291,18 @@ def deleteReservation(request, pk):
     message = "User is not authorized!"
     return Response(message, status=status.HTTP_401_UNAUTHORIZED)
 
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def joinReservation(request, pk):
-
     user = request.user
+    data = request.data
 
     try:
         current_reservation = Reservation.objects.filter(id=pk)[0]
-        is_part_of_reservations = IsPartOf.objects.filter(reservation_diner=user)
-        for part_of in is_part_of_reservations:
-            if part_of.reservation == current_reservation:
-                return Response("Already joined the Reservation", status=status.HTTP_400_BAD_REQUEST)
-        
+        if current_reservation.reservation_pin != data['linkPassword']:
+            return Response("Incorrect Password", status=status.HTTP_400_BAD_REQUEST)
+
         if current_reservation.number_of_users_in_reservation < current_reservation.reservation_pax:
             current_reservation.number_of_users_in_reservation += 1
             current_reservation.save()
@@ -313,14 +316,15 @@ def joinReservation(request, pk):
             return Response(ispartof_serializer.data, status=status.HTTP_200_OK)
 
         else:
-            return Response("Max Reservation Pax has been reached, please update Reservation pax to join!", status=status.HTTP_400_BAD_REQUEST)
+            return Response("Max Reservation Pax has been reached, please update Reservation pax to join!",
+                            status=status.HTTP_400_BAD_REQUEST)
     except:
         return Response(f"Reservation id {pk} do not exist", status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def removeReservation(request, pk):
-
     user = request.user
     try:
         all_is_part_of = IsPartOf.objects.all()
@@ -340,6 +344,7 @@ def removeReservation(request, pk):
     message = "User is not authorized!"
     return Response(message, status=status.HTTP_401_UNAUTHORIZED)
 
+
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def updatePin(request, pk):
@@ -351,21 +356,21 @@ def updatePin(request, pk):
     reservation_serializer = ReservationSerializer(reservation, many=False)
     return Response(reservation_serializer.data, status=status.HTTP_200_OK)
 
-# Set Completed 
+
+# Set Completed
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def reservationCompleted(request, reservation_id):
     reservation = Reservation.objects.get(id=reservation_id)
     if reservation.reservation_is_completed:
         return Response('Reservation Completed!', status=status.HTTP_401_OK)
-    
+
     reservation.reservation_is_completed = True
     reservation.save()
-    
+
     reservation_serializer = ReservationSerializer(reservation, many=False)
     reservation_data = reservation_serializer.data
-    
-    return Response(reservation_data, status=status.HTTP_200_OK)
-    
 
-    
+    return Response(reservation_data, status=status.HTTP_200_OK)
+
+
