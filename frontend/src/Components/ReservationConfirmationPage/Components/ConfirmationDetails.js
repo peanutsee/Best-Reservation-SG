@@ -13,9 +13,10 @@ import { createReservation } from '../Redux/actions';
 
 function ConfirmationDetails(props) {
   const {
-    userInfo, reservationDate, reservationTime, reservationPax, nGuest, restaurantID,
+    userInfo, reservationDate, reservationTime, nGuest, restaurantID,
   } = props;
   const [created, setCreated] = useState(false);
+  const [paid, setPaid] = useState(false);
   const createsReservation = useSelector(
     (state) => state.createReservationReducer,
   );
@@ -73,12 +74,21 @@ function ConfirmationDetails(props) {
             </span>
           </OverlayTrigger>
           <br />
-          <PaymentButton />
+          <PaymentButton
+            setPaid={setPaid}
+            paid={paid}
+          />
         </div>
       </div>
+      { paid === false ? (
+        <Button>please oay</Button>
+      ) : (
+        <Button> ok paid </Button>
+      )}
       { !created ? (
         <div className="d-grid gap-2">
           <Button
+            type="submit"
             className="my-3"
             variant="primary"
             onClick={handleCreate}

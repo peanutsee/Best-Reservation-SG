@@ -57,7 +57,7 @@ function Order() {
           )}
           <Row>
             <Col md={10}>
-              <Menu pre_order_details={pre_order_details} />
+              {pre_order_details && <Menu restaurant_id={pre_order_details.restaurant_id} />}
             </Col>
             <Col md={2} className="d-flex justify-content-end">
               <Link to={`/payment/${params.id}`}>

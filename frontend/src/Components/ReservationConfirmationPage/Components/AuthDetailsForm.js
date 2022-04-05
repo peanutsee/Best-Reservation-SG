@@ -47,8 +47,8 @@ function AuthDetailsForm(props) {
             <Form.Label>Reservation Date</Form.Label>
             <Form.Group>
               <Form.Control
+                required="required"
                 type="date"
-                value={new Date()}
                 onChange={(e) => setReservationDate(e.target.value)}
               />
             </Form.Group>
@@ -59,6 +59,7 @@ function AuthDetailsForm(props) {
             <Form.Label>Reservation Time</Form.Label>
             <Form.Group>
               <Form.Control
+                required="required"
                 type="time"
                 onChange={(e) => setReservationTime(e.target.value)}
               />

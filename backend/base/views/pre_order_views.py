@@ -16,6 +16,7 @@ def retrieveAllOrders(request, order_pk):
     order_data = order_serialized.data
     order_data.update({"order_items": []})
     reservation = order.order_reservation
+    restaurant_id = reservation.reservation_restaurant.id
     if reservation.reservation_owner == user:
         order_items = OrderItemInOrder.objects.filter(order=order)
 
@@ -27,7 +28,7 @@ def retrieveAllOrders(request, order_pk):
             menu_item_data = menu_item_serializer.data
             menu_item_data.update({'order_item_qty': order_item_qty, 'item_order_key': item.id})
             order_data['order_items'].append(menu_item_data)
-
+        order_data['restaurant_id'] = restaurant_id
         return Response(order_data, status=status.HTTP_200_OK)
     else:
         return Response("Reservation Does Not Belong to User", status=status.HTTP_400_BAD_REQUEST)
@@ -79,7 +80,7 @@ def removeItemInOrder(request, item_order_key):
 def retrieveMenu(request, restaurant_id):
     restaurant = Restaurant.objects.get(id=restaurant_id)
     menu = Menu.objects.get(menu_restaurant=restaurant)
-    menu_items = MenuItem.objects.get(menu_item_menu_restaurant=menu)
+    menu_items = MenuItem.objects.filter(menu_item_menu_restaurant=menu)
     menu_items_serialized = MenuItemSerializer(menu_items, many=True)
     menu_items_data = menu_items_serialized.data
     

@@ -78,7 +78,19 @@ def retrieveRestaurant(request, pk):
     restaurant.save()
     restaurant_serialized = RestaurantSerializer(restaurant, many=False)
     restaurant_data = restaurant_serialized.data
-    return Response(restaurant_data, status=status.HTTP_200_OK)
+
+    # Get Restaurant Menu
+    menu = Menu.objects.get(menu_restaurant=restaurant)
+    menu_items = MenuItem.objects.filter(menu_item_menu_restaurant=menu)
+    menu_items_serialized = MenuItemSerializer(menu_items, many=True)
+    menu_items_data = menu_items_serialized.data
+    
+    output = {
+        'restaurant_data': restaurant_data,
+        'menu_data': menu_items_data
+    }
+    
+    return Response(output, status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])

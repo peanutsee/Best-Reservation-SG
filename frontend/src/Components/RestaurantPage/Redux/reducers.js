@@ -16,7 +16,8 @@ export const getRestaurantReducer = (state = {}, action) => {
       return {
         loading: false,
         success: true,
-        restaurant: payload,
+        restaurant: payload.restaurant_data,
+        menu: payload.menu_data,
       };
     case RESTAURANT_GET_ERROR:
       return { loading: false, success: false, error: payload };

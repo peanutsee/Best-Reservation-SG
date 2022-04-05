@@ -45,7 +45,7 @@ function Restaurant() {
             <RestaurantTabs
               reservation_confirmation={reservation_confirmation}
               restaurant={restaurant}
-              menu={restaurant.menu_data}
+              menu={menu}
             />
           )}
         </Container>

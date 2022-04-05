@@ -8,10 +8,11 @@ import {
 import { useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import './app.css';
-import Menu from './Menu';
+import MenuTab from './MenuTab';
 
 function RestaurantTabs(props) {
   const params = useParams();
+
   const { reservation_confirmation, restaurant, menu } = props;
   return (
     <Container>
@@ -106,10 +107,7 @@ function RestaurantTabs(props) {
           </div>
         </Tab>
         <Tab eventKey="menu" title="Menu">
-          <div className="row p-3 " style={{ textAlign: 'center' }}>
-            <h4>Restaurant Menu</h4>
-            <Menu menu={menu} />
-          </div>
+          <MenuTab menu={menu} />
         </Tab>
       </Tabs>
     </Container>

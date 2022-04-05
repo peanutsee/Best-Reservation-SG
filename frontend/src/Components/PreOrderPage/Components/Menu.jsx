@@ -1,13 +1,27 @@
 /* eslint-disable camelcase */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getMenuDetails } from '../Redux/actions';
+import MenuItem from './MenuItem';
 
 function Menu(props) {
-  const { pre_order_details } = props;
+  const { restaurant_id } = props;
+  const dispatch = useDispatch();
+
+  const menu = useSelector((state) => state.retrieveMenuReducer);
+  const { loading, error, menu_data } = menu;
+
+  useEffect(() => {
+    dispatch(getMenuDetails(restaurant_id));
+  }, [restaurant_id]);
 
   return (
-    <div className="shadow shadow-100 rounded p-3 mb-4 mt-2">Menu</div>
+    <div className="shadow shadow-100 rounded p-3 mb-4 mt-2">
+      <h4>Restaurant Menu</h4>
+      {menu_data && menu_data.map((item) => <MenuItem menu_item={item} />)}
+    </div>
   );
 }
 
