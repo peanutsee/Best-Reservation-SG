@@ -1,7 +1,5 @@
 import { React } from 'react';
-import {
-  Container,
-} from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import AcceptRejectOption from './Components/AcceptRejectOption';
 import ProportionTable from './Components/ProportionTable';
 
@@ -9,19 +7,14 @@ function ProportionViewPage() {
   return (
     <Container className="py-5 my-5">
       <h1 className="text-left">
-        <strong>
-          Proportions
-        </strong>
+        <strong>Proportions</strong>
       </h1>
-      <h4 className="text-left">
+      <p className="text-left">
         Please view the submitted proportions.
-      </h4>
-      <h4>
+        <br />
         If everything seems fine, accept the proportion to split the bill!
-      </h4>
-
+      </p>
       <ProportionTable />
-
       <AcceptRejectOption />
     </Container>
   );

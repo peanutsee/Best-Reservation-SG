@@ -38,6 +38,12 @@ class TestUrls(SimpleTestCase):
         url = reverse('add-proportions', kwargs={'order_pk': 1}) 
         self.assertEquals(resolve(url).func, payment_views.addProportions)
     
+            
+    def test_get_proportions_bill(self):
+        # Discrete Value Test
+        url = reverse('get-proportions', kwargs={'bill_pk': 1}) 
+        self.assertEquals(resolve(url).func, payment_views.getProportions)
+    
     
     # Test Cases for Pre Order URLs
     def test_retrieve_all_orders(self):

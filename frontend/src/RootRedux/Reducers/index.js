@@ -12,6 +12,7 @@ import * as ReservationInfoReducer from '../../Components/ReservationInfoPage/Re
 import * as PaymentReducer from '../../Components/PaymentPage/Redux/reducers';
 import * as SplitBillReducer from '../../Components/SplitBillPage/Redux/reducers';
 import * as PreOrderReducer from '../../Components/PreOrderPage/Redux/reducers';
+import * as ProportionReducer from '../../Components/ProportionViewPage/Redux/reducers';
 
 const reducers = combineReducers({
   ...LandingPageReducer,
@@ -26,6 +27,7 @@ const reducers = combineReducers({
   ...PaymentReducer,
   ...SplitBillReducer,
   ...PreOrderReducer,
+  ...ProportionReducer,
 });
 
 export default reducers;

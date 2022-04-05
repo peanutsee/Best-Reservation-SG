@@ -13,13 +13,13 @@ function AcceptRejectOption() {
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
   return (
-    <Row className="pt-5 block-example border border-dark rounded mb-0">
+    <Row className="py-3 block-example border border-dark rounded mb-0">
       <Col>
         <h4>
           Do you accept the proportions?
         </h4>
       </Col>
-      <Col className="d-flex justify-content-end mb-3">
+      <Col className="d-flex justify-content-end">
         <Button className="me-5" variant="success">Accept</Button>
         <Button variant="danger" onClick={handleShow}>Reject</Button>
       </Col>

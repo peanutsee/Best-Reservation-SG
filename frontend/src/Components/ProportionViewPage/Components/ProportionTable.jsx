@@ -1,14 +1,22 @@
-import { React } from 'react';
-import {
-  Table,
-} from 'react-bootstrap';
+/* eslint-disable no-unused-vars */
+/* eslint-disable camelcase */
+import React, { useEffect } from 'react';
+import { Table } from 'react-bootstrap';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProportions } from '../Redux/actions';
 
 function ProportionTable() {
+  const params = useParams();
+  const bill_detail_id = params.id;
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getProportions(bill_detail_id));
+  }, []);
   return (
     <>
-      <h2 className="pt-5">
-        Your Proportions
-      </h2>
+      <h2 className="pt-5">Your Proportions</h2>
       <Table className="table table-striped table-sm">
         <thead>
           <tr>
@@ -36,9 +44,7 @@ function ProportionTable() {
           </tr>
         </tbody>
       </Table>
-      <h2 className="pt-5">
-        @john_doe&apos;s Proportions
-      </h2>
+      <h2 className="pt-5">@john_doe&apos;s Proportions</h2>
       <Table className="table table-striped table-sm">
         <thead>
           <tr>
@@ -71,9 +77,7 @@ function ProportionTable() {
           </tr>
         </tbody>
       </Table>
-      <h2 className="pt-5">
-        @maria_lee&apos;s Proportions
-      </h2>
+      <h2 className="pt-5">@maria_lee&apos;s Proportions</h2>
       <Table className="table table-striped table-sm">
         <thead>
           <tr>

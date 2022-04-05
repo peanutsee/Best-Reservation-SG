@@ -8,7 +8,8 @@ urlpatterns = [
     
     # Split Bill Payment to Users
     path("split-bill-to-users/order_id=<int:order_pk>/", views.splitBillPayment, name='split-bill-payment'), 
-    path("add-proportions/order_id=<int:order_pk>/", views.addProportions, name='add-proportions')
+    path("add-proportions/order_id=<int:order_pk>/", views.addProportions, name='add-proportions'),
+    path('get-proportions/order_id=<int:bill_pk>/', views.getProportions, name='get-proportions')
 ]
 
 

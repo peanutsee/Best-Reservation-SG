@@ -90,8 +90,22 @@ def addProportions(request, order_pk):
     except:
         return Response("Proportion Already Exists!", status=status.HTTP_400_BAD_REQUEST)
 
+# Get Proportions
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getProportions(request, bill_pk):
+    bill = BillDetail.objects.get(id=bill_pk)
+    reservation = Reservation.objects.get(id=bill.bill_reservation.id)
+    order = Order.objects.get(order_reservation=reservation)
+    proportions = Proportion.objects.filter(order=order)
+    proportions_serialized = ProportionSerializer(proportions, many=True)
+    proportions_data = proportions_serialized.data
+    
+    # TODO: SPLIT DATA INTO ITEM, QUANTIY, PRICE
+    return Response(proportions_data, status=status.HTTP_202_ACCEPTED)
 
 # Split Payment
+# TODO: REVAMP API
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def splitBillPayment(request, order_pk):    
