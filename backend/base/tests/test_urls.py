@@ -47,7 +47,7 @@ class TestUrls(SimpleTestCase):
         
     def test_add_item_to_order(self):
         # Discrete Value Test
-        url = reverse('add-item-orders', kwargs={'order_pk': 1,'item_id':1}) 
+        url = reverse('add-item-orders', kwargs={'order_pk': 1,'item_pk':1}) 
         self.assertEquals(resolve(url).func, pre_order_views.addItemToOrder)
         
     def test_update_item_in_order(self):
