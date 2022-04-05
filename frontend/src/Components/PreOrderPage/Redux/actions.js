@@ -17,6 +17,7 @@ import {
   UPDATE_PRE_ORDER_ITEM_REQUEST,
   UPDATE_PRE_ORDER_ITEM_SUCCESS,
   UPDATE_PRE_ORDER_ITEM_ERROR,
+  ADD_PRE_ORDER_ITEM_RESET,
 } from './constants';
 
 export const getPreOrderDetails = (order_id) => async (dispatch, getState) => {
@@ -51,7 +52,7 @@ export const getPreOrderDetails = (order_id) => async (dispatch, getState) => {
   }
 };
 
-export const addItem = (order_id, item_id) => async (dispatch, getState) => {
+export const addItem = (order_id, item_id, qty) => async (dispatch, getState) => {
   try {
     dispatch({ type: ADD_PRE_ORDER_ITEM_REQUEST });
 
@@ -68,17 +69,22 @@ export const addItem = (order_id, item_id) => async (dispatch, getState) => {
 
     const { data } = await axios.post(
       `/api/pre_order/add-item-to-order/order_id=${order_id}/item_id=${item_id}/`,
+      { qty },
       config,
     );
 
     dispatch({ type: ADD_PRE_ORDER_ITEM_SUCCESS, payload: data });
+    dispatch(getPreOrderDetails(order_id));
+    dispatch({
+      type: ADD_PRE_ORDER_ITEM_RESET,
+    });
   } catch (error) {
     dispatch({
       type: ADD_PRE_ORDER_ITEM_ERROR,
       payload:
-        error.response && error.response.data.detail
-          ? error.response.data.detail
-          : error.message,
+          error.response && error.response.data.detail
+            ? error.response.data.detail
+            : error.message,
     });
   }
 };
@@ -116,9 +122,9 @@ export const removeItem = (order_item_id, order_id) => async (dispatch, getState
     dispatch({
       type: REMOVE_PRE_ORDER_ITEM_ERROR,
       payload:
-        error.response && error.response.data.detail
-          ? error.response.data.detail
-          : error.message,
+          error.response && error.response.data.detail
+            ? error.response.data.detail
+            : error.message,
     });
   }
 };

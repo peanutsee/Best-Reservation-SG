@@ -87,7 +87,6 @@ class BillDetail(models.Model):
 
     objects = models.Manager()
 
-    @property
     def calculate_final_bill(self):
         return float(self.before_tax_bill) * float(self.tax) - float(self.deposit)
 
@@ -130,7 +129,6 @@ class OrderItemInOrder(models.Model):
 
     objects = models.Manager()
 
-    @property
     def get_price(self):
         return self.order_item_qty * self.order_item.menu_item_price
 

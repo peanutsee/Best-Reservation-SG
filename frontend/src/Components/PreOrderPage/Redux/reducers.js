@@ -10,6 +10,7 @@ import {
   ADD_PRE_ORDER_ITEM_REQUEST,
   ADD_PRE_ORDER_ITEM_SUCCESS,
   ADD_PRE_ORDER_ITEM_ERROR,
+  ADD_PRE_ORDER_ITEM_RESET,
   RETRIEVE_MENU_REQUEST,
   RETRIEVE_MENU_SUCCESS,
   RETRIEVE_MENU_ERROR,
@@ -57,6 +58,8 @@ export const addPreOrderItemReducer = (state = {}, action) => {
       return { loading: false, success: true, pre_order_details: payload };
     case ADD_PRE_ORDER_ITEM_ERROR:
       return { loading: false, success: false, error: payload };
+    case ADD_PRE_ORDER_ITEM_RESET:
+      return {};
     default:
       return state;
   }

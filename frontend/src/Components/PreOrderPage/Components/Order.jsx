@@ -22,10 +22,8 @@ function Order() {
   const { success: deleteSuccess, error: deleteError } = deleteItem;
 
   useEffect(() => {
-    if (!pre_order_details) {
-      dispatch(getPreOrderDetails(params.id));
-    }
-  }, [pre_order_details]);
+    dispatch(getPreOrderDetails(params.id));
+  }, []);
 
   return (
     <Container className="py-5 my-5">
@@ -50,20 +48,30 @@ function Order() {
               {params.id}
             </strong>
           </h1>
-          {deleteSuccess && <Alert variant="success">Item Deleted Successfully!</Alert>}
-          {deleteError && <Alert variant="danger">Item Deleted Not Successfully!</Alert>}
+          {deleteSuccess && (
+            <Alert variant="success">Item Deleted Successfully!</Alert>
+          )}
+          {deleteError && (
+            <Alert variant="danger">Item Deleted Not Successfully!</Alert>
+          )}
           {pre_order_details && (
             <OrderItemList pre_order_details={pre_order_details} />
           )}
           <Row>
             <Col md={10}>
-              {pre_order_details && <Menu restaurant_id={pre_order_details.restaurant_id} />}
+              {pre_order_details && (
+                <Menu restaurant_id={pre_order_details.restaurant_id} />
+              )}
             </Col>
             <Col md={2} className="d-flex justify-content-end">
-              <Link to={`/payment/${params.id}`}>
-                {' '}
-                <Button className="btn btn-primary mt-2">Make Payment </Button>
-              </Link>
+              <div>
+                <Link to={`/payment/${params.id}`}>
+                  <Button className="btn btn-primary mt-2">
+                    Make Payment
+                    {' '}
+                  </Button>
+                </Link>
+              </div>
             </Col>
           </Row>
         </>

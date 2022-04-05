@@ -47,11 +47,11 @@ def addItemToOrder(request, order_pk, item_pk):
         item_in_order = OrderItemInOrder.objects.create(
             order_item=order_item,
             order=order,
-            order_item_qty=data['order_item_qty']
+            order_item_qty=data['qty']
         )
     else:
         item_in_order = order_items[0]
-        item_in_order.order_item_qty += int(data['order_item_qty'])
+        item_in_order.order_item_qty += int(data['qty'])
     item_in_order.save()
 
     return Response(f"{order_item.__str__()} Added to Order {order.id} * {item_in_order.order_item_qty}")
