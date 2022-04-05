@@ -6,7 +6,6 @@ import { Container } from 'react-bootstrap';
 
 function MenuTab(props) {
   const { menu } = props;
-  console.log(menu.id);
   return (
     <Container className="p-3">
       <h3 style={{ textAlign: 'center' }}>Restaurant Menu</h3>

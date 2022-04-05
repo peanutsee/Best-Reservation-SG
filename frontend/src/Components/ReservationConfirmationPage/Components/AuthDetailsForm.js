@@ -28,7 +28,6 @@ function AuthDetailsForm(props) {
   } = props;
 
   // const [reservationDate, setReservationDate] = useState('');
-  console.log(userInfo);
   const dispatch = useDispatch();
 
   const initialValues = {
@@ -59,7 +58,6 @@ function AuthDetailsForm(props) {
             <Form.Label>Reservation Time</Form.Label>
             <Form.Group>
               <Form.Control
-                required="required"
                 type="time"
                 onChange={(e) => setReservationTime(e.target.value)}
               />

@@ -100,7 +100,6 @@ def getAllReservation(request):
 
     return Response(output, status=status.HTTP_200_OK)
 
-
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def createReservation(request):
@@ -111,9 +110,11 @@ def createReservation(request):
     reservation = Reservation.objects.create(
         reservation_restaurant=restaurant,
         reservation_owner=user,
-        reservation_date_time=data['reservation_time'],
+        reservation_date_time=data['reservation_tyme'],
         reservation_pax=data['reservation_pax'],
+        reservation_deposit_is_paid=True
     )
+
 
     reservation.reservation_url = f"http://localhost:3000/reservation_info/{reservation.id}"
 

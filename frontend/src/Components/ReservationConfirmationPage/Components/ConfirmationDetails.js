@@ -3,15 +3,16 @@
 /* eslint-disable camelcase */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-filename-extension */
-import { React, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 import { Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { VscQuestion } from 'react-icons/vsc';
 import { useDispatch, useSelector } from 'react-redux';
 import PaymentButton from './PaymentButton';
 import { createReservation } from '../Redux/actions';
 
 function ConfirmationDetails(props) {
+  const navigate = useNavigate();
   const {
     userInfo, reservationDate, reservationTime, nGuest, restaurantID,
   } = props;
@@ -25,20 +26,18 @@ function ConfirmationDetails(props) {
   } = createsReservation;
 
   const reservation_date_time = `${reservationDate} ${reservationTime}`;
-  // console.log(reservation_date_time);
-  // console.log(restaurantID);
-  // console.log(nGuest);
   const dispatch = useDispatch();
   const handleCreate = (e) => {
     e.preventDefault();
     dispatch(createReservation(restaurantID, reservation_date_time, nGuest));
     setCreated(true);
-    // window.location.href = `/post_confirmation/${reservation.id}`;
   };
 
-  const goToPostConfirmation = (e) => {
-    window.location.href = `/post_confirmation/${reservation.id}`;
-  };
+  useEffect(() => {
+    if (created && reservation) {
+      window.location.href = `/post_confirmation/${reservation.id}`;
+    }
+  }, [created, reservation]);
 
   return (
     <div className="p-5 shadow shadow-100 row">
@@ -80,34 +79,7 @@ function ConfirmationDetails(props) {
           />
         </div>
       </div>
-      { paid === false ? (
-        <Button>please oay</Button>
-      ) : (
-        <Button> ok paid </Button>
-      )}
-      { !created ? (
-        <div className="d-grid gap-2">
-          <Button
-            type="submit"
-            className="my-3"
-            variant="primary"
-            onClick={handleCreate}
-          >
-            Confirm Reservation
-          </Button>
-        </div>
-      ) : (
-        <div className="d-grid gap-2">
-          <Button
-            className="my-3"
-            variant="primary"
-            onClick={goToPostConfirmation}
-          >
-            Go to Post Reservation Confirmation page!
-          </Button>
-        </div>
-      )}
-
+      <Button disabled={!paid || !reservationDate || !reservationTime || !nGuest} type="submit" className="my-3" onClick={handleCreate}>Confirm Reservation</Button>
     </div>
   );
 }

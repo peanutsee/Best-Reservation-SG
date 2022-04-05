@@ -87,7 +87,7 @@ function PaymentButton(props) {
     return (
       <div className="d-flex justify-content-end px-5">
         <PayPalButton
-          amount={bill_details.after_tax_bill}
+          amount={bill_details.after_tax_bill > 0 ? bill_details.after_tax_bill : 0}
           onSuccess={handlePayment}
         />
       </div>
