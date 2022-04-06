@@ -6,7 +6,6 @@ import { Table } from 'react-bootstrap';
 
 function ProportionTable(props) {
   const { proportion } = props;
-  console.log(proportion);
   return (
     <>
       <h2 className="pt-5">

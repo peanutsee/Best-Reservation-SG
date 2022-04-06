@@ -5,9 +5,8 @@ from rest_framework.permissions import IsAuthenticated
 from ..serializers import *
 import telegram
 
+
 # Full Payment
-
-
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def fullBillPaymentTabulation(request, order_pk):
@@ -125,29 +124,79 @@ def getProportions(request, bill_pk):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def splitBillPayment(request, bill_pk):
-    # Get Data
-    data = request.data
-    telegram_handles = data.telegram_handles.split(", ")
+    bill = BillDetail.objects.get(id=bill_pk)
+    reservation = Reservation.objects.get(id=bill.bill_reservation.id)
+    order = Order.objects.get(order_reservation=reservation)
+    proportions = Proportion.objects.filter(order=order)
+    proportions_serialized = ProportionSerializer(proportions, many=True)
+    proportions_data = proportions_serialized.data
 
-    # Get Order Details
-    order = Order.objects.get(id=order_pk)
+    # Order Items - Price List
+    item_price_dict = {}
     order_items = OrderItemInOrder.objects.filter(order=order)
     order_items_serialized = OrderItemInOrderSerializer(order_items, many=True)
     order_items_data = order_items_serialized.data
-
     for item in order_items_data:
         menu_item = MenuItem.objects.get(id=item['id'])
-        item_serialized = MenuItemSerializer(menu_item, many=False)
-        item_data = item_serialized.data
-        item_name = item_data['menu_item_name']
-        item_price = item_data['menu_item_price']
-        item.update({'order_item_name': item_name})
-        item.update({'order_item_price': item_price})
+        menu_item_serialized = MenuItemSerializer(menu_item, many=False)
+        menu_item_data = menu_item_serialized.data
+        name = menu_item_data['menu_item_name']
+        qty = item['order_item_qty']
+        price = menu_item_data['menu_item_price']
+        
+        if not name in item_price_dict.keys():
+            item_price_dict.update({name: {'price': price, 'quantity': qty}})
 
+    # Split Proportions
+    prop_dict = []
+    for index, proportion in enumerate(proportions_data):
+        prop_list = proportion.get('proportions').split(', ')
+        telegram_handle = proportion.get('telegram_handle')
+        prop_dict.append(
+            {'telegram_handle': telegram_handle, 'proportions': []})
+        for item in prop_list:
+            item_id, qty = item.split(' - ')
+            menu_item = MenuItem.objects.get(id=item_id)
+            menu_item_serialized = MenuItemSerializer(menu_item, many=False)
+            menu_item_data = menu_item_serialized.data
+            prop_dict[index]['proportions'].append({'item': menu_item_data, 'quantity': int(qty)})
+    
+    # Tabulate Avg for Each Proportion
+    items_qtys = {}
+    
+    for prop in prop_dict:
+        items = prop.get('proportions')
+        for item in items:
+            item_name = item.get('item').get('menu_item_name')
+            item_qty = item.get('quantity')
+            item_price = item.get('menu_item_price')
+            if not item_name in items_qtys.keys():
+                items_qtys.update({item_name: {'proportions': item_qty, 'avg_per_prop': 0}})
+            else:
+                items_qtys[item_name]['proportions'] += item_qty
+    
+    for key in items_qtys.keys():
+        item = items_qtys[key]
+        menu_item_data = item_price_dict[key]
+        price, qty = menu_item_data['price'], menu_item_data['quantity']
+        avg = round(float(price) * int(qty) / item['proportions'], 2)
+        items_qtys[key]['avg_per_prop'] = avg
+
+    # Tabulate Payment for Each User
+    user_total = {}
+    for prop in prop_dict:
+        tg_handle = prop.get('telegram_handle')
+        proportions = prop.get('proportions')
+        total = 0
+        for item in proportions:
+            name = item['item']['menu_item_name']
+            props = item['quantity']
+            total += items_qtys[name]['avg_per_prop'] * props
+        user_total.update({tg_handle: total})
+    
     # Instantiate Telegram Bot
     bot = telegram.Bot(token='5299208701:AAFoSrKG7yvP1_s_-q8gT_8v6tRIdM4iz_4')
     updates = bot.getUpdates()
-
     # Add User to Database
     for i in range(len(updates)):
         chat_id = updates[i].message.chat.id
@@ -159,25 +208,13 @@ def splitBillPayment(request, bill_pk):
                 telegram_handle=username,
                 telegram_id=chat_id
             )
-            user.save()
-
-    # Retrieve Users from Database
-    users = {}
-
-    for user in telegram_handles:
+            user.save()    
+            
+    for user in user_total.keys():
+        amount = user_total.get(user)
         query_user = TelegramData.objects.get(telegram_handle=user)
-        query_user_serialized = TelegramDataSerializer(query_user, many=False)
-        query_user_data = query_user_serialized.data
-        id = query_user_data['telegram_id']
-        users.update({id: {"amount": 0}})
-
-    # Tabulate Proportions
-    # TODO: TABULATE TOTALS | EACH CHAT_ID : AMOUNT
-
-    # Submit Telegram Message
-    for user in users.keys():
-        amount = users.get(user).get('amount')
+        id = query_user.telegram_id
         bot.send_message(
-            text=f"Hey there, please pay SGD$ {amount} for your meal!", chat_id=user)
-
-    return Response('OK', status=status.HTTP_200_OK)
+            text=f"Hey there, please pay SGD$ {amount} for your meal!", chat_id=id)
+       
+    return Response(user_total, status=status.HTTP_200_OK)
