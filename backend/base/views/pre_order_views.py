@@ -30,6 +30,24 @@ def retrieveAllOrders(request, order_pk):
             order_data['order_items'].append(menu_item_data)
         order_data['restaurant_id'] = restaurant_id
         return Response(order_data, status=status.HTTP_200_OK)
+
+    all_reservation_diner_in_all_reservation = IsPartOf.objects.all()
+    for part_of in all_reservation_diner_in_all_reservation:
+        if part_of.reservation_diner == user:
+            if part_of.reservation == reservation:
+                order_items = OrderItemInOrder.objects.filter(order=order)
+
+                for item in order_items:
+                    order_item_qty, order_item_id = OrderItemInOrder.objects.get(id=item.id).order_item_qty, \
+                                                    OrderItemInOrder.objects.get(id=item.id).order_item
+                    menu_item = MenuItem.objects.get(id=order_item_id.id)
+                    menu_item_serializer = MenuItemSerializer(menu_item, many=False)
+                    menu_item_data = menu_item_serializer.data
+                    menu_item_data.update({'order_item_qty': order_item_qty, 'item_order_key': item.id})
+                    order_data['order_items'].append(menu_item_data)
+                order_data['restaurant_id'] = restaurant_id
+                return Response(order_data, status=status.HTTP_200_OK)
+
     else:
         return Response("Reservation Does Not Belong to User", status=status.HTTP_400_BAD_REQUEST)
 
