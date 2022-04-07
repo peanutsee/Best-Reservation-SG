@@ -152,4 +152,4 @@ class Proportion(models.Model):
     objects = models.Manager()
     
     def __str__(self):
-        return self.telegram_handle + " in " + str(self.order.id)
+        return self.telegram_handle + " in " + str(self.order.order_reservation)
