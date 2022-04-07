@@ -1,10 +1,13 @@
+/* eslint-disable max-len */
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 /* eslint-disable camelcase */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-filename-extension */
 import { React, useEffect, useState } from 'react';
-import { Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import {
+  Button, OverlayTrigger, Tooltip,
+} from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { VscQuestion } from 'react-icons/vsc';
 import { useDispatch, useSelector } from 'react-redux';
@@ -79,7 +82,11 @@ function ConfirmationDetails(props) {
           />
         </div>
       </div>
-      <Button disabled={!paid || !reservationDate || !reservationTime || !nGuest} type="submit" className="my-3" onClick={handleCreate}>Confirm Reservation</Button>
+      {(!paid || !reservationDate || !reservationTime || !nGuest) ? (
+        <Button onClick={() => { alert('Please ensure all form fields are filled!'); }}>Confirm Reservation</Button>
+      ) : (
+        <Button type="submit" className="my-3" onClick={handleCreate}>Confirm Reservation</Button>
+      )}
     </div>
   );
 }
