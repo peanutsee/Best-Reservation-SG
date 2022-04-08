@@ -106,6 +106,7 @@ function AuthDetailsForm(props) {
                     isValid={touched.firstName && !errors.firstName}
                     feedback={errors.firstName}
                     placeholder={initialValues.firstName}
+                    disabled
                   />
                   {errors.firstName && (
                   <Form.Control.Feedback type="invalid">
@@ -126,6 +127,7 @@ function AuthDetailsForm(props) {
                     isValid={touched.lastName && !errors.lastName}
                     feedback={errors.lastName}
                     placeholder={initialValues.lastName}
+                    disabled
                   />
                   {errors.lastName && (
                   <Form.Control.Feedback type="invalid">
@@ -149,6 +151,7 @@ function AuthDetailsForm(props) {
                     isValid={touched.email && !errors.email}
                     feedback={errors.email}
                     placeholder={initialValues.email}
+                    disabled
                   />
                   {errors.email && (
                   <Form.Control.Feedback type="invalid">
@@ -170,6 +173,7 @@ function AuthDetailsForm(props) {
                     isValid={touched.contact && !errors.contact}
                     feedback={errors.contact}
                     placeholder={initialValues.contact}
+                    disabled
                   />
                   {errors.contact && (
                   <Form.Control.Feedback type="invalid">
