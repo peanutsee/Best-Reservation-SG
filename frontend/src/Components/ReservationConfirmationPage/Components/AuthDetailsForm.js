@@ -36,6 +36,8 @@ function AuthDetailsForm(props) {
     email: userInfo.email,
     contact: userInfo.contact,
   };
+  const date = new Date();
+  date.setDate(date.getDate() + 2);
 
   return (
     <div className="p-5 shadow shadow-100 row">
@@ -49,7 +51,7 @@ function AuthDetailsForm(props) {
                 required="required"
                 type="date"
                 onChange={(e) => setReservationDate(e.target.value)}
-                min={new Date().toISOString().split('T')[0]}
+                min={date.toISOString().split('T')[0]}
               />
             </Form.Group>
           </Form>
@@ -66,7 +68,7 @@ function AuthDetailsForm(props) {
           </Form>
         </div>
 
-        <div className="col-6 col-md-4 border-left border-dark">
+        <div className="col-6 col-md-4">
           <Form.Group>
             <Form.Label>Number of Guests</Form.Label>
             <Form.Select onChange={(e) => setNGuest(e.target.value)}>

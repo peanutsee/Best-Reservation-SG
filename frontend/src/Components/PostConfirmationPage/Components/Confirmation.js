@@ -65,16 +65,16 @@ function Confirmation() {
                     </Button>
 
                   </div>
-
                 </Link>
                 <br />
-                <div className="d-grid gap-2">
-                  <Button variant="success" className="mb-3" size="md">I want to order</Button>
-                </div>
+                <Link to={`/preorder/${reservation.pre_order_id}`}>
+                  <div className="d-grid gap-2">
+                    <Button variant="success" className="mb-3" size="md">I want to order</Button>
+                  </div>
+                </Link>
               </div>
 
               <div className="col-6">
-                <h3>QR CODE</h3>
                 <Pdf targetRef={ref} filename="reservation-confirmation.pdf">
                   {({ toPdf }) => <Button onClick={toPdf}>Generate Pdf</Button>}
                 </Pdf>

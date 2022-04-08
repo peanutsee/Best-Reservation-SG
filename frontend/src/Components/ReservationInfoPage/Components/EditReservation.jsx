@@ -35,6 +35,8 @@ function EditPopUpModal(props) {
     setEditModalShow(false);
     setEdited(true);
   };
+  const date = new Date();
+  date.setDate(date.getDate() + 2);
 
   return (
     <Modal
@@ -57,6 +59,8 @@ function EditPopUpModal(props) {
             <Form.Control
               type="date"
               onChange={(e) => handleDateChange(e.target.value)}
+              value={reservation.reservation_date}
+              min={date.toISOString().split('T')[0]}
             />
             {' '}
 
@@ -77,11 +81,16 @@ function EditPopUpModal(props) {
         <Form.Group>
           <Form.Label>Number of Guests</Form.Label>
           <Form.Select onChange={(e) => handlePaxChange(e.target.value)}>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
+            <option value={1}>1</option>
+            <option value={2}>2</option>
+            <option value={3}>3</option>
+            <option value={4}>4</option>
+            <option value={5}>5</option>
+            <option value={6}>6</option>
+            <option value={7}>7</option>
+            <option value={8}>8</option>
+            <option value={9}>9</option>
+            <option value={10}>10</option>
           </Form.Select>
         </Form.Group>
       </Modal.Body>

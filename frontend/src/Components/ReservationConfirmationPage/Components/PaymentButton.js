@@ -48,7 +48,7 @@ function PaymentButton(props) {
   return (
     <div className="d-flex justify-content-end px-5">
       <PayPalButton
-        amount={20.00}
+        amount={14.34}
         onSuccess={handlePayment}
         disabled={!paid}
       />
