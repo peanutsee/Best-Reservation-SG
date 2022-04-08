@@ -22,7 +22,7 @@ function JoinedCompleted(props) {
 
   useEffect(() => {
     if (goTosplitBill === true) {
-      window.location.href = `/payment/${currentReservation.id}`;
+      window.location.href = `/split_bill/${currentReservation.pre_order_id}`;
     }
   }, [goTosplitBill]);
 
