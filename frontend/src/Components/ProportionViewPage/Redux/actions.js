@@ -67,7 +67,7 @@ export const splitProportions = (bill_id) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get(
-      `/api/payment/get-proportions/bill_id=${bill_id}/`,
+      `/api/payment/split-bill-to-users/bill_id=${bill_id}/`,
       config,
     );
 
