@@ -39,7 +39,7 @@ function AppFooter() {
 
         <Row className="mt-4">
           <div className="text-center pt-2">
-            <p className="copyright">VolunteerBroz © 2021</p>
+            <p className="copyright">VolunteerBroz © 2022</p>
           </div>
         </Row>
       </Container>
