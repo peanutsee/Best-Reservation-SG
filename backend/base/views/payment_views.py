@@ -8,7 +8,6 @@ import telegram
 
 # Full Payment
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
 def fullBillPaymentTabulation(request, order_pk):
     order = Order.objects.get(id=order_pk)
     order_items = OrderItemInOrder.objects.filter(order=order)

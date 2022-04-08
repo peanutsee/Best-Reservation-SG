@@ -11,20 +11,20 @@ import {
   SUBMIT_PROPORTION_ERROR,
 } from './constants';
 
-export const retrievePayment = (order_id) => async (dispatch, getState) => {
+export const retrievePayment = (order_id) => async (dispatch) => {
   try {
     dispatch({
       type: RETRIEVE_PAYMENT_REQUEST,
     });
 
-    const {
-      userLoginReducer: { userInfo },
-    } = getState();
+    // const {
+    //   userLoginReducer: { userInfo },
+    // } = getState();
 
     const config = {
       headers: {
         'Content-type': 'application/json',
-        Authorization: `Bearer ${userInfo.token}`,
+        // Authorization: `Bearer ${userInfo.token}`,
       },
     };
 

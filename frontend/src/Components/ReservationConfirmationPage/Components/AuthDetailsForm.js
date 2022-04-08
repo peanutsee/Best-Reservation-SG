@@ -62,6 +62,7 @@ function AuthDetailsForm(props) {
             <Form.Group>
               <Form.Control
                 type="time"
+                min="0900"
                 onChange={(e) => setReservationTime(e.target.value)}
               />
             </Form.Group>
