@@ -83,7 +83,7 @@ function ConfirmationDetails(props) {
         </div>
       </div>
       {(!paid || !reservationDate || !reservationTime || !nGuest) ? (
-        <Button onClick={() => { alert('Please ensure all form fields are filled!'); }}>Confirm Reservation</Button>
+        <Button onClick={() => { alert('Please ensure all form fields are filled and deposit is paid!'); }}>Confirm Reservation</Button>
       ) : (
         <Button type="submit" className="my-3" onClick={handleCreate}>Confirm Reservation</Button>
       )}
