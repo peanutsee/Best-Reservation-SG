@@ -28,7 +28,7 @@ def fullBillPaymentTabulation(request, order_pk):
         total_before_tax += item.get_price()
     bill = BillDetail.objects.get(bill_reservation=order.order_reservation)
 
-    bill.bill_url = f"http://localhost:3000/split_bill/{bill.id}"
+    bill.bill_url = f"http://cz2006-project-frontend-bucket.s3-website-ap-southeast-1.amazonaws.com/split_bill/{bill.id}"
     bill.before_tax_bill = total_before_tax
     bill.after_tax_bill = bill.calculate_final_bill()
 
