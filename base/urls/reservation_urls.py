@@ -11,7 +11,7 @@ urlpatterns = [
     path('join-reservation/reservation_id=<int:pk>/', views.joinReservation, name='join-reservation'),
     path('remove-reservation/reservation_id=<int:pk>/', views.removeReservation, name='remove-reservation'),
     path('update-reservation-password/reservation_id=<int:pk>/', views.updatePin, name='update-reservation-pin'),
-    path('complete-reservation/reservation_id=<int:reservation_id>/', views.reservationCompleted),
+    path('complete-reservation/reservation_id=<int:reservation_id>/', views.reservationCompleted, name='complete-reservation'),
 ]
 
 
