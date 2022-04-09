@@ -116,7 +116,7 @@ def createReservation(request):
     )
 
 
-    reservation.reservation_url = f"http://localhost:3000/reservation_info/{reservation.id}"
+    reservation.reservation_url = f"http://cz2006-project-frontend-bucket.s3-website-ap-southeast-1.amazonaws.com/reservation_info/{reservation.id}"
 
     bill = BillDetail.objects.create(
         bill_reservation=reservation,
