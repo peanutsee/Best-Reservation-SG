@@ -22,7 +22,7 @@ export const registration = (firstName, lastName, email, password, contact) => a
     };
 
     const { data } = await axios.post(
-      '/api/users/register/',
+      'http://ec2-18-141-208-218.ap-southeast-1.compute.amazonaws.com:9090/api/users/register/',
       {
         firstName, lastName, email, password, contactNumber: contact,
       },

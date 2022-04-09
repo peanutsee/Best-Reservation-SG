@@ -37,7 +37,7 @@ export const retrievePayment = (order_id) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get(
-      `/api/payment/pay-full-bill-tabulate/order_id=${order_id}`,
+      `http://ec2-18-141-208-218.ap-southeast-1.compute.amazonaws.com:9090/api/payment/pay-full-bill-tabulate/order_id=${order_id}/`,
       config,
     );
 
@@ -74,7 +74,7 @@ export const setPin = (order_id, password) => async (dispatch, getState) => {
     };
 
     await axios.put(
-      `/api/payment/update-bill-password/order_id=${order_id}/`,
+      `http://ec2-18-141-208-218.ap-southeast-1.compute.amazonaws.com:9090/api/payment/update-bill-password/order_id=${order_id}/`,
       { bill_password: password },
       config,
     );
@@ -111,7 +111,7 @@ export const setComplete = (reservation_id) => async (dispatch, getState) => {
     };
 
     await axios.put(
-      `/api/reservation/complete-reservation/reservation_id=${reservation_id}/`,
+      `http://ec2-18-141-208-218.ap-southeast-1.compute.amazonaws.com:9090/api/reservation/complete-reservation/reservation_id=${reservation_id}/`,
       {},
       config,
     );
@@ -148,7 +148,7 @@ export const makePayment = (bill_id, reservation_id) => async (dispatch, getStat
     };
 
     const { data } = await axios.put(
-      `/api/payment/pay-full-bill-settlement/bill_id=${bill_id}/`,
+      `http://ec2-18-141-208-218.ap-southeast-1.compute.amazonaws.com:9090/api/payment/pay-full-bill-settlement/bill_id=${bill_id}/`,
       { bill_id },
       config,
     );

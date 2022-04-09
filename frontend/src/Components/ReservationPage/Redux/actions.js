@@ -35,7 +35,7 @@ export const getAllReservations = () => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get(
-      '/api/reservation/get-all-reservation/',
+      'http://ec2-18-141-208-218.ap-southeast-1.compute.amazonaws.com:9090/api/reservation/get-all-reservation/',
       config,
     );
 
@@ -72,7 +72,7 @@ export const deleteReservation = (reservationID) => async (dispatch, getState) =
       },
     };
     const { data } = await axios.delete(
-      `/api/reservation/delete-reservation/reservation_id=${reservationID}`,
+      `http://ec2-18-141-208-218.ap-southeast-1.compute.amazonaws.com:9090/api/reservation/delete-reservation/reservation_id=${reservationID}/`,
       config,
     );
 
@@ -110,7 +110,7 @@ export const removeReservation = (reservationID) => async (dispatch, getState) =
     };
 
     const { data } = await axios.delete(
-      `/api/reservation/remove-reservation/reservation_id=${reservationID}`,
+      `http://ec2-18-141-208-218.ap-southeast-1.compute.amazonaws.com:9090/api/reservation/remove-reservation/reservation_id=${reservationID}/`,
       config,
     );
 

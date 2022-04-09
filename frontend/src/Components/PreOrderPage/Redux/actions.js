@@ -36,7 +36,7 @@ export const getPreOrderDetails = (order_id) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get(
-      `/api/pre_order/list-order-items/order_id=${order_id}/`,
+      `http://ec2-18-141-208-218.ap-southeast-1.compute.amazonaws.com:9090/api/pre_order/list-order-items/order_id=${order_id}/`,
       config,
     );
 
@@ -68,7 +68,7 @@ export const addItem = (order_id, item_id, qty) => async (dispatch, getState) =>
     };
 
     const { data } = await axios.post(
-      `/api/pre_order/add-item-to-order/order_id=${order_id}/item_id=${item_id}/`,
+      `http://ec2-18-141-208-218.ap-southeast-1.compute.amazonaws.com:9090/api/pre_order/add-item-to-order/order_id=${order_id}/item_id=${item_id}/`,
       { qty },
       config,
     );
@@ -105,7 +105,7 @@ export const removeItem = (order_item_id, order_id) => async (dispatch, getState
     };
 
     await axios.delete(
-      `/api/pre_order/delete-order-items/item_order_key=${order_item_id}/`,
+      `http://ec2-18-141-208-218.ap-southeast-1.compute.amazonaws.com:9090/api/pre_order/delete-order-items/item_order_key=${order_item_id}/`,
       config,
     );
 
@@ -145,7 +145,7 @@ export const updateItem = (order_item_id) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.put(
-      `/api/pre_order/update-order-items-qty/item_order_key=${order_item_id}/`,
+      `http://ec2-18-141-208-218.ap-southeast-1.compute.amazonaws.com:9090/api/pre_order/update-order-items-qty/item_order_key=${order_item_id}/`,
       config,
     );
 
@@ -177,7 +177,7 @@ export const getMenuDetails = (restaurant_id) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get(
-      `/api/pre_order/retrieve-menu-items/restaurant_id=${restaurant_id}/`,
+      `http://ec2-18-141-208-218.ap-southeast-1.compute.amazonaws.com:9090/api/pre_order/retrieve-menu-items/restaurant_id=${restaurant_id}/`,
       config,
     );
 

@@ -20,7 +20,7 @@ export const login = (email, password) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      '/api/users/login/',
+      'http://ec2-18-141-208-218.ap-southeast-1.compute.amazonaws.com:9090/api/users/login/',
       { username: email, password },
       config,
     );

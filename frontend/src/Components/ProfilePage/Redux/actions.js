@@ -38,7 +38,7 @@ export const retrieveUserProfile = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get('/api/profile/retrieve-profile/', config);
+    const { data } = await axios.get('http://ec2-18-141-208-218.ap-southeast-1.compute.amazonaws.com:9090/api/profile/retrieve-profile/', config);
 
     dispatch({
       type: RETRIEVE_USER_PROFILE_SUCCESS,
@@ -74,7 +74,7 @@ export const updateProfile = (first_name, last_name, email, password, contact_nu
     };
 
     const { data } = await axios.put(
-      '/api/profile/update-profile/',
+      'http://ec2-18-141-208-218.ap-southeast-1.compute.amazonaws.com:9090/api/profile/update-profile/',
       {
         first_name,
         last_name,
@@ -128,7 +128,7 @@ export const updateNotifications = (sms_notification, email_notification) => asy
     };
 
     const { data } = await axios.put(
-      '/api/profile/update-profile/',
+      'http://ec2-18-141-208-218.ap-southeast-1.compute.amazonaws.com:9090/api/profile/update-profile/',
       {
         first_name: '',
         last_name: '',
@@ -180,7 +180,7 @@ export const deleteProfile = () => async (dispatch, getState) => {
       },
     };
 
-    await axios.delete('/api/profile/delete-profile/', config);
+    await axios.delete('http://ec2-18-141-208-218.ap-southeast-1.compute.amazonaws.com:9090/api/profile/delete-profile/', config);
 
     dispatch({
       type: USER_LOGOUT,

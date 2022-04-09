@@ -30,7 +30,7 @@ export const getProportions = (bill_id) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get(
-      `/api/payment/get-proportions/bill_id=${bill_id}/`,
+      `http://ec2-18-141-208-218.ap-southeast-1.compute.amazonaws.com:9090/api/payment/get-proportions/bill_id=${bill_id}/`,
       config,
     );
 
@@ -67,7 +67,7 @@ export const splitProportions = (bill_id) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get(
-      `/api/payment/split-bill-to-users/bill_id=${bill_id}/`,
+      `http://ec2-18-141-208-218.ap-southeast-1.compute.amazonaws.com:9090/api/payment/split-bill-to-users/bill_id=${bill_id}/`,
       config,
     );
 

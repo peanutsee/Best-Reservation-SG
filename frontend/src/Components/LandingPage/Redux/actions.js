@@ -20,13 +20,13 @@ export const retrieveRestaurants = (page = '') => async (dispatch) => {
     };
     if (page === '') {
       const { data } = await axios.get(
-        '/api/restaurants/retrieve-all-restaurants',
+        'http://ec2-18-141-208-218.ap-southeast-1.compute.amazonaws.com:9090/api/restaurants/retrieve-all-restaurants/',
         config,
       );
       dispatch({ type: RETRIEVE_RESTAURANTS_SUCCESS, payload: data });
     } else {
       const { data } = await axios.get(
-        `/api/restaurants/retrieve-all-restaurants/?page=${page}`,
+        `http://ec2-18-141-208-218.ap-southeast-1.compute.amazonaws.com:9090/api/restaurants/retrieve-all-restaurants/?page=${page}/`,
         config,
       );
       dispatch({ type: RETRIEVE_RESTAURANTS_SUCCESS, payload: data });

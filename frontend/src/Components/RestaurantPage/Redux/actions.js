@@ -12,7 +12,7 @@ export const getRestaurant = (restaurantID) => async (dispatch) => {
     });
 
     const { data } = await axios.get(
-      `/api/restaurants/retrieve-restaurant/${restaurantID}`,
+      `http://ec2-18-141-208-218.ap-southeast-1.compute.amazonaws.com:9090/api/restaurants/retrieve-restaurant/${restaurantID}/`,
     );
 
     dispatch({

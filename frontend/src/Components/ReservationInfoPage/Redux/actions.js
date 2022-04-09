@@ -34,7 +34,7 @@ export const updateReservation = (reservationID, reservation_date_time, reservat
       },
     };
     const { data } = await axios.put(
-      `/api/reservation/update-reservation/reservation_id=${reservationID}/`,
+      `http://ec2-18-141-208-218.ap-southeast-1.compute.amazonaws.com:9090/api/reservation/update-reservation/reservation_id=${reservationID}/`,
       {
         reservationID, reservation_date_time, reservation_pax,
       },
@@ -74,7 +74,7 @@ export const getReservation = (reservationID) => async (dispatch, getState) => {
       },
     };
     const { data } = await axios.get(
-      `/api/reservation/get-reservation/reservation_id=${reservationID}`,
+      `http://ec2-18-141-208-218.ap-southeast-1.compute.amazonaws.com:9090/api/reservation/get-reservation/reservation_id=${reservationID}/`,
       config,
     );
 

@@ -27,7 +27,7 @@ export const createReservation = (restaurant_id, reservation_tyme, reservation_p
     };
 
     const { data } = await axios.post(
-      '/api/reservation/create-reservation/',
+      'http://ec2-18-141-208-218.ap-southeast-1.compute.amazonaws.com:9090/api/reservation/create-reservation/',
       {
         restaurant_id, reservation_tyme, reservation_pax,
       },

@@ -29,7 +29,7 @@ export const retrievePayment = (order_id) => async (dispatch) => {
     };
 
     const { data } = await axios.get(
-      `/api/payment/pay-full-bill-tabulate/order_id=${order_id}/`,
+      `http://ec2-18-141-208-218.ap-southeast-1.compute.amazonaws.com:9090/api/payment/pay-full-bill-tabulate/order_id=${order_id}/`,
       config,
     );
 
@@ -61,7 +61,7 @@ export const submitProportion = (order_id, telegram_handle, proportions) => asyn
     };
 
     const { data } = await axios.post(
-      `/api/payment/add-proportions/order_id=${order_id}/`,
+      `http://ec2-18-141-208-218.ap-southeast-1.compute.amazonaws.com:9090/api/payment/add-proportions/order_id=${order_id}/`,
       { telegram_handle, proportions },
       config,
     );

@@ -30,7 +30,7 @@ export const updateReservationPin = (reservationID, reservation_pin) => async (d
       },
     };
     const { data } = await axios.put(
-      `/api/reservation/update-reservation-password/reservation_id=${reservationID}/`,
+      `http://ec2-18-141-208-218.ap-southeast-1.compute.amazonaws.com:9090/api/reservation/update-reservation-password/reservation_id=${reservationID}/`,
       {
         reservation_pin,
       },
@@ -70,7 +70,7 @@ export const getConfirmedReservation = (reservationID) => async (dispatch, getSt
       },
     };
     const { data } = await axios.get(
-      `/api/reservation/get-reservation/reservation_id=${reservationID}`,
+      `http://ec2-18-141-208-218.ap-southeast-1.compute.amazonaws.com:9090/api/reservation/get-reservation/reservation_id=${reservationID}/`,
       config,
     );
 
