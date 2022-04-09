@@ -1,0 +1,152 @@
+[
+    {
+        "Name": "Wild Mushroom Cream Soup",
+        "Description": "A variety of hand-picked mushrooms, cooked to perfection, mixed in with velvety cream and served with freshly chopped scallions.",
+        "Price": 6.00
+    },
+    {
+        "Name": "French Onion Soup",
+        "Description": "Slow simmered sweet onions, topped with savory Swiss Cheese and garnished with croutons.",
+        "Price": 5.50
+    },
+    {
+        "Name": "Calamari",
+        "Description": "Breadcrumbed squid sautéed in garlic, lemon and parsley with tartare sauce.",
+        "Price": 5.50
+    },
+    {
+        "Name": "Goats Cheese Salad",
+        "Description": "Warm goats cheese and roasted vegetable salad with black olive tapenade crostini.",
+        "Price": 8.50
+    },
+    {
+        "Name": "House Salad",
+        "Description": "Grape tomatoes + red onion + cheddar cheese + croutons.",
+        "Price": 6.00
+    },
+    {
+        "Name": "Spinach and Mushroom Crêpes ",
+        "Description": "Baked crêpes with wild mushrooms, spinach and Gruyère cheese.",
+        "Price": 7.95
+    },
+    {
+        "Name": "Chicken and Walnut Salad",
+        "Description": "Chargrilled chicken with avocado, baby gem lettuce, baby spinach, shallots, French beans, walnuts, croutons and a mustard dressing.",
+        "Price": 8.95
+    },
+    {
+        "Name": "Bacon Mac ‘n Cheese Spring Rolls",
+        "Description": "Bacon and green chili mac and cheese with a side of ranch.",
+        "Price": 8.50
+    },
+    {
+        "Name": "French Fries",
+        "Description": "Cut from whole potatoes grown on Canadian farms, our fries are cooked to golden perfection in a vegetable oil blend.",
+        "Price": 3.00
+    },
+    {
+        "Name": "Shrimp Cocktail",
+        "Description": "6 house-poached large shrimp + fresh vegetable slaw + ginger cocktail sauce.",
+        "Price": 11.50
+    },
+    {
+        "Name": "Chorizo and Egg Sliders",
+        "Description": "Chorizo patty with aged white cheddar, scrambled egg and house-roasted tomatillo salsa.",
+        "Price": 7.00
+    },
+    {
+        "Name": "Eggs Benedict",
+        "Description": "Served with savory house potatoes.",
+        "Price": 10.00
+    },
+    {
+        "Name": "Caramelized French Toast",
+        "Description": "Cinnamon French toast infused with coconut rum + maple syrup + fresh strawberries. Non-alcoholic/kid-friendly version available upon request.",
+        "Price": 9.00
+    },
+    {
+        "Name": "Guac & Chips",
+        "Description": "Homemade guacamole + tortilla chips + fresh salsa.",
+        "Price": 7.00
+    },
+    {
+        "Name": "Quesadillas",
+        "Description": "Jack + cheddar + pepper jack cheese + grilled peppers.",
+        "Price": 8.00
+    },
+    {
+        "Name": "Cheese Burger",
+        "Description": "Our simple, classic cheeseburger begins with a 100% pure beef burger seasoned with just a pinch of salt and pepper.",
+        "Price": 9.00
+    },
+    {
+        "Name": "Grilled Dory Burger",
+        "Description": "Grilled Dory, pickled red onion, iceberg lettuce topped with our home-made tartare sauce.",
+        "Price": 11.90
+    },
+    {
+        "Name": "Veggie Burger",
+        "Description": "Chipotle-spiced black bean patty with avocado, red onion, tomato and red leaf lettuce.",
+        "Price": 9.50
+    },
+    {
+        "Name": "Fried Chicken Sandwich",
+        "Description": "Spicy, marinated, fried chicken breast with brioche bun and cilantro slaw.",
+        "Price": 10.50
+    },
+    {
+        "Name": "Grilled Chicken Sandwich",
+        "Description": "Lettuce + tomato + red onion + Dijon-aioli.",
+        "Price": 10.50
+    },
+    {
+        "Name": "Turkey & Avocado Wrap",
+        "Description": "Freshly sliced oven-roasted turkey + avocado + carrots + cucumber + lettuce + tomato + chipotle aioli.",
+        "Price": 9.50
+    },
+    {
+        "Name": "Sunrise Burger",
+        "Description": "Pecanwood-smoked bacon with cheddar cheese and fried egg, lettuce, tomato and onion.",
+        "Price": 10.50
+    },
+    {
+        "Name": "Roasted Pork Belly",
+        "Description": "Pan roasted pork belly with gratin potato, braised Savoy cabbage, apples, thyme and calvados sauce.",
+        "Price": 13.50
+    },
+    {
+        "Name": "Chocoholic's Cheesecake",
+        "Description": "Creamy chocolate cheesecake nested in dark, moist brownie, sprinkled with chocolate flakes.",
+        "Price": 7.00
+    },
+    {
+        "Name": "Sensational S’mores",
+        "Description": "Marshmallow-filled chocolate chip cookie sandwiches.",
+        "Price": 7.00
+    },
+    {
+        "Name": "Screwdriver",
+        "Description": "Blood Orange Vodka + fresh orange juice.",
+        "Price": 7.00
+    },
+    {
+        "Name": "Zing Zang Bloody Mary",
+        "Description": "Tito’s Handmade Vodka + Zing Zang Bloody Mary Mix.",
+        "Price": 8.00
+    },
+    {
+        "Name": "Aperol Spritz",
+        "Description": "Aperol + Prosecco + lemon twist.",
+        "Price": 7.00
+    },
+    {
+        "Name": "Espresso Martini",
+        "Description": "Vanilla Bean Vodka + RumChata + Monin True Brewed Espresso.",
+        "Price": 8.00
+    },
+    {
+        "Name": "Irish Coffee",
+        "Description": "Jameson Irish Whiskey + coffee + real whipping cream.",
+        "Price": 6.00
+    }
+]
