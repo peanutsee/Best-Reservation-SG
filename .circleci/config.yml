@@ -36,7 +36,9 @@ jobs:
           name: run checks for backend
           command: |
             cd backend
+            pipenv install -r requirements.txt
             pipenv run python manage.py check
+            pipenv run python manage.py test base
           # app-dir: ~/project/package-directory/  # If you're requirements.txt isn't in the root directory.
           # pip-dependency-file: test-requirements.txt  # if you have a different name for your requirements file, maybe one that combines your runtime and test requirements.
       # - run:

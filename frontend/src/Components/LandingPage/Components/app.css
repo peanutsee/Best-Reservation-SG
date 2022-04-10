@@ -1,0 +1,13 @@
+.glass-card {
+    background: rgba(227, 235, 226, 0.3);
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37);
+    backdrop-filter: blur( 17px);
+    -webkit-backdrop-filter: blur( 17px);
+    border-radius: 30px;
+    border: 2px solid rgba( 255, 255, 255, 0.18);
+}
+
+.glass-card:hover {
+    transform: scale(1.05);
+    transition: 0.1s;
+}

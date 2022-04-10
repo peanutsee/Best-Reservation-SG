@@ -1,18 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-
-# TODO: Create serializers for all fields (unless otherwise stated)
-# TODO: All models must support CRUD, views must reflect this
-# TODO: ALl endpoints must be tested independently of each other and the frontend UI
-# TODO: All endpoints must be documented in swaggerhub
-
-# TODO: API to Restaurants
-# TODO: API to DBS PayLah!
-# TODO: API to Telegram
-# TODO: Email SMTP
-# TODO: AWS backend (EC2, RDS, S3, ELB)
-
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     contact_number = models.CharField(max_length=255)
@@ -26,49 +14,29 @@ class Profile(models.Model):
 
 
 class Restaurant(models.Model):
-    WESTERN = 'WS'
-    CHINESE = 'CH'
-    JAPANESE = 'JP'
-    KOREAN = 'KR'
-    OTHERS = 'OT'
-    CUISINE_TYPES = [
-        (WESTERN, 'Western'),
-        (CHINESE, 'Chinese'),
-        (JAPANESE, 'Japanese'),
-        (KOREAN, 'Korean'),
-        (OTHERS, 'Others'),
-    ]
-
-    KOPITIAM = 'HC'
-    CAFE = "CF"
-    BAR = 'BA'
-    HIGH_END_RESTAURANT = 'HE'
-    MEDIUM_END_RESTAURANT = 'ME'
-    BUDGET_RESTAURANT = 'BR'
-    FAST_FOOD_RESTAURANT = 'FF'
-    OTHERS = 'OT'
-    RESTAURANT_TYPES = [
-        (KOPITIAM, 'Kopitiam'),
-        (CAFE, 'Cafe'),
-        (BAR, 'Bar'),
-        (HIGH_END_RESTAURANT, 'High End Restaurant'),
-        (MEDIUM_END_RESTAURANT, 'Medium End Restaurant'),
-        (BUDGET_RESTAURANT, 'Budget Restaurant'),
-        (FAST_FOOD_RESTAURANT, 'Fast Food Restaurant'),
-        (OTHERS, 'Others'),
-    ]
-
+    restaurant_uuid = models.TextField(default="None")
     restaurant_name = models.CharField(max_length=255)
-    restaurant_image = models.ImageField('restaurant-images/')
-    restaurant_description = models.TextField()
-    restaurant_cuisine = models.CharField(max_length=2, choices=CUISINE_TYPES, default=OTHERS)
-    restaurant_type = models.CharField(max_length=2, choices=RESTAURANT_TYPES, default=OTHERS)
-    restaurant_rating = models.DecimalField(decimal_places=2, max_digits=3, default=4)
+    restaurant_official_website = models.URLField()
+    restaurant_official_email = models.EmailField()
+    restaurant_shorter_description = models.TextField(default="")
+    restaurant_primary_contact = models.TextField(default="")
+    restaurant_secondary_contact = models.TextField(default="")
+    restaurant_rating = models.DecimalField(decimal_places=1, max_digits=2)
+    restaurant_block = models.CharField(max_length=255)
+    restaurant_street_name = models.TextField()
+    restaurant_floor_number = models.CharField(max_length=255)
+    restaurant_unit_number = models.CharField(max_length=255)
+    restaurant_building_name = models.TextField()
+    restaurant_postal_code = models.CharField(max_length=255)
+    restaurant_longer_description = models.TextField()
+    restaurant_thumbnail = models.URLField(default=None)
+    restaurant_image_1 = models.URLField(default=None)
+    restaurant_image_2 = models.URLField(default=None)
     num_clicks = models.IntegerField(default=0)
 
     objects = models.Manager()
 
-    def increaseClick(self):
+    def increase_click(self):
         return self.num_clicks + 1
 
     def __str__(self):
@@ -81,13 +49,12 @@ class Reservation(models.Model):
     reservation_date_time = models.DateTimeField()
     reservation_created_date_time = models.DateTimeField(auto_created=True, auto_now_add=True)
     reservation_is_completed = models.BooleanField(default=False)
-
     reservation_pax = models.IntegerField()
     number_of_users_in_reservation = models.IntegerField(default=1)
-    #reservation_link = models.URLField()
-    reservation_pax = models.IntegerField(default=False)
-
-
+    reservation_pin = models.TextField(default='NO PIN')
+    reservation_url = models.URLField(default='www.example.com')
+    reservation_deposit_is_paid = models.BooleanField(default=False)
+    
     objects = models.Manager()
 
     def __str__(self):
@@ -114,6 +81,9 @@ class BillDetail(models.Model):
     deposit = models.DecimalField(default=20, decimal_places=2, max_digits=10)
     after_tax_bill = models.DecimalField(decimal_places=2, max_digits=10, default=0)
     bill_is_paid = models.BooleanField(default=False)
+    bill_pin = models.TextField(default='NO PIN')
+    bill_url = models.URLField(default='www.example.com')
+    bill_is_split = models.BooleanField(default=False)
 
     objects = models.Manager()
 
@@ -135,7 +105,7 @@ class MenuItem(models.Model):
     menu_item_name = models.CharField(max_length=255)
     menu_item_description = models.TextField()
     menu_item_price = models.DecimalField(max_digits=10, decimal_places=2)
-    menu_item_image = models.ImageField(upload_to='menu-item-image/')
+    menu_item_image = models.ImageField(upload_to='menu-item-image/', default=None, blank=True, null=True)
 
     objects = models.Manager()
 
@@ -164,3 +134,22 @@ class OrderItemInOrder(models.Model):
 
     def __str__(self):
         return f"{self.order_item.menu_item_name} in {self.order.__str__()}"
+
+class TelegramData(models.Model):
+    telegram_handle = models.TextField()
+    telegram_id = models.IntegerField()
+    
+    objects = models.Manager()
+    
+    def __str__(self):
+        return self.telegram_handle
+    
+class Proportion(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    telegram_handle = models.TextField()
+    proportions = models.TextField()
+    
+    objects = models.Manager()
+    
+    def __str__(self):
+        return self.telegram_handle + " in " + str(self.order.order_reservation)

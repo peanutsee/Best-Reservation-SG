@@ -4,6 +4,7 @@
 2. Running Development Environment
 3. Developing Guide
 4. GIT Practises
+5. Application Skeleton Tree
 
 ## Setup Guide 
 You will only need to set up <strong>once</strong> unless you screwed up somewhere. 
@@ -172,6 +173,21 @@ Let's suppose you want to push your things onto the remote repository but there 
 
 This is because, only you know what changes you've made. The other parties don't! 
 
+```
+# stash your commits 
+git add .
+git commit -m "stash"
+
+# pull changes 
+git pull origin main
+```
+at this point, you should be able to deconflict on VSCode if you have GIT Lens extension. 
+```
+git add .
+git commit -m "new changes + deconflich merge"
+git checkout <BRANCH_NAME>
+git push origin <BRANCH_NAME>
+```
 PS: If you have a better solution to deconflict a conflict, please suggest. I don't know of a better solution to do this yet.
 
 ### Extra Juice 
@@ -185,4 +201,44 @@ git remote -v
 Checkout to another branch (to change branch)
 ```
 git checkout <branch_name>
+```
+
+## Application Skeleton Tree
+```bash
+project_root
+|_.circleci
+|_.git
+|_frontend
+    |_README.md
+    |_public
+        |_index.html
+        |_build
+    |_src
+        |_Commons
+        |_Components
+        |_Navigation
+        |_RootRedux
+        |_bootstrap.min.css
+        |_index.js
+    |_Dockerfile
+    |_package.json
+    |_.dockerignore
+    |_.gitignore
+|_backend
+    |_backend
+        |_settings.py
+        |_urls.py
+    |_base
+        |_views
+        |_urls
+        |_admin.py
+        |_models.py
+        |_serializer.py
+    |_.dockerignore
+    |_.gitignore
+    |_manage.py
+    |_requirements.txt
+    |_Dockerfile    
+|_docker-compose.yaml
+|_README.md
 ```

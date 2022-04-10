@@ -10,8 +10,7 @@ services:
       - "8000:8000"
     links: 
       - frontend
-    command : bash -c "python manage.py makemigrations && python manage.py migrate &&
-                      python manage.py runserver 0.0.0.0:8000"
+    command : bash -c "python manage.py runserver 127.0.0.1:8000"
   frontend:
     container_name: frontend # frontned
     restart: always

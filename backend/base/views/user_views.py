@@ -19,8 +19,14 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         data = super().validate(attrs)
 
         serializer = UserSerializerWithToken(self.user).data
+        profile = Profile.objects.get(user=self.user)
+        profile_serializer = ProfileSerializer(profile, many=False)
+        profile_data = profile_serializer.data
+
         for k, v in serializer.items():
             data[k] = v
+
+        data.update({'contact': profile_data.get('contact_number')})
 
         return data
 

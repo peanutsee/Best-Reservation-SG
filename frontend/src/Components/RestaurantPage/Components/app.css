@@ -1,0 +1,15 @@
+.border-left {
+  border-left: solid !important;
+  border-width: 1px !important;
+  border-color: #eceeef !important;
+}
+
+@media (max-width: 768px) {
+  .border-left {
+    border-left: none !important;
+  }
+}
+
+.nav-item {
+  margin-right: 0.01rem !important;
+}
