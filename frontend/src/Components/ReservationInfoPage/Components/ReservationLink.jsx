@@ -9,6 +9,24 @@ import {
 
 function LinkPopUpModal(props) {
   const { reservation } = props;
+  const copyToClipboard = (str) => {
+    const el = document.createElement('textarea');
+    el.value = str;
+    el.setAttribute('readonly', '');
+    el.style.position = 'absolute';
+    el.style.left = '-9999px';
+    document.body.appendChild(el);
+    const selected = document.getSelection().rangeCount > 0
+      ? document.getSelection().getRangeAt(0)
+      : false;
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    if (selected) {
+      document.getSelection().removeAllRanges();
+      document.getSelection().addRange(selected);
+    }
+  };
   return (
     <Modal
       {...props}
@@ -34,9 +52,12 @@ function LinkPopUpModal(props) {
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={() => {
-          navigator.clipboard.writeText(`URL: ${reservation.reservation_url}\nReservation ID: ${reservation.id}\nPassword: ${reservation.reservation_pin}\n${reservation.reservation_owner} is inviting you to join them at ${reservation.Restaurant.restaurant_name} on ${reservation.reservation_date} at ${reservation.reservation_time}`);
-        }}
+        <Button
+          onClick={() => {
+            copyToClipboard(
+              `URL: ${reservation.reservation_url}\nReservation ID: ${reservation.id}\nPassword: ${reservation.reservation_pin}\n${reservation.reservation_owner} is inviting you to join them at ${reservation.Restaurant.restaurant_name} on ${reservation.reservation_date} at ${reservation.reservation_time}`,
+            );
+          }}
         >
           Copy Link
         </Button>
