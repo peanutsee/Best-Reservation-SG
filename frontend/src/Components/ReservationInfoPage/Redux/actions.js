@@ -73,6 +73,7 @@ export const getReservation = (reservationID) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
+
     const { data } = await axios.get(
       `http://ec2-18-141-208-218.ap-southeast-1.compute.amazonaws.com:9090/api/reservation/get-reservation/reservation_id=${reservationID}/`,
       config,
@@ -112,7 +113,7 @@ export const joinReservation = (reservationID, linkPassword) => async (dispatch,
     };
 
     const { data } = await axios.post(
-      `/api/reservation/join-reservation/reservation_id=${reservationID}/`,
+      `http://ec2-18-141-208-218.ap-southeast-1.compute.amazonaws.com:9090/api/reservation/join-reservation/reservation_id=${reservationID}/`,
       { linkPassword },
       config,
     );

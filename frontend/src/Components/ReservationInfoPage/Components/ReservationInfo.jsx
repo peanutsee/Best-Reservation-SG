@@ -28,43 +28,35 @@ function ReservationInfo() {
     if (!reservation) {
       dispatch(getReservation(params.id));
     }
-    setJoined(false);
     if (edited === true) {
       dispatch(getReservation(params.id));
       setEdited(false);
+    }
+    if (joined === true) {
+      dispatch(getReservation(params.id));
+      setJoined(false);
     }
   }, [dispatch, reservation, joined, edited]);
 
   return (
     <div>
-      {loading ? (
-        <h1>Loading Reservation...</h1>
-      ) : error ? (
-      /* on error load the joinModal, i.e. not in reservation */
-        <JoinReservationPopUpModal
-          show={joinModal}
-          setJoined={setJoined}
-        />
-
-      ) : (
-        <Container className="px-5">
-          <div className="py-3">
-            <Link to="/">Back</Link>
-          </div>
-          {reservation && (
-            <>
-              <CarouselSection />
-              <h1 className="py-3 text-center">
-                {reservation.Restaurant.restaurant_name}
-              </h1>
-              <RestaurantInfo
-                reservation={reservation}
-                setEdited={setEdited}
-              />
-            </>
-          )}
-        </Container>
+      {error && (
+        <JoinReservationPopUpModal show={joinModal} setJoined={setJoined} />
       )}
+      <Container className="px-5">
+        <div className="py-3">
+          <Link to="/">Back</Link>
+        </div>
+        {reservation && (
+          <>
+            <CarouselSection />
+            <h1 className="py-3 text-center">
+              {reservation.Restaurant.restaurant_name}
+            </h1>
+            <RestaurantInfo reservation={reservation} setEdited={setEdited} />
+          </>
+        )}
+      </Container>
     </div>
   );
 }

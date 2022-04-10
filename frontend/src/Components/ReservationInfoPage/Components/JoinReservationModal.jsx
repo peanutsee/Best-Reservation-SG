@@ -22,13 +22,6 @@ function JoinReservationPopUpModal(props) {
     setJoined(true);
   };
 
-  /* used to check if Form onChange  work
-  useEffect(() => {
-    console.log(reservationID);
-    console.log(linkPassword);
-  }, [reservationID, linkPassword]);
-  */
-
   return (
     <Modal
       {...props}

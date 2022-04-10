@@ -75,6 +75,24 @@ def addProportions(request, order_pk):
     order = Order.objects.get(id=order_pk)
     proportion = Proportion.objects.filter(
         order=order, telegram_handle=data['telegram_handle'])
+    
+    # Instantiate Telegram Bot
+    bot = telegram.Bot(token='5299208701:AAFoSrKG7yvP1_s_-q8gT_8v6tRIdM4iz_4')
+    updates = bot.getUpdates()
+
+    # Add User to Database
+    for i in range(len(updates)):
+        chat_id = updates[i].message.chat.id
+        username = updates[i].message.chat.username
+
+        query_user = TelegramData.objects.filter(telegram_handle=data['telegram_handle'])
+        if not query_user:
+            user = TelegramData.objects.create(
+                telegram_handle=username,
+                telegram_id=chat_id
+            )
+            user.save()    
+
     try:
         if not proportion.exists():
             new_proportions = Proportion.objects.create(
@@ -196,6 +214,7 @@ def splitBillPayment(request, bill_pk):
     # Instantiate Telegram Bot
     bot = telegram.Bot(token='5299208701:AAFoSrKG7yvP1_s_-q8gT_8v6tRIdM4iz_4')
     updates = bot.getUpdates()
+
     # Add User to Database
     for i in range(len(updates)):
         chat_id = updates[i].message.chat.id
