@@ -242,3 +242,11 @@ project_root
 |_docker-compose.yaml
 |_README.md
 ```
+
+
+Authors
+- [Darryl See Wei Shen](https://github.com/peanutsee)
+- [Lau Kai Yun](https://github.com/KaiYun99)
+- [Mazel Tan Jia Ying](https://github.com/mazeltan)
+- [Takesawa Saori](https://github.com/Take-Saori)
+- [Lim Chien Hui](https://github.com/Limchienhui)
